@@ -1,5 +1,8 @@
 .grid-container {
-  margin: 20px;
+  // margin: 15px;
+  mat-grid-list {
+    margin: -15px;
+  }
 }
 
 .dashboard-card {
