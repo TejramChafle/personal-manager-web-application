@@ -1,0 +1,56 @@
+<mat-sidenav-container class="sidenav-container">
+	<mat-sidenav #drawer class="sidenav" fixedInViewport [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
+		[mode]="(isHandset$ | async) ? 'over' : 'side'" [opened]="(isHandset$ | async) === false">
+		<mat-toolbar style="padding-left:35%">Menu</mat-toolbar>
+		<mat-nav-list>
+
+			<!-- FEATURES -->
+			<a mat-list-item routerLink="" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+				<mat-icon class="icon">home</mat-icon> <span class="label">Home</span>
+			</a>
+			<a mat-list-item routerLink="returnings" routerLinkActive="active" (click)="isHandset && drawer.toggle()">
+				<mat-icon class="icon">payment</mat-icon><span class="label">Returnings</span>
+			</a>
+			<a mat-list-item routerLink="expenditures" routerLinkActive="active" (click)="isHandset && drawer.toggle()">
+				<mat-icon class="icon">insert_chart</mat-icon> <span class="label">Expenditure</span>
+			</a>
+			<a mat-list-item routerLink="reminders" routerLinkActive="active" (click)="isHandset && drawer.toggle()">
+				<mat-icon class="icon">alarm</mat-icon> <span class="label">Reminders</span>
+			</a>
+			<a mat-list-item routerLink="tasks" routerLinkActive="active" (click)="isHandset && drawer.toggle()">
+				<mat-icon class="icon">event_note</mat-icon> <span class="label">Tasks</span>
+			</a>
+			<a mat-list-item routerLink="groceries" routerLinkActive="active" (click)="isHandset && drawer.toggle()">
+				<mat-icon class="icon">add_shopping_cart</mat-icon> <span class="label">Grocery</span>
+			</a>
+			<a mat-list-item routerLink="learnings" routerLinkActive="active" (click)="isHandset && drawer.toggle()">
+				<mat-icon class="icon">psychology</mat-icon> <span class="label">Learnings</span>
+			</a>
+			<a mat-list-item routerLink="assignments" routerLinkActive="active" (click)="isHandset && drawer.toggle()">
+				<mat-icon class="icon">check_box</mat-icon> <span class="label">Assignments</span>
+			</a>
+
+			<!-- PROFILE & SETTINGS -->
+			<span class="header-spacer"></span>
+			<hr>
+			<a mat-list-item routerLink="profile" routerLinkActive="active" (click)="isHandset && drawer.toggle()">
+				<mat-icon class="icon">person</mat-icon> <span class="label">Profile</span>
+			</a>
+			<a mat-list-item (click)="isHandset && drawer.toggle(); _authService.logout()" routerLink="login"
+				type="button">
+				<mat-icon class="icon">login</mat-icon><span class="label">Logout</span>
+			</a>
+		</mat-nav-list>
+	</mat-sidenav>
+	<mat-sidenav-content>
+		<mat-toolbar color="primary">
+			<button type="button" aria-label="Toggle sidenav" mat-icon-button (click)="drawer.toggle()"
+				*ngIf="isHandset$ | async">
+				<mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
+			</button>
+			<span>Personal Manager</span>
+		</mat-toolbar>
+		<!-- Add Content Here -->
+		<div style="padding:15px;"><router-outlet></router-outlet></div>
+	</mat-sidenav-content>
+</mat-sidenav-container>

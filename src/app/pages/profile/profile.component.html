@@ -1,0 +1,35 @@
+<mat-card class="profile-card">
+    <mat-card-header color="primary">
+        
+        <mat-card-title>
+            {{user?.displayName}}
+        </mat-card-title>
+        <img mat-card-image class="profile-image" 
+            [src]="user?.photoUrl || 'http://www.cse.mrt.ac.lk/images/people/profile.jpg'" alt="Profile picture of user">
+            <div class="profile-image-avatar"></div>
+    </mat-card-header>
+    <mat-card-content>
+        <form #profileForm="ngForm" class="profile-form" (ngSubmit)="onUpdateProfile(profileForm.value)">
+            <mat-form-field>
+                <mat-label for="name">Name</mat-label>
+                <input type="text" matInput name="name" ngModel #name="ngModel">
+                <mat-error *ngIf="name.invalid && name.touched">Name is required</mat-error>
+            </mat-form-field>
+            <mat-form-field>
+                <mat-label>Username</mat-label>
+                <input matInput type="email" required email name="username" ngModel #username="ngModel" required>
+                <mat-error *ngIf="username.invalid && username.touched">Username is required</mat-error>
+            </mat-form-field>
+            <mat-form-field>
+                <mat-label for="password">Password</mat-label>
+                <input type="text" matInput name="password" ngModel #password="ngModel" required>
+                <mat-error *ngIf="password.invalid && password.touched">Password is required</mat-error>
+            </mat-form-field>
+            <button mat-raised-button [disabled]="profileForm.invalid" color="primary">UPDATE PROFILE</button>
+        </form>
+    </mat-card-content>
+    <mat-card-actions>
+        <button mat-button color="primary" (click)="onUpdatePhoto()">UPDATE PHOTO</button>
+        <!-- <button mat-button color="warn">DELETE ACCOUNT</button> -->
+    </mat-card-actions>
+</mat-card>

@@ -1,0 +1,7 @@
+<!-- If user is authenticated  -->
+<personal-manager-navigation *ngIf="_authService.user"></personal-manager-navigation>
+
+<!-- When user is not authenticated -->
+<div style="padding:15px;">
+    <router-outlet *ngIf="!_authService.user"></router-outlet>
+</div>

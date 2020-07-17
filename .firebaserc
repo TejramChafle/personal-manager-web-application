@@ -1,0 +1,14 @@
+{
+  "targets": {
+    "ng-personal-manager": {
+      "hosting": {
+        "PersonalManager": [
+          "ng-personal-manager"
+        ]
+      }
+    }
+  },
+  "projects": {
+    "default": "ng-personal-manager"
+  }
+}

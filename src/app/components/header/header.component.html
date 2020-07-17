@@ -1,0 +1,20 @@
+<mat-toolbar color="primary" *ngIf="_authService.user">
+    <!-- <button mat-icon-button class="header-icon" aria-label="Header icon-button with menu icon">
+        <mat-icon>menu</mat-icon>
+    </button> -->
+    <img src="assets/brand/angular-material.png" width="35" height="35"> 
+    <span> &nbsp; Assistant Application &nbsp; </span>
+
+    <button mat-button routerLink="" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Home</button>
+    <button mat-button routerLink="returning" routerLinkActive="active">Returnings</button>
+    <button mat-button routerLink="profile" routerLinkActive="active">Profile</button>
+
+    <span class="header-spacer"></span>
+    <button mat-button (click)="_authService.logout()" routerLink="login">Logout</button>
+    <button mat-icon-button class="header-icon favorite-icon" aria-label="Header icon-button with heart icon">
+        <mat-icon>favorite</mat-icon>
+    </button>
+    <button mat-icon-button class="header-icon" aria-label="Header icon-button with share icon">
+        <mat-icon>share</mat-icon>
+    </button>
+</mat-toolbar>

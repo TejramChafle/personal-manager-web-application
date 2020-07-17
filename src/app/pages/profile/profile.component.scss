@@ -1,0 +1,41 @@
+.profile-image {
+    height: 150px;
+    width: 150px;
+    object-fit: cover;
+    border-radius: 50%;
+    margin: 15px auto;
+}
+
+.profile-image-avatar {
+    text-align: center;
+    margin: 15px;
+}
+
+mat-card-header {
+    flex-direction: column-reverse;
+    background-color: #673ab7;
+    color: lightgray;
+}
+
+mat-card-title {
+    // border-bottom: 1px solid lightgray;
+    padding: 15px 0;
+    text-align: center;
+    margin: 0 -16px;
+    margin-bottom: 0px;
+}
+
+mat-card-actions {
+    text-align: right;
+}
+
+.profile-form {
+    margin-top: 30px !important;
+    mat-form-field, input, button {
+        width: 100%;
+    }
+}
+
+.mat-card-header-text {
+    margin: 0px;
+}

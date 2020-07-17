@@ -1,0 +1,20 @@
+<mat-card>
+    <mat-card-content>
+        <img [src]="photoURL" class="profile-picture">
+        <br>
+        <input type="file" accept=".png, .jpg" (change)="onPhotoSelect($event)" [hidden]="isUploading || isUploaded">
+        <br>
+        <mat-progress-bar mode="determinate" [value]="(uploadProgress | async)" *ngIf="isUploading || isUploaded">{{(uploadProgress | async)}}</mat-progress-bar>
+        <br><br>
+        <div class="alert alert-success" *ngIf="isUploaded">
+            <b>Success!</b> Profile picture updated successfully.
+        </div>
+        <div class="alert alert-error" *ngIf="hasError">
+            <b>Error!</b> Oops! Something went wrong. Unable to update photo.
+        </div>
+    </mat-card-content>
+    <mat-card-actions>
+        <button mat-button (click)="onClose()" mat-dialog-close>CLOSE</button>
+        <button mat-raised-button (click)="onUploadPhoto()" [disabled]="isUploading" *ngIf="!isUploaded" color="primary"> UPLOAD</button>
+    </mat-card-actions>
+</mat-card>

@@ -1,0 +1,21 @@
+.profile-picture {
+    width: 200px;
+    height: 200px;
+    object-fit: cover;
+    margin: 0 auto;
+    display: block;
+}
+
+.alert {
+    padding: 15px;
+}
+
+.alert-success {
+    background-color: lightseagreen;
+}
+
+.alert-error {
+    background-color: coral;
+}
+
+#file { display: none; }
