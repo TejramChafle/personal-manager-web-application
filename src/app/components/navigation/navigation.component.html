@@ -1,7 +1,15 @@
 <mat-sidenav-container class="sidenav-container">
 	<mat-sidenav #drawer class="sidenav" fixedInViewport [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
 		[mode]="(isHandset$ | async) ? 'over' : 'side'" [opened]="(isHandset$ | async) === false">
-		<mat-toolbar style="padding-left:35%">Menu</mat-toolbar>
+		<mat-toolbar class="user-info-toolbar">
+			<div class="user-info">
+				<div class="profile-picture">
+					<img [src]="_authService.user.profilePicture || 'http://www.cse.mrt.ac.lk/images/people/profile.jpg'" alt="Profile picture of user">
+				</div>
+				{{_authService.user.displayName}}
+			</div>
+			<!-- Menu -->
+		</mat-toolbar>
 		<mat-nav-list>
 
 			<!-- FEATURES -->

@@ -3,7 +3,7 @@
 }
 
 .sidenav {
-  width: 200px;
+  width: 250px;
 }
 
 .sidenav .mat-toolbar {
@@ -32,4 +32,25 @@
   line-height: 30px;
   margin: 0;
   width: 70%;
+}
+
+.user-info-toolbar {
+  height: auto;
+  position: relative;
+  background-color: #673ab7 !important;
+  text-align: center;
+  padding: 24px;
+  color: #fefefe;
+}
+
+.user-info {
+  margin: 0 auto;
+  .profile-picture {
+    img {
+      border-radius: 50%;
+      height: 100px;
+      width: 100px;
+      object-fit: cover;
+    }
+  }
 }

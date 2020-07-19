@@ -5,15 +5,15 @@
 </div>
 
 <!-- ITEMS -->
-<mat-grid-list [cols]="gridCols" rowHeight="200px">
+<mat-grid-list [cols]="gridCols" rowHeight="225px">
     <mat-grid-tile
         *ngFor="let returning of returnings"
         colspan="1"
         rowspan="1"
         gutterSize="15px"
     >
-        <mat-card class="returning-card" [ngClass]="returning.type=='Borrowed' ? 'warn' : 'primary'">
-            <div class="card-content-container">
+        <mat-card class="returning-card thecard" [ngClass]="returning.type=='Borrowed' ? 'warn' : 'primary'">
+            <div class="card-content-container thefront">
                 <div class="amount-summary">
                     <h1>&#x20B9; {{returning.amount | number}}</h1>
                     <div class="returning-type">
@@ -24,20 +24,18 @@
                     <mat-card-header>
                         <mat-card-title>
                             <button mat-flat-button [color]="returning.type=='Borrowed' ? 'warn' : 'primary'" class="returning-status">
-                                <!-- {{returning.type}} -->
                                 {{returning.person}}
                             </button>    
-                            <button mat-icon-button class="more-button" [matMenuTriggerFor]="menu" aria-label="Toggle menu">
+                            <!-- <button mat-icon-button class="more-button" [matMenuTriggerFor]="menu" aria-label="Toggle menu">
                                 <mat-icon>more_vert</mat-icon>
                             </button>
                             <mat-menu #menu="matMenu" xPosition="before">
                                 <button mat-menu-item (click)="onEdit(returning)"><mat-icon>edit</mat-icon>Edit</button>
                                 <button mat-menu-item (click)="onDelete(returning)"><mat-icon>delete</mat-icon>Remove</button>
-                            </mat-menu>
+                            </mat-menu> -->
                         </mat-card-title>
                     </mat-card-header>
                     <mat-card-content>
-                        <!-- <h4>{{returning.person}}</h4> -->
                         <div class="returning-purpose">
                             {{returning.purpose}}
                         </div>
@@ -56,14 +54,42 @@
                             </div>
                         </div>
                     </mat-card-content>
-                    <!-- <mat-card-actions>
-                        <button mat-button [color]="returning.type=='Borrowed' ? 'warn' : 'primary'">
-                            <mat-icon>calendar_today</mat-icon> {{returning.expectedReturnDate | date }}
-                        </button>&nbsp;
-                        <button mat-button color="accent">
-                            <mat-icon>calendar_today</mat-icon> {{returning.date | date }}
-                        </button>
-                    </mat-card-actions> -->
+                </div>
+            </div>
+
+            <div class="card-content-container theback">
+                <div class="amount-summary">
+                    <h1>&#x20B9; {{returning.amount | number}}</h1>
+                    <div class="returning-type">
+                        {{returning.type}}
+                    </div>
+                </div>
+                <div class="returning-brief">
+                    <mat-card-header>
+                        <mat-card-title>
+                            <button mat-flat-button [color]="returning.type=='Borrowed' ? 'warn' : 'primary'" class="returning-status">
+                                {{returning.person}}
+                            </button>
+                            <button mat-icon-button class="more-button" [matMenuTriggerFor]="menu" aria-label="Toggle menu">
+                                <mat-icon>more_vert</mat-icon>
+                            </button>
+                            <mat-menu #menu="matMenu" xPosition="before">
+                                <button mat-menu-item (click)="onEdit(returning)"><mat-icon>edit</mat-icon>Edit</button>
+                                <button mat-menu-item (click)="onDelete(returning)"><mat-icon>delete</mat-icon>Remove</button>
+                            </mat-menu>
+                        </mat-card-title>
+                    </mat-card-header>
+                    <mat-card-content>
+
+                        <div class="returning-dates">
+                            <mat-icon>calendar_today</mat-icon> {{returning.type}}: <b>{{returning.expectedReturnDate | date }}</b> <br> 
+                            <mat-icon>calendar_today</mat-icon> Expected Return: <b>{{returning.date | date }}</b>
+                        </div>
+                        <div class="returning-actions">
+                            <a href="tel://+919482153795"><mat-icon>phone</mat-icon> CALL</a>
+                            <a href="sms://+919482153795?body=I%27m%20interested%20in%20your%20product.%20Please%20contact%20me."><mat-icon>message</mat-icon> TEXT</a>
+                        </div>
+                    </mat-card-content>
                 </div>
             </div>
         </mat-card>
