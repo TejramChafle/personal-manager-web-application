@@ -42,9 +42,12 @@ export class ReturningsComponent implements OnInit {
   }
 
   ngOnInit() {
-    this._moneyService.getReturnings().subscribe((responsive) => {
-      console.log(responsive);
-      this.returnings = responsive;
+    this._moneyService.getReturnings().subscribe((response) => {
+      console.log(response);
+      this.returnings = response;
+      this.returnings.forEach((returning)=> {
+        returning.whatsAppUrl = 'Dear+'+returning.person.replace(" ", "+")+'%2C+This+is+a+reminder+to+the+borrowings+of+&#x20B9;+'+returning.amount+'+due+on+dated+'+returning.expectedReturnDate.replace(" ", "+")+'.+Kindly+return+the+amount+on+or+before+the+due+date.'
+      })
     });
   }
 

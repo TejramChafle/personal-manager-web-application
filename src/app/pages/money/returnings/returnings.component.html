@@ -5,7 +5,7 @@
 </div>
 
 <!-- ITEMS -->
-<mat-grid-list [cols]="gridCols" rowHeight="225px">
+<mat-grid-list [cols]="gridCols" rowHeight="225px" *ngIf="returnings">
     <mat-grid-tile
         *ngFor="let returning of returnings"
         colspan="1"
@@ -86,8 +86,33 @@
                             <mat-icon>calendar_today</mat-icon> Expected Return: <b>{{returning.date | date }}</b>
                         </div>
                         <div class="returning-actions">
-                            <a href="tel://+919482153795"><mat-icon>phone</mat-icon> CALL</a>
-                            <a href="sms://+919482153795?body=I%27m%20interested%20in%20your%20product.%20Please%20contact%20me."><mat-icon>message</mat-icon> TEXT</a>
+                            <!-- <a href="tel://+919482153795"><mat-icon>phone</mat-icon> CALL</a>
+                            <a href="sms://+919482153795?body=I%27m%20interested%20in%20your%20product.%20Please%20contact%20me."><mat-icon>message</mat-icon> TEXT</a> -->
+
+                            <a href="tel://+919482153795"><mat-icon>phone</mat-icon></a>
+                            <a href="sms://+919482153795?body=I%27m%20interested%20in%20your%20product.%20Please%20contact%20me."><mat-icon>message</mat-icon></a>
+                            <a 
+                                [href]="returning.whatsAppUrl"
+                            >
+                                <img src="https://img.icons8.com/ios/24/000000/whatsapp.png"/>
+                            </a>
+
+                            <!-- [href]="'whatsapp://send?abid=phonenumber&text=Dear+${returning.person}%2C+This+is+a+reminder+to+the+borrowings+of+&#x20B9;+${returning.amount}+due+on+dated+Oct+31%2C+2020.+Kindly+return+the+amount+on+or+before+the+due+date'" -->
+                            <!-- Dear+{{returning.person}}%2C+This+is+a+reminder+to+the+borrowings+of+&#x20B9;+{{returning.amount}}+due+on+dated+Oct+31%2C+2020.+Kindly+return+the+amount+on+or+before+the+due+date. -->
+
+                            <!-- Dear+Ashutosh%2C+This+is+a+reminder+to+the+borrowings+of+Rs.+3500+due+on+dated+Oct+31%2C+2020.+Kindly+return+the+amount+on+or+before+the+due+date. -->
+                                
+                            <!-- <div class="returning-actions-block">
+                                <a href="tel://+919482153795"><mat-icon>phone</mat-icon></a>
+                            </div>
+                            <div class="returning-actions-block" style="border-left: 0.5px solid #9E9E9E; border-right: 0.5px solid #9E9E9E;">
+                                <a href="sms://+919482153795?body=I%27m%20interested%20in%20your%20product.%20Please%20contact%20me."><mat-icon>message</mat-icon></a>
+                            </div>
+                            <div class="returning-actions-block">
+                                <a href="whatsapp://send?abid=phonenumber&text=Hello%2C%20World!">
+                                    <img src="https://img.icons8.com/ios/24/000000/whatsapp.png"/>
+                                </a>
+                            </div> -->
                         </div>
                     </mat-card-content>
                 </div>
@@ -96,3 +121,9 @@
         <!-- <mat-card></mat-card> -->
     </mat-grid-tile>
 </mat-grid-list>
+
+
+<!-- SPINNER -->
+<div class="spinner-container" *ngIf="!returnings">
+    <mat-spinner></mat-spinner>
+</div>

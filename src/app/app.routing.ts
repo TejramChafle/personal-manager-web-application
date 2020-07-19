@@ -15,7 +15,9 @@ import { ExpenditureComponent } from './pages/money/expenditures/expenditure/exp
 import { AuthGuard } from '../app/guards/auth.guard';
 
 const routes: Routes = [
-    { path: '', component: DashboardComponent, canActivate: [AuthGuard] },
+    // { path: 'home', component: DashboardComponent, canActivate: [AuthGuard] },
+    // { path: '', redirectTo : '/home', pathMatch : 'full' },
+    { path: '', component: DashboardComponent, pathMatch: 'full', canActivate: [AuthGuard] },
     { path: 'profile', component: ProfileComponent, canActivate: [AuthGuard] },
     { path: 'returnings', component: ReturningsComponent, canActivate: [AuthGuard] },
     { path: 'returnings/returning', component: ReturningComponent, canActivate: [AuthGuard] },

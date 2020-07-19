@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { finalize } from 'rxjs/operators';
 import { AuthService } from '../../auth/auth.service';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { AppService } from '../../../app.service';
 
 @Component({
   selector: 'personal-manager-upload-photo',
@@ -27,7 +28,8 @@ export class UploadPhotoComponent implements OnInit {
     private _fireStorage: AngularFireStorage, 
     private _authService: AuthService,
     private _dialogRef: MatDialogRef<UploadPhotoComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: any
+    @Inject(MAT_DIALOG_DATA) public data: any,
+    private _appService: AppService
     ) { }
 
   ngOnInit() {
@@ -43,6 +45,13 @@ export class UploadPhotoComponent implements OnInit {
   }
 
   onUploadPhoto() {
+
+    // Check if the file is selected
+    if (!this.selectedFile) {
+      this._appService.actionMessage({title: 'Error!', text: 'Please browse file to upload!'});
+      return false;
+    }
+    
     this.isUploading = true;
     const filePath = 'profile-pictures/' + this.user.displayName.replace(' ', '-').toLowerCase();
     const fileRef = this._fireStorage.ref(filePath);

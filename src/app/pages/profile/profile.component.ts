@@ -19,11 +19,11 @@ export class ProfileComponent implements OnInit {
     private _authService: AuthService, 
     private _appService: AppService, 
     private _router: Router,
-    public _dialog: MatDialog) { 
-    // this.profileForm.setValue('username') = {};
+    public _dialog: MatDialog) {
   }
 
   ngOnInit() {
+    console.log(this.user);
     this._authService.getUser().subscribe((response) => {
       this.user = response.users[0];
       this.profileForm.control.setValue({

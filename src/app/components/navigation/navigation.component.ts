@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, AfterContentChecked } from '@angular/core';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Observable } from 'rxjs';
 import { map, shareReplay } from 'rxjs/operators';
@@ -10,7 +10,8 @@ import { AuthService } from '../../pages/auth/auth.service';
   styleUrls: ['./navigation.component.scss']
 })
 
-export class NavigationComponent {
+export class NavigationComponent implements AfterContentChecked {
+  pageTitle = 'Personal Manager';
   isHandset: boolean;
   isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
     .pipe(
@@ -18,6 +19,12 @@ export class NavigationComponent {
       shareReplay()
     );
 
-  constructor(private breakpointObserver: BreakpointObserver, public _authService: AuthService) { }
+  constructor(private breakpointObserver: BreakpointObserver, public _authService: AuthService) {
+    console.log(history.state);
+  }
+
+  ngAfterContentChecked() {
+    this.pageTitle = history.state.title || 'Personal Manager';
+  }
 
 }
