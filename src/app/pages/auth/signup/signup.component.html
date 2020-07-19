@@ -1,33 +1,38 @@
 
-<mat-grid-list cols="3" rowHeight="350px" class="login-form-container">
-    <mat-grid-tile [colspan]="dimentions.cols" [rowspan]="dimentions.rows">
-        <mat-card>
-            <mat-card-content>
-                <div align="center">
-                    <img src="assets/brand/task-manager.png" width="100" height="100" style="margin: 10px auto;">
-                </div>
-                <form class="login-form" #signupForm="ngForm" (ngSubmit)="onSignup(signupForm.value)">
-                    <mat-form-field class="login-form-field">
-                        <mat-label>Email</mat-label>
-                        <input matInput type="text" name="username" ngModel #username="ngModel" required>
-                        <mat-error *ngIf="username.invalid && username.touched">Email address required!</mat-error>
-                    </mat-form-field>
-                    <mat-form-field class="login-form-field">
-                        <mat-label>Password</mat-label>
-                        <input matInput type="password" name="password" ngModel #password="ngModel" required>
-                        <mat-error *ngIf="password.invalid && password.touched">Password required!</mat-error>
-                    </mat-form-field>
-                    <div class="login-form-field">
-                        <br>
-                        <button mat-raised-button type="submit" color="primary" class="login-form-field">Register</button>
+<div class="signup-page">
+    <mat-grid-list cols="3" rowHeight="400px" gutterSize="25px">
+        <mat-grid-tile [colspan]="dimentions.cols" [rowspan]="dimentions.rows">
+            <mat-card>
+                <mat-card-content>
+                    <div align="center">
+                        <img src="assets/brand/task-manager.png" width="100" height="100" style="margin: 10px auto;">
                     </div>
-                    <div class="login-form-field" align="center">
-                        <hr>
-                        <a routerLink="/login"><b>ALREADY HAVING ACCOUNT? LOGIN</b></a>
-                    </div>
-                </form>
-            </mat-card-content>
-        </mat-card>
-    </mat-grid-tile>
-</mat-grid-list>
+                    <form class="login-form" #signupForm="ngForm" (ngSubmit)="onSignup(signupForm.value)">
+                        <mat-form-field class="login-form-field">
+                            <mat-label>Email</mat-label>
+                            <input matInput type="text" name="username" ngModel #username="ngModel" required>
+                            <mat-error *ngIf="username.invalid && username.touched">Email address required!</mat-error>
+                        </mat-form-field>
+                        <mat-form-field class="login-form-field">
+                            <mat-label>Password</mat-label>
+                            <input matInput type="password" name="password" ngModel #password="ngModel" required>
+                            <mat-error *ngIf="password.invalid && password.touched">Password required!</mat-error>
+                        </mat-form-field>
+                        <div class="login-form-field">
+                            <br>
+                            <button mat-raised-button type="submit" color="primary" class="login-form-field" [disabled]="loading">
+                                {{loading ? 'Please wait..' : 'Register'}}</button>
+                        </div>
+                        <div class="login-form-field" align="center">
+                            <hr><br>
+                            <a routerLink="/login"><b>ALREADY HAVING ACCOUNT? LOGIN</b></a>
+                            <br><br>
+                        </div>
+                    </form>
+                </mat-card-content>
+            </mat-card>
+        </mat-grid-tile>
+    </mat-grid-list>
+</div>
+
 

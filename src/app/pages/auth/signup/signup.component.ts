@@ -15,6 +15,7 @@ import { map } from 'rxjs/operators';
 export class SignupComponent implements OnInit {
   signupForm: NgForm;
   dimentions: { rows: number, cols: number };
+  loading = false;
 
   constructor(
     private _authService: AuthService, 
@@ -44,7 +45,9 @@ export class SignupComponent implements OnInit {
   }
 
   onSignup(form: NgForm) {
+    this.loading = true;
     this._authService.signup(form).subscribe((response) => {
+      this.loading = false;
       console.log(response);
       if (response) {
         this._appSerivce.actionMessage({ title: 'Success!', text: 'Account created successfully.' });
@@ -52,6 +55,7 @@ export class SignupComponent implements OnInit {
       }
     }, (error) => {
       console.log(error);
+      this.loading = false;
       if (error.error.error.message == 'EMAIL_EXISTS') {
         this._appSerivce.actionMessage({ title: 'Error!', text: 'Email address is already in use. Please login.' });
       } else if (error.error.error.message == 'INVALID_EMAIL') {

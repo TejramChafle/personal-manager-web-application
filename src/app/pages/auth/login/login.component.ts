@@ -15,6 +15,7 @@ import { map } from 'rxjs/operators';
 export class LoginComponent implements OnInit {
   loginForm: NgForm;
   dimentions: { rows: number, cols: number };
+  loading = false;
 
   constructor(
     private _authService: AuthService,
@@ -44,10 +45,12 @@ export class LoginComponent implements OnInit {
   }
 
   onLogin(form: NgForm) {
-    console.log(form);
+    this.loading = true;
     this._authService.login(form).subscribe((response) => {
+      this.loading = false;
       this._router.navigate(['/']);
     }, (error) => {
+      this.loading = false;
       this._snackbar.open('Username or password is incorrect!', 'Close', {
         duration: 5000,
         horizontalPosition: "center",

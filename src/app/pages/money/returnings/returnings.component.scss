@@ -1,0 +1,111 @@
+
+.returning-card {
+    position: absolute;
+    top: 5px;
+    left: 5px;
+    right: 5px;
+    bottom: 5px;
+
+    .mat-card-header-text {
+        margin: 0 !important;
+    }
+
+    .returning-status {
+        // display: block;
+        border-radius: 0px;
+        margin-left: -16px;
+        max-width: 195px;
+
+        overflow: hidden;
+        position: relative;
+        display: inline-block;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    mat-card-actions {
+        bottom: 0;
+        margin-bottom: 0px;
+        position: absolute;
+    }
+
+    .more-button {
+        position: absolute;
+        top: 5px;
+        right: 0px;
+    }
+
+    mat-card-actions {
+        button {
+            border-radius: 0px;
+        }
+    }
+}
+
+.mat-card-header-text {
+    margin: 0 !important;
+}
+
+.primary {
+    border-left: 7px solid #673ab7;
+}
+
+.warn {
+    border-left: 7px solid #f44336;
+}
+
+.card-content-container {
+    display: flex;
+    height: 100%;
+    .amount-summary {
+        text-align: right;
+        font-family: 'Open Sans Condensed', sans-serif;
+        padding-right: 10px;
+        flex: 30%;
+        border-right: 1px dotted black;
+        margin-bottom: 0;
+
+        .returning-type {
+            text-align: right;
+            position: absolute;
+            font-family: inherit;
+            text-transform: capitalize;
+            font-size: 24px;
+            color: #9E9E9E;
+            bottom: 0;
+            padding: 10px 0px;
+            width: 25%;
+        }
+    }
+    .returning-brief {
+        padding-left: 15px;
+        flex: 70%;
+        .returning-purpose {
+            height: 50px;
+            padding-bottom: 15px;
+            border-bottom: 0.5px solid #9E9E9E;
+
+            // Below solution manage the multiline text wrap with ellipses on paragraph
+            display: block;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            line-height: 21px;
+        }
+        .returning-actions {
+            height: 50px;
+            display: inline-flex;
+            position: absolute;
+            bottom: 5px;
+            width: 58%;
+            .returning-actions-block {
+                font-family: 'Open Sans Condensed', sans-serif;
+                text-transform: capitalize;
+                width: 33%;
+                text-align: center;
+            }
+        }
+    }
+}

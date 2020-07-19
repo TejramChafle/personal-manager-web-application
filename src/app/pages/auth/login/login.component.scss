@@ -24,3 +24,18 @@
 .login-page {
     padding: 15px;
 }
+
+.login-page-container {
+    // height: 100vh;
+    display: flex;
+    justify-content: center;
+
+    .login-card {
+        @media screen and (max-width: 640px){
+            margin-top: 25%;
+        }
+        @media screen and (min-width: 641px){
+            margin-top: 5%;
+        }
+    }
+}

@@ -5,6 +5,8 @@ import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+// import { FlexLayoutModule } from '@angular/flex-layout';
+
 
 // Components
 import { NavigationComponent } from './components/navigation/navigation.component';
@@ -57,7 +59,8 @@ import { UploadPhotoComponent } from './pages/profile/upload-photo/upload-photo.
     ReactiveFormsModule,
     HttpClientModule,
     AngularFireModule.initializeApp(environment.FIREBASE_CONFIG),
-    AngularFireStorageModule
+    AngularFireStorageModule,
+    // FlexLayoutModule
   ],
   providers: [AuthGuard, { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }],
   bootstrap: [AppComponent],

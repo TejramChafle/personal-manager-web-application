@@ -5,7 +5,7 @@
 		<mat-nav-list>
 
 			<!-- FEATURES -->
-			<a mat-list-item routerLink="" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+			<a mat-list-item routerLink="" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" (click)="isHandset && drawer.toggle()">
 				<mat-icon class="icon">home</mat-icon> <span class="label">Home</span>
 			</a>
 			<a mat-list-item routerLink="returnings" routerLinkActive="active" (click)="isHandset && drawer.toggle()">
@@ -42,7 +42,7 @@
 			</a>
 		</mat-nav-list>
 	</mat-sidenav>
-	<mat-sidenav-content>
+	<mat-sidenav-content style="background-color: #ebebeb;">
 		<mat-toolbar color="primary">
 			<button type="button" aria-label="Toggle sidenav" mat-icon-button (click)="drawer.toggle()"
 				*ngIf="isHandset$ | async">
@@ -51,6 +51,6 @@
 			<span>Personal Manager</span>
 		</mat-toolbar>
 		<!-- Add Content Here -->
-		<div style="padding:15px;"><router-outlet></router-outlet></div>
+		<div style="padding:16px; background-color: #ebebeb;"><router-outlet></router-outlet></div>
 	</mat-sidenav-content>
 </mat-sidenav-container>
