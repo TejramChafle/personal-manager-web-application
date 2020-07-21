@@ -21,4 +21,18 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
     display: flex;
     justify-content: center;
     align-items: center;
+    flex-direction: column;
+}
+
+.empty-record-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    font-family: 'Open Sans Condensed', sans-serif;
+    img {
+        width: 75px;
+        height: auto;
+    }
+    h4 {margin: 0;}
 }

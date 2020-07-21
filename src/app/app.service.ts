@@ -30,4 +30,18 @@ export class AppService {
       this._router.navigate(['/login']);
     }
   }
+
+
+  public formatDate(jsDate) {
+    const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep','Oct', 'Nov', 'Dec'];
+    let date = new Date(jsDate);
+    const day = date.getDate();
+    const month = date.getMonth();
+    const year = date.getFullYear();
+
+    // console.log('jsDate : ', jsDate);
+    // console.log(day, month, year);
+    // console.log(day+' '+months[month]+', '+year);
+    return day+' '+months[month]+', '+year;
+  }
 }

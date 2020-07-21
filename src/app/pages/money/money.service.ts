@@ -13,9 +13,11 @@ import { AuthService } from '../auth/auth.service';
 
 export class MoneyService {
   paymentMethods: Array<string>;
+  purposeTypes: Array<string>;
 
   constructor(private _http: HttpClient, private _appService: AppService, private _authService: AuthService) {
     this.paymentMethods = ['Cash', 'Credit Card', 'Debit Card', 'Google Pay', 'PayTM', 'Other'];
+    this.purposeTypes = ['Rent', 'Bike', 'Fuel', 'Grocery', 'Transportation', 'Telephone', 'Hospital', 'Insurance', 'Entertainment', 'Clothing', 'Canteen', 'Food', 'Utilities', 'Membership', 'Other'];
   }
 
   public saveReturning(data): Observable<any> {
@@ -29,10 +31,10 @@ export class MoneyService {
 
 
   public getReturnings(): Observable<any> {
-    return this._http.get(environment.API_URL + 'returnings.json/?user='+this._authService.user.localId).pipe(
+    return this._http.get(environment.API_URL + 'returnings.json/?user=' + this._authService.user.localId).pipe(
       map((response) => {
         let result: Array<Returning> = [];
-        for (let key in response) {  
+        for (let key in response) {
           let returning: Returning = {
             type: response[key]['type'],
             amount: response[key]['amount'],
@@ -58,8 +60,8 @@ export class MoneyService {
 
   // DELETE
   public deleteReturning(data): Observable<any> {
-    return this._http.delete(environment.API_URL + 'returnings/'+data.id+'.json').pipe(
-      catchError((error)=> {
+    return this._http.delete(environment.API_URL + 'returnings/' + data.id + '.json').pipe(
+      catchError((error) => {
         this._appService.handleError(error);
         return throwError(error);
       })
@@ -68,8 +70,65 @@ export class MoneyService {
 
   // UPDATE
   public updateReturning(data): Observable<any> {
-    return this._http.put(environment.API_URL + 'returnings/'+data.id+'.json', data).pipe(
-      catchError((error)=> {
+    return this._http.put(environment.API_URL + 'returnings/' + data.id + '.json', data).pipe(
+      catchError((error) => {
+        this._appService.handleError(error);
+        return throwError(error);
+      })
+    )
+  }
+
+
+  // SAVE EXPENDITURE
+  public saveExpenditure(data): Observable<any> {
+    data.user = this._authService.user.localId;
+    return this._http.post(environment.API_URL + 'expenditures.json', data).pipe(
+      catchError((error) => {
+        this._appService.handleError(error);
+        return throwError(error);
+      })
+    )
+  }
+
+  // GET EXPENDITURE
+  public getExpenditures(): Observable<any> {
+    return this._http.get(environment.API_URL + 'expenditures.json').pipe(
+      map((response) => {
+        let result = [];
+        for (let key in response) {
+          result.push({
+            id: key,
+            date: response[key]['date'],
+            purpose: response[key]['purpose'],
+            place: response[key]['place'],
+            description: response[key]['description'],
+            payment: response[key]['payment'],
+          })
+        }
+        return result;
+      }),
+      catchError((error) => {
+        this._appService.handleError(error);
+        return throwError(error);
+      })
+    )
+  }
+
+  // DELETE EXPENDITURE
+  public deleteExpenditure(data): Observable<any> {
+    return this._http.delete(environment.API_URL + 'expenditures/' + data.id + '.json').pipe(
+      catchError((error) => {
+        this._appService.handleError(error);
+        return throwError(error);
+      })
+    )
+  }
+
+  // UPDATE EXPENDITURE
+  public updateExpenditure(data): Observable<any> {
+    data.user = this._authService.user.localId;
+    return this._http.put(environment.API_URL + 'expenditures/' + data.id + '.json', data).pipe(
+      catchError((error) => {
         this._appService.handleError(error);
         return throwError(error);
       })

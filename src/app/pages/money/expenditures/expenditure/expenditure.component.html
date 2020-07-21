@@ -1,1 +1,76 @@
-<p>expenditure works!</p>
+
+<div class="expenditure-form">
+    <form [formGroup]="expenditureForm" (ngSubmit)="onSubmit(expenditureForm)">
+        <mat-form-field>
+            <mat-label for="date">Date</mat-label>
+            <input matInput type="date" formControlName="date">
+            <mat-error *ngIf="expenditureForm.get('date').invalid && expenditureForm.get('date').touched">Date is required</mat-error>
+        </mat-form-field>
+    
+        <mat-form-field>
+            <mat-label for="purpose">Purpose</mat-label>
+            <mat-select name="purpose" formControlName="purpose">
+                <mat-option *ngFor="let type of _moneyService.purposeTypes" [value]="type">{{type}}</mat-option>
+            </mat-select>
+            <mat-error *ngIf="expenditureForm.get('purpose').invalid && expenditureForm.get('purpose').touched">Purpose is required</mat-error>
+        </mat-form-field>
+    
+        <mat-form-field>
+            <mat-label for="place">Place</mat-label>
+            <input matInput type="text" formControlName="place" name="place">
+            <mat-error *ngIf="expenditureForm.get('place').invalid && expenditureForm.get('place').touched">Place is required</mat-error>
+        </mat-form-field>
+    
+        <mat-form-field>
+            <mat-label for="description">Description</mat-label>
+            <textarea matInput type="date" formControlName="description" name="description"></textarea>
+            <mat-error *ngIf="expenditureForm.get('description').invalid && expenditureForm.get('description').touched">Description is required</mat-error>
+        </mat-form-field>
+    
+        <div formGroupName="payment">
+            <mat-form-field>
+                <mat-label for="amount">Amount</mat-label>
+                <input matInput type="number" formControlName="amount">
+                <mat-error *ngIf="expenditureForm.get('payment.amount').invalid && expenditureForm.get('payment.amount').touched">Please enter valid payment amount</mat-error>
+            </mat-form-field>
+            
+            <!-- RADIO BUTTON -->
+            <!-- <mat-form-field>
+                <mat-label for="status">Status</mat-label>
+                <mat-radio-group formControlName="status">
+                    <mat-radio-button value="Paid" >Paid</mat-radio-button>
+                    <mat-radio-button value="Unpaid">Unpaid</mat-radio-button>
+                </mat-radio-group>
+                <mat-error *ngIf="expenditureForm.get('payment.status').invalid && expenditureForm.get('payment.status').touched">Please select payment status</mat-error>
+            </mat-form-field> -->
+
+            <mat-form-field>
+                <mat-label for="status">Status</mat-label>
+                <mat-select name="status" formControlName="status">
+                    <mat-option value="Paid">Paid</mat-option>
+                    <mat-option value="Unpaid">Unpaid</mat-option>
+                </mat-select>
+                <mat-error *ngIf="expenditureForm.get('payment.status').invalid && expenditureForm.get('payment.status').touched">Please select payment status</mat-error>
+            </mat-form-field>
+    
+            <mat-form-field>
+                <mat-label for="method">Method</mat-label>
+                <mat-select name="method" formControlName="method">
+                    <mat-option *ngFor="let meth of _moneyService.paymentMethods" [value]="meth">{{meth}}</mat-option>
+                </mat-select>
+                <mat-error *ngIf="expenditureForm.get('payment.method').invalid && expenditureForm.get('payment.method').touched">Please select payment method</mat-error>
+            </mat-form-field>
+    
+            <!-- <mat-form-field>
+                <mat-label for="bill">Bill</mat-label>
+                <input type="file" formControlName="bill" name="bill" accept=".png, .jpg">
+                <mat-error *ngIf="expenditureForm.get('payment.bill').invalid && expenditureForm.get('payment.bill').touched">Bill is required</mat-error>
+            </mat-form-field> -->
+            <br>
+            <div align="right">
+                <button mat-raised-button type="button" (click)="onClose()" [disabled]="loading">Close</button>
+                <button mat-raised-button type="submit" color="primary" [disabled]="loading || expenditureForm.invalid">{{loading ? 'Please wait..' : 'Submit'}}</button>
+            </div>
+        </div>
+    </form>
+</div>

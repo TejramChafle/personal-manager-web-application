@@ -1,0 +1,122 @@
+.list-card {
+    position: absolute;
+    top: 5px;
+    left: 5px;
+    right: 5px;
+    bottom: 5px;
+
+    .mat-card-header-text {
+        margin: 0 !important;
+    }
+
+    .record-status {
+        display: block;
+        padding-top: 5px;
+        border-radius: 0px;
+        margin-left: -16px;
+        // max-width: 195px;
+        max-width: 170px;
+        overflow: hidden;
+        position: relative;
+        display: inline-block;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        font-weight: bold;
+    }
+
+    mat-card-actions {
+        bottom: 0;
+        margin-bottom: 0px;
+        position: absolute;
+    }
+
+    .more-button {
+        position: absolute;
+        top: 15px;
+        right: 10px;
+    }
+
+    mat-card-actions {
+        button {
+            border-radius: 0px;
+        }
+    }
+}
+
+.mat-card-header-text {
+    margin: 0 !important;
+}
+
+.card-content-container {
+    display: flex;
+    height: 100%;
+    .record-summary {
+        text-align: right;
+        font-family: 'Open Sans Condensed', sans-serif;
+        // padding-right: 10px;
+        flex: 30%;
+        // border-right: 1px dotted black;
+        margin-bottom: 0;
+        background-color: #B39DDB;
+        .record-type {
+            text-align: center;
+            position: absolute;
+            font-family: inherit;
+            text-transform: capitalize;
+            font-size: 16px;
+            // color: #9E9E9E;
+            color: #673ab7;
+            bottom: 0;
+            padding: 10px 0px;
+            width: 25%;
+        }
+        .record-icon {
+            // font-size: 400% !important;
+            font-size: 80px !important;
+            color: #673ab7;
+            text-align: center;
+            img {
+                height: 50px;
+                width: 50px;
+                margin: 0 auto;
+            }
+        }
+    }
+    .record-detail {
+        padding-left: 15px;
+        flex: 70%;
+        background-color: #EDE7F6;
+        font-family: 'Open Sans Condensed', sans-serif;
+        font-size: 16px;
+        h5 { margin-bottom: 5px; }
+        .record-purpose {
+            height: 50px;
+            padding-bottom: 15px;
+            // border-bottom: 0.5px solid #9E9E9E;
+
+            // Below solution manage the multiline text wrap with ellipses on paragraph
+            display: block;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            line-height: 21px;
+        }
+        .record-actions {
+            height: 50px;
+            display: inline-flex;
+            position: absolute;
+            bottom: 20px;
+            width: 58%;
+            .record-actions-block {
+                padding: 5px;
+                border-top: 0.5px solid #9E9E9E;
+                font-family: 'Open Sans Condensed', sans-serif;
+                text-transform: capitalize;
+                width: 33%;
+                text-align: center;
+            }
+        }
+    }
+}

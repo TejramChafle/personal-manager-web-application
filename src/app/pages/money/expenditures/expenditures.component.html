@@ -1,5 +1,79 @@
 <div class="fab-button-bottom-right">
-    <button mat-fab color="primary">
+    <button mat-fab color="primary" (click)="openExpenditure()">
         <mat-icon>add</mat-icon>
     </button>
+</div>
+
+<!-- ITEMS -->
+<mat-grid-list [cols]="gridCols" rowHeight="225px" *ngIf="expenditures">
+    <mat-grid-tile
+        *ngFor="let expenditure of expenditures"
+        colspan="1"
+        rowspan="1"
+        gutterSize="15px"
+    >
+        <mat-card class="list-card">
+            <div class="card-content-container">
+                <div class="record-summary">
+                    <div class="record-icon">
+                        <!-- <mat-icon *ngIf="expenditure.purpose == 'Grocery'">shopping_cart</mat-icon> -->
+                        <img src="assets/icons/shopping-cart.svg" *ngIf="expenditure.purpose == 'Grocery'">
+                        <img src="assets/icons/telephone.svg" *ngIf="expenditure.purpose == 'Telephone'">
+                        <img src="assets/icons/hospital.svg" *ngIf="expenditure.purpose == 'Hospital'">
+                        <img src="assets/icons/multimedia.svg" *ngIf="expenditure.purpose == 'Entertainment'">
+                        <img src="assets/icons/fork.svg" *ngIf="expenditure.purpose == 'Food'">
+                        <img src="assets/icons/food-tray.svg" *ngIf="expenditure.purpose == 'Canteen'">
+                        <img src="assets/icons/fuel.svg" *ngIf="expenditure.purpose == 'Fuel'">
+                        <img src="assets/icons/gift-card.svg" *ngIf="expenditure.purpose == 'Membership'">
+                        <img src="assets/icons/shirt.svg" *ngIf="expenditure.purpose == 'Clothing'">
+                        <img src="assets/icons/plane.svg" *ngIf="expenditure.purpose == 'Transportation' || expenditure.purpose == 'Travel'">
+                        <img src="assets/icons/bike.svg" *ngIf="expenditure.purpose == 'Bike'">
+                        <img src="assets/icons/utilities.svg" *ngIf="expenditure.purpose == 'Utilities'">
+                        <img src="assets/icons/insurance.svg" *ngIf="expenditure.purpose == 'Insurance'">
+                        <img src="assets/icons/other.svg" *ngIf="expenditure.purpose == 'Other'">
+                        <img src="assets/icons/rent.svg" *ngIf="expenditure.purpose == 'Rent'">
+                    </div>
+                    <div class="record-type">
+                        <h1>&#x20B9; {{expenditure.payment?.amount | number}}</h1>
+                    </div>
+                </div>
+                <div class="record-detail">
+                    <mat-card-header>
+                        <mat-card-title>
+                            <div class="record-status">
+                                {{expenditure.purpose}}
+                            </div>
+                            <button mat-icon-button class="more-button" [matMenuTriggerFor]="menu" aria-label="Toggle menu">
+                                <mat-icon>more_vert</mat-icon>
+                            </button>
+                            <mat-menu #menu="matMenu" xPosition="before">
+                                <button mat-menu-item (click)="openExpenditure(expenditure)"><mat-icon>edit</mat-icon>Edit</button>
+                                <button mat-menu-item (click)="onDelete(expenditure)"><mat-icon>delete</mat-icon>Remove</button>
+                            </mat-menu>
+                        </mat-card-title>
+                    </mat-card-header>
+                    <mat-card-content>
+                        <h4>{{expenditure.place | uppercase}}</h4>
+                        <h5>{{expenditure.date | date:'dd MMM, yyyy'}} | {{expenditure.payment.method}}</h5>
+                        <div class="record-purpose">
+                            {{expenditure.description}}
+                        </div>
+                    </mat-card-content>
+                </div>
+            </div>
+        </mat-card>
+    </mat-grid-tile>
+</mat-grid-list>
+
+<!-- EMPTY RECORDS -->
+<div class="empty-record-container" *ngIf="expenditures && expenditures.length == 0">
+    <img src="assets/icons/files.svg">
+    <h2>No expenditures found here</h2>
+    <h4>Any new expenditure will appear here</h4>
+</div>
+
+
+<!-- SPINNER -->
+<div class="spinner-container" *ngIf="!expenditures">
+    <mat-spinner></mat-spinner>
 </div>

@@ -35,6 +35,8 @@ import { AngularFireStorageModule } from '@angular/fire/storage';
 import { environment } from '../environments/environment';
 import { UploadPhotoComponent } from './pages/profile/upload-photo/upload-photo.component';
 
+import { ConfirmComponent } from '../app/components/confirm/confirm.component';
+
 
 @NgModule({
   declarations: [
@@ -48,7 +50,8 @@ import { UploadPhotoComponent } from './pages/profile/upload-photo/upload-photo.
     ExpendituresComponent,
     SignupComponent,
     ProfileComponent,
-    UploadPhotoComponent
+    UploadPhotoComponent,
+    ConfirmComponent
   ],
   imports: [
     BrowserModule,
@@ -64,6 +67,6 @@ import { UploadPhotoComponent } from './pages/profile/upload-photo/upload-photo.
   ],
   providers: [AuthGuard, { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }],
   bootstrap: [AppComponent],
-  entryComponents: [UploadPhotoComponent]
+  entryComponents: [UploadPhotoComponent, ExpenditureComponent, ConfirmComponent]
 })
 export class AppModule { }
