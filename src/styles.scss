@@ -25,6 +25,7 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 }
 
 .empty-record-container {
+    height: -webkit-fill-available;
     display: flex;
     justify-content: center;
     align-items: center;

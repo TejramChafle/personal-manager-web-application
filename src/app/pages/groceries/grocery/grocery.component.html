@@ -1,0 +1,73 @@
+
+<div class="grocery-form">
+    <form [formGroup]="groceryForm" (ngSubmit)="onSubmit(groceryForm)">
+        <mat-form-field >
+            <mat-label for="date">Date</mat-label>
+            <input matInput type="date" formControlName="date" [min]="today">
+            <mat-error *ngIf="groceryForm.get('date').invalid && groceryForm.get('date').touched">Date is required</mat-error>
+        </mat-form-field>
+    
+        <mat-form-field hidden>
+            <mat-label for="purpose">Purpose</mat-label>
+            <mat-select name="purpose" formControlName="purpose">
+                <mat-option *ngFor="let type of _moneyService.purposeTypes" [value]="type">{{type}}</mat-option>
+            </mat-select>
+            <mat-error *ngIf="groceryForm.get('purpose').invalid && groceryForm.get('purpose').touched">Purpose is required</mat-error>
+        </mat-form-field>
+    
+        <mat-form-field >
+            <mat-label for="place">Place</mat-label>
+            <input matInput type="text" formControlName="place" name="place">
+            <mat-error *ngIf="groceryForm.get('place').invalid && groceryForm.get('place').touched">Place is required</mat-error>
+        </mat-form-field>
+    
+        <div >
+            <mat-label for="item">ITEMS</mat-label>
+            <div class="item-container" *ngFor="let itemCtrl of groceryForm.get('items').controls; let i = index;">
+                <input type="text" [name]="i" [formControl]="groceryForm.get('items').controls[i]" [disabled]="data.isPaid">
+                <button mat-mini-fab type="button" color="warn" aria-label="Remove" (click)="removeItem(itemCtrl)" *ngIf="!data.isPaid">
+                    <mat-icon>delete</mat-icon>
+                </button>
+                <mat-error *ngIf="groceryForm.get('items').controls[i].invalid && groceryForm.get('items').controls[i].touched">Item is required</mat-error>
+            </div>
+            <div class="add-item-alert" *ngIf="groceryForm.get('items').controls && groceryForm.get('items').controls.length==0">Add items in grocery list</div>
+        </div>
+    
+        <div formGroupName="payment" *ngIf="data.isPaid">
+            <hr>
+            <mat-form-field >
+                <mat-label for="amount">Amount</mat-label>
+                <input matInput type="number" formControlName="amount">
+                <mat-error *ngIf="groceryForm.get('payment.amount').invalid && groceryForm.get('payment.amount').touched">Please enter valid payment amount</mat-error>
+            </mat-form-field>
+
+            <mat-form-field >
+                <mat-label for="status">Status</mat-label>
+                <mat-select name="status" formControlName="status">
+                    <mat-option value="Paid">Paid</mat-option>
+                    <mat-option value="Unpaid">Unpaid</mat-option>
+                </mat-select>
+                <mat-error *ngIf="groceryForm.get('payment.status').invalid && groceryForm.get('payment.status').touched">Please select payment status</mat-error>
+            </mat-form-field>
+    
+            <mat-form-field >
+                <mat-label for="method">Method</mat-label>
+                <mat-select name="method" formControlName="method">
+                    <mat-option *ngFor="let meth of _moneyService.paymentMethods" [value]="meth">{{meth}}</mat-option>
+                </mat-select>
+                <mat-error *ngIf="groceryForm.get('payment.method').invalid && groceryForm.get('payment.method').touched">Please select payment method</mat-error>
+            </mat-form-field>
+        </div>
+        <br>
+        <div align="right">
+            <!-- <button mat-mini-fab type="button" color="accent" aria-label="Add item field" (click)="onAddItem()">
+                <mat-icon>plus_one</mat-icon>
+            </button> -->
+            <button class="add-item-btn" mat-raised-button type="button" color="accent" aria-label="Add item field" (click)="onAddItem()" *ngIf="!data.isPaid">
+                Add Item
+            </button>
+            <button mat-raised-button type="button" (click)="onClose()" [disabled]="loading">Close</button>
+            <button mat-raised-button type="submit" color="primary" [disabled]="loading || groceryForm.invalid">{{loading ? 'Please wait..' : 'Submit'}}</button>
+        </div>
+    </form>
+</div>

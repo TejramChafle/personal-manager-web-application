@@ -17,7 +17,7 @@ export class MoneyService {
 
   constructor(private _http: HttpClient, private _appService: AppService, private _authService: AuthService) {
     this.paymentMethods = ['Cash', 'Credit Card', 'Debit Card', 'Google Pay', 'PayTM', 'Other'];
-    this.purposeTypes = ['Rent', 'Bike', 'Fuel', 'Grocery', 'Transportation', 'Telephone', 'Hospital', 'Insurance', 'Entertainment', 'Clothing', 'Canteen', 'Food', 'Utilities', 'Membership', 'Other'];
+    this.purposeTypes = ['Rent', 'Bike', 'Fuel', 'Grocery', 'Transportation', 'Telephone', 'Hospital', 'Insurance', 'Entertainment', 'Shopping', 'Canteen', 'Food', 'Utilities', 'Membership', 'Other'];
   }
 
   public saveReturning(data): Observable<any> {

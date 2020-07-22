@@ -1,27 +1,28 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { ExpenditureComponent } from './expenditure/expenditure.component';
-import { MoneyService } from '../money.service';
-import { AppService } from '../../../app.service';
+import { GroceryComponent } from './grocery/grocery.component';
+import { GroceryService } from './grocery.service';
+import { AppService } from '../../app.service';
 import { Breakpoints, BreakpointObserver } from '@angular/cdk/layout';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { ConfirmComponent } from '../../../components/confirm/confirm.component';
-
+import { ConfirmComponent } from '../../components/confirm/confirm.component';
+import { ManageItemComponent } from './manage-item/manage-item.component'
+import { AddItemComponent } from './add-item/add-item.component';
 
 @Component({
-  selector: 'personal-manager-expenditures',
-  templateUrl: './expenditures.component.html',
-  styleUrls: ['./expenditures.component.scss']
+  selector: 'personal-manager-groceries',
+  templateUrl: './groceries.component.html',
+  styleUrls: ['./groceries.component.scss']
 })
 
-export class ExpendituresComponent implements OnInit {
-  expenditures: Array<any>;
+export class GroceriesComponent implements OnInit {
+  groceries: Array<any>;
   loading = false;
   gridCols: number;
 
   constructor(
     private _dialog: MatDialog,
-    private _moneyService: MoneyService,
+    private _groceryService: GroceryService,
     private _appService: AppService,
     private _breakpointObserver: BreakpointObserver,
     private _snakBar: MatSnackBar) {
@@ -47,41 +48,39 @@ export class ExpendituresComponent implements OnInit {
   }
 
   ngOnInit() {
-    this._moneyService.getExpenditures().subscribe((response) => {
+    this._groceryService.getGroceries().subscribe((response) => {
       console.log(response);
-      this.expenditures = response;
+      this.groceries = response;
     }, (error) => {
       if (error.status == 401 && error.statusText == "Unauthorized") {
       } else {
         this._appService.actionMessage({ title: 'Error!', text: 'Failed to get expenditure information' });
       }
       console.log(error);
-    })
+    });
   }
 
 
-  openExpenditure(expenditure?: any) {
-    let dialogRef = this._dialog.open(ExpenditureComponent, {
+  openGrocery(grocery?: any) {
+    let dialogRef = this._dialog.open(GroceryComponent, {
       minWidth: '350px',
-      data: { expenditure: expenditure }
+      data: { grocery }
     });
 
-    dialogRef.afterClosed().subscribe((response) => {
-      console.log(response);
-      if (response) {
+    dialogRef.afterClosed().subscribe((resp) => {
+      console.log(resp);
+      if (resp) {
         this.ngOnInit();
       }
     })
   }
 
-
-  onDelete(expenditure) {
-
+  onDelete(grocery) {
     let dialogRef = this._dialog.open(ConfirmComponent, {
       width: '400px',
       data: {
         title: 'Delete?',
-        message: 'Are you sure you want to delete this expenditure?',
+        message: 'Are you sure you want to delete this grocery record?',
         okayText: 'Yes',
         cancelText: 'No'
       }
@@ -91,7 +90,7 @@ export class ExpendituresComponent implements OnInit {
       console.log(response);
       if (response) {
         let snak = this._snakBar.open('Deleting, Please wait...', 'Close');
-        this._moneyService.deleteExpenditure(expenditure).subscribe((response) => {
+        this._groceryService.deleteGrocery(grocery).subscribe((response) => {
           console.log(response);
           snak.dismiss();
 
@@ -102,11 +101,40 @@ export class ExpendituresComponent implements OnInit {
         }, (error) => {
           if (error.status == 401 && error.statusText == "Unauthorized") {
           } else {
-            this._appService.actionMessage({ title: 'Error!', text: 'Failed to delete expenditure information' });
+            this._appService.actionMessage({ title: 'Error!', text: 'Failed to delete grocery information' });
           }
           console.log(error);
           snak.dismiss();
         })
+      }
+    })
+  }
+
+
+  manageItem(grocery) {
+    let dialogRef = this._dialog.open(ManageItemComponent, {
+      minWidth: '350px',
+      data: { grocery }
+    })
+
+    dialogRef.afterClosed().subscribe((response)=> {
+      console.log(response);
+      if (response) {
+        this.ngOnInit();
+      }
+    })
+  }
+
+  addItem(grocery) {
+    let dialogRef = this._dialog.open(AddItemComponent, {
+      minWidth: '350px',
+      data: { grocery }
+    })
+
+    dialogRef.afterClosed().subscribe((response)=> {
+      console.log(response);
+      if (response) {
+        
       }
     })
   }

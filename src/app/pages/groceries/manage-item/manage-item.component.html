@@ -1,0 +1,15 @@
+<h3 mat-dialog-title>Manange Grocery</h3>
+<mat-dialog-content>
+    <mat-selection-list (selectionChange)="onChangeItem($event)" #selectedItem>
+        <mat-list-option checkboxPosition="before"
+            *ngFor="let item of data.grocery.items"
+            [value]="item"
+        >
+            {{item}}
+        </mat-list-option>
+    </mat-selection-list>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+    <button mat-button (click)="onClose()">Close</button>
+    <button mat-raised-button color="primary" *ngIf="isPurschasingFinished" (click)="onFinishedPurchase()">Finished Purchasing</button>
+</mat-dialog-actions>

@@ -1,0 +1,39 @@
+.grocery-form {
+    width: 100%;
+    mat-form-field {
+        width: 100%;
+    }
+    button {
+        margin-left: 10px;
+    }
+}
+
+.item-container {
+    box-sizing: border-box;
+    margin: 10px auto;
+    input {
+        padding: 10px;
+        // width: -webkit-fill-available;
+        width: 75%;
+        display: table-row;
+        border: 1px solid #EDE7F6;
+    }
+    button {
+        position: absolute;
+    }
+}
+
+.add-item-btn {
+    position: relative;
+    float: left;
+    margin-left: 0px !important;
+}
+
+.add-item-alert {
+    padding: 16px;
+    font-family: 'Open Sans Condensed', sans-serif;
+    border: 1px solid #EDE7F6;
+    background-color: #B39DDB;
+    margin: 15px auto;
+    font-weight: bold;
+}

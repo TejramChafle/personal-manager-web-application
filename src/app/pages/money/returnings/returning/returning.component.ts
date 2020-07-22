@@ -109,12 +109,4 @@ export class ReturningComponent implements OnInit {
       this.loading = false;
     });
   }
-
-
-  async fetchContact() {
-    if (navigator.hasOwnProperty('contacts')) {
-      this.constacts = await navigator['contacts'].select(['name', 'email'], { multile: false });
-      // console.log(constacts)
-    }
-  }
 }

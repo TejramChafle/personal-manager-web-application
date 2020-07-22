@@ -38,10 +38,15 @@ export class AppService {
     const day = date.getDate();
     const month = date.getMonth();
     const year = date.getFullYear();
-
-    // console.log('jsDate : ', jsDate);
-    // console.log(day, month, year);
-    // console.log(day+' '+months[month]+', '+year);
     return day+' '+months[month]+', '+year;
+  }
+
+  public inputDate(date) {
+    const day = date.getDate();
+    let month = date.getMonth();
+    const year = date.getFullYear();
+    month++;
+    month = month<10 ? '0'+month : month;
+    return year+'-'+month+'-'+day;
   }
 }

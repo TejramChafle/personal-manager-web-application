@@ -3,7 +3,7 @@
     <form [formGroup]="expenditureForm" (ngSubmit)="onSubmit(expenditureForm)">
         <mat-form-field>
             <mat-label for="date">Date</mat-label>
-            <input matInput type="date" formControlName="date">
+            <input matInput type="date" formControlName="date" [max]="today">
             <mat-error *ngIf="expenditureForm.get('date').invalid && expenditureForm.get('date').touched">Date is required</mat-error>
         </mat-form-field>
     

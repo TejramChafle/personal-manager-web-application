@@ -1,0 +1,87 @@
+.list-card {
+    position: absolute;
+    top: 5px;
+    left: 5px;
+    right: 5px;
+    bottom: 5px;
+    font-family: 'Open Sans Condensed', sans-serif;
+    .mat-card-header-text {
+        margin: 0 !important;
+    }
+
+    .more-button {
+        position: absolute;
+        top: 15px;
+        right: 10px;
+    }
+
+    mat-card-actions {
+        bottom: 0;
+        margin-bottom: 0px;
+        position: absolute;
+        button {
+            border-radius: 0px;
+        }
+    }
+
+    .card-content-container {
+        display: flex;
+        height: 100%;
+        flex-direction: column;
+        background-color: #D1C4E9;
+
+        mat-card-header {
+            background-color: #B39DDB;
+            color: #fefefe;
+            .record-status {
+                display: block;
+                padding-top: 10px;
+                border-radius: 0px;
+                // margin-left: -16px;
+                // max-width: 195px;
+                max-width: 275px;
+                overflow: hidden;
+                position: relative;
+                display: inline-block;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+                font-weight: bold;
+            }
+        }
+
+        .mat-list-base .mat-list-item, .mat-list-base .mat-list-option {
+            display: block;
+            height: 30px;
+            -webkit-tap-highlight-color: transparent;
+            width: 100%;
+            padding: 0;
+            // color: #9575CD;
+            color: #7E57C2;
+        }
+
+        .record-purpose {
+            max-height: 125px;
+            overflow-y: auto;
+        }
+
+        .record-payment {
+            // float: right;
+            margin-right: 40px;
+            background-color: #7E57C2;
+            margin-top: -30px;
+            padding: 0 10px;
+            right: 0;
+            position: absolute;
+        }
+    }
+}
+
+.record-action-button {
+    position: absolute;
+    right: 0px;
+    display: flex;
+    flex-direction: column;
+    button {
+        margin: 3px auto;
+    }
+}

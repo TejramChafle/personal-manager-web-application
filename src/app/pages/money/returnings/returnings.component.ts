@@ -93,18 +93,6 @@ export class ReturningsComponent implements OnInit {
         });
       }
     });
-
-    /* if (confirm('Are you sure you want to delete?')) {
-      this._moneyService.deleteReturning(returning).subscribe((response) => {
-        console.log(response);
-        this.ngOnInit();
-        this._appService.actionMessage({ title: 'Success!', text: 'Returning information deleted successfully.' });
-      }, (error) => {
-        if (error.statusText !== 'Unauthorized' || error.error.error !== 'Auth token is expired') {
-          this._appService.actionMessage({ title: 'Error!', text: 'Oops. Something went wrong. Unable to delete information.' });
-        }
-      });
-    } */
   }
 
 

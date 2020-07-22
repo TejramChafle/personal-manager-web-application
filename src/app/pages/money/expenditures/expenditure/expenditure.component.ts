@@ -14,6 +14,7 @@ export class ExpenditureComponent implements OnInit {
 	expenditureForm: FormGroup;
 	loading = false;
 	id
+	today: string;
 
 	constructor(
 		public _moneyService: MoneyService,
@@ -33,7 +34,10 @@ export class ExpenditureComponent implements OnInit {
 				method: new FormControl(null, Validators.required),
 				// bill: new FormControl(null)
 			})
-		})
+		});
+
+		// SET the max date in date input to restrict user from adding future dates
+		this.today = this._appService.inputDate(new Date());
 	}
 
 	ngOnInit() {

@@ -36,6 +36,10 @@ import { environment } from '../environments/environment';
 import { UploadPhotoComponent } from './pages/profile/upload-photo/upload-photo.component';
 
 import { ConfirmComponent } from '../app/components/confirm/confirm.component';
+import { GroceriesComponent } from './pages/groceries/groceries.component';
+import { GroceryComponent } from './pages/groceries/grocery/grocery.component';
+import { AddItemComponent } from './pages/groceries/add-item/add-item.component';
+import { ManageItemComponent } from './pages/groceries/manage-item/manage-item.component';
 
 
 @NgModule({
@@ -51,7 +55,11 @@ import { ConfirmComponent } from '../app/components/confirm/confirm.component';
     SignupComponent,
     ProfileComponent,
     UploadPhotoComponent,
-    ConfirmComponent
+    ConfirmComponent,
+    GroceriesComponent,
+    GroceryComponent,
+    AddItemComponent,
+    ManageItemComponent
   ],
   imports: [
     BrowserModule,
@@ -67,6 +75,13 @@ import { ConfirmComponent } from '../app/components/confirm/confirm.component';
   ],
   providers: [AuthGuard, { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }],
   bootstrap: [AppComponent],
-  entryComponents: [UploadPhotoComponent, ExpenditureComponent, ConfirmComponent]
+  entryComponents: [
+    UploadPhotoComponent, 
+    ExpenditureComponent, 
+    ConfirmComponent, 
+    GroceryComponent,
+    AddItemComponent,
+    ManageItemComponent 
+  ]
 })
 export class AppModule { }
