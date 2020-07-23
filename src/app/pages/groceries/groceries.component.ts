@@ -50,6 +50,10 @@ export class GroceriesComponent implements OnInit {
   ngOnInit() {
     this._groceryService.getGroceries().subscribe((response) => {
       console.log(response);
+      // SET the items descriptions from available items array
+      response.forEach(element => {
+        element.itemDescription = element.items.toString().replace(/,/g,", ");
+      });
       this.groceries = response;
     }, (error) => {
       if (error.status == 401 && error.statusText == "Unauthorized") {

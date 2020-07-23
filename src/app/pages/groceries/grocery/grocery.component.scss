@@ -19,7 +19,7 @@
         border: 1px solid #EDE7F6;
     }
     button {
-        position: absolute;
+        position: relative;
     }
 }
 
@@ -36,4 +36,9 @@
     background-color: #B39DDB;
     margin: 15px auto;
     font-weight: bold;
+}
+
+.form-action {
+    position: absolute;
+    bottom: 0;
 }

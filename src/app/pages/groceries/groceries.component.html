@@ -21,37 +21,26 @@
                         <div class="record-status">
                             {{grocery.place | uppercase}}
                         </div>
-                        <div class="record-payment" *ngIf="grocery.payment">
-                            &#x20B9; {{grocery.payment.amount | number}}
+                        <div class="record-payment" >
+                            {{grocery.purpose}}
                         </div>
-                        <!-- <button mat-icon-button class="more-button" [matMenuTriggerFor]="menu" aria-label="Toggle menu">
-                            <mat-icon>more_vert</mat-icon>
-                        </button>
-                        <mat-menu #menu="matMenu" xPosition="before">
-                            <button mat-menu-item (click)="openGrocery(grocery)"><mat-icon>edit</mat-icon>Edit</button>
-                            <button mat-menu-item (click)="onDelete(grocery)"><mat-icon>delete</mat-icon>Remove</button>
-                        </mat-menu> -->
                     </mat-card-title>
                 </mat-card-header>
                 <mat-card-content>
-                    <!-- <div class="record-summary">
-                
-                    </div>
-                    <div class="record-detail">
-                        
-                    </div> -->
-                    <!-- <h5>{{grocery.date | date:'dd MMM, yyyy'}} | {{grocery.payment?.method}}</h5> -->
                     <div class="record-purpose">
-                        <!-- <mat-selection-list #itemList>
-                            <mat-list-option checkboxPosition="before" *ngFor="let item of grocery.items">
-                                {{item}}
-                            </mat-list-option>
-                        </mat-selection-list> -->
-                        <mat-list>
+                        <!-- <mat-list>
                             <mat-list-item *ngFor="let item of grocery.items; let i = index">{{i+1}}. {{item}}</mat-list-item>
-                        </mat-list>
+                        </mat-list> -->
+                        {{grocery.itemDescription}}
+                        <!-- <h5>{{grocery.date | date:'dd MMM, yyyy'}}</h5> -->
                     </div>
                 </mat-card-content>
+                <mat-card-actions>
+                    <div class="record-footer" *ngIf="grocery.payment">
+                        &#x20B9; {{grocery.payment.amount | number}} | {{grocery.payment?.method}}
+                        <span style="float: right;">{{grocery.date | date:'dd MMM, yyyy'}}</span>
+                    </div>  
+                </mat-card-actions>
             </div>
         </mat-card>
         <div class="record-action-button" *ngIf="!grocery.payment">
@@ -61,9 +50,6 @@
             <button mat-mini-fab color="primary" aria-label="Manange grocery item" (click)="manageItem(grocery)">
                 <mat-icon>menu</mat-icon>
             </button>
-            <!-- <button mat-mini-fab color="warn" aria-label="Add items to list" (click)="addItem(grocery)">
-                <b>+</b>
-            </button> -->
             <mat-menu #menu="matMenu" xPosition="before">
                 <button mat-menu-item (click)="openGrocery(grocery)"><mat-icon>edit</mat-icon>Edit</button>
                 <button mat-menu-item (click)="onDelete(grocery)"><mat-icon>delete</mat-icon>Remove</button>
