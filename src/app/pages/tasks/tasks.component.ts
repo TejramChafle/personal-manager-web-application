@@ -1,30 +1,30 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { GroceryComponent } from './grocery/grocery.component';
-import { GroceryService } from './grocery.service';
+import { TaskComponent } from './task/task.component';
 import { AppService } from '../../app.service';
 import { Breakpoints, BreakpointObserver } from '@angular/cdk/layout';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ConfirmComponent } from '../../components/confirm/confirm.component';
-import { ManageItemComponent } from './manage-item/manage-item.component';
+import { TaskService } from './task.service';
 
 @Component({
-  selector: 'personal-manager-groceries',
-  templateUrl: './groceries.component.html',
-  styleUrls: ['./groceries.component.scss']
+  selector: 'personal-manager-tasks',
+  templateUrl: './tasks.component.html',
+  styleUrls: ['./tasks.component.scss']
 })
 
-export class GroceriesComponent implements OnInit {
-  groceries: Array<any>;
+export class TasksComponent implements OnInit {
+  tasks: Array<any>;
   loading = false;
   gridCols: number;
 
   constructor(
     private _dialog: MatDialog,
-    private _groceryService: GroceryService,
+    private _taskService: TaskService,
     private _appService: AppService,
     private _breakpointObserver: BreakpointObserver,
-    private _snakBar: MatSnackBar) {
+    private _snakBar: MatSnackBar
+  ) {
     let breakpoint = { ...Breakpoints };
     _breakpointObserver.observe(
       Object.values(breakpoint)
@@ -47,27 +47,23 @@ export class GroceriesComponent implements OnInit {
   }
 
   ngOnInit() {
-    this._groceryService.getGroceries().subscribe((response) => {
+    this._taskService.getTasks().subscribe((response) => {
       console.log(response);
-      // SET the items descriptions from available items array
-      response.forEach(element => {
-        element.itemDescription = element.items.toString().replace(/,/g,", ");
-      });
-      this.groceries = response;
+      this.tasks = response;
     }, (error) => {
       if (error.status == 401 && error.statusText == "Unauthorized") {
       } else {
-        this._appService.actionMessage({ title: 'Error!', text: 'Failed to get expenditure information' });
+        this._appService.actionMessage({ title: 'Error!', text: 'Failed to get tasks information' });
       }
       console.log(error);
     });
   }
 
 
-  openGrocery(grocery?: any) {
-    let dialogRef = this._dialog.open(GroceryComponent, {
+  openTask(task?: any) {
+    let dialogRef = this._dialog.open(TaskComponent, {
       minWidth: '350px',
-      data: { grocery }
+      data: { task }
     });
 
     dialogRef.afterClosed().subscribe((resp) => {
@@ -78,12 +74,12 @@ export class GroceriesComponent implements OnInit {
     })
   }
 
-  onDelete(grocery) {
+  onDelete(task) {
     let dialogRef = this._dialog.open(ConfirmComponent, {
       width: '400px',
       data: {
         title: 'Delete?',
-        message: 'Are you sure you want to delete this grocery record?',
+        message: 'Are you sure you want to delete this task record?',
         okayText: 'Yes',
         cancelText: 'No'
       }
@@ -93,7 +89,7 @@ export class GroceriesComponent implements OnInit {
       console.log(response);
       if (response) {
         let snak = this._snakBar.open('Deleting, Please wait...', 'Close');
-        this._groceryService.deleteGrocery(grocery).subscribe((response) => {
+        this._taskService.deleteTask(task).subscribe((response) => {
           console.log(response);
           snak.dismiss();
 
@@ -104,26 +100,11 @@ export class GroceriesComponent implements OnInit {
         }, (error) => {
           if (error.status == 401 && error.statusText == "Unauthorized") {
           } else {
-            this._appService.actionMessage({ title: 'Error!', text: 'Failed to delete grocery information' });
+            this._appService.actionMessage({ title: 'Error!', text: 'Failed to delete task information' });
           }
           console.log(error);
           snak.dismiss();
         })
-      }
-    })
-  }
-
-
-  manageItem(grocery) {
-    let dialogRef = this._dialog.open(ManageItemComponent, {
-      minWidth: '350px',
-      data: { grocery }
-    })
-
-    dialogRef.afterClosed().subscribe((response)=> {
-      console.log(response);
-      if (response) {
-        this.ngOnInit();
       }
     })
   }

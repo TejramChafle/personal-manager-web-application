@@ -12,6 +12,7 @@ import { ReturningComponent } from './pages/money/returnings/returning/returning
 import { ExpendituresComponent } from './pages/money/expenditures/expenditures.component';
 import { ExpenditureComponent } from './pages/money/expenditures/expenditure/expenditure.component';
 import { GroceriesComponent } from './pages/groceries/groceries.component';
+import { TasksComponent } from './pages/tasks/tasks.component';
 
 import { AuthGuard } from '../app/guards/auth.guard';
 
@@ -27,6 +28,7 @@ const routes: Routes = [
     { path: 'expenditures/expenditure', component: ExpenditureComponent, canActivate: [AuthGuard] },
     { path: 'expenditures/expenditure/:id', component: ExpenditureComponent, canActivate: [AuthGuard] },
     { path: 'groceries', component: GroceriesComponent, canActivate: [AuthGuard] },
+    { path: 'tasks', component: TasksComponent, canActivate: [AuthGuard] },
     { path: 'login', component: LoginComponent },
     { path: 'signup', component: SignupComponent }
 ];

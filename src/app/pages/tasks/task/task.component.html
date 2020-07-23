@@ -1,0 +1,93 @@
+
+<!-- TASK HEADER -->
+<div class="task-header" align="right">
+    <mat-checkbox (change)="isDone=!isDone">Mark as Done</mat-checkbox>
+    <button mat-icon-button [color]="isImportant?'accent':''" (click)="isImportant=!isImportant">
+        <mat-icon >error_outline</mat-icon>
+    </button>
+    <button mat-icon-button [color]="isStarred?'accent':''" (click)="isStarred=!isStarred">
+        <mat-icon color>start_outline</mat-icon>
+    </button>
+
+    <button mat-icon-button class="more-button" [matMenuTriggerFor]="menu" aria-label="Toggle menu">
+        <mat-icon>more_vert</mat-icon>
+    </button>
+    <mat-menu #menu="matMenu" xPosition="before">
+        <button mat-menu-item *ngFor="let label of labels" (click)="onClickLabel(label)">
+            <mat-icon *ngIf="label.isChecked">check</mat-icon>
+            <mat-icon *ngIf="!label.isChecked"></mat-icon>{{label.name}}
+        </button>
+    </mat-menu>
+</div>
+
+<!-- LABELS -->
+<div class="tags-container">
+    <div *ngFor="let label of labels">
+        <div class="tag-container" *ngIf="label.isChecked">
+            <div class="tag-color" [ngStyle]="{ backgroundColor: label.color }"></div>
+            <div class="tag-label">{{label.name}}</div>
+        </div>
+    </div>
+</div>
+
+<!-- TASK COMPOSE FORM -->
+<mat-dialog-content>
+    <div class="task-form">
+        <form [formGroup]="taskForm" (ngSubmit)="onSubmit(taskForm)" novalidate="false">
+
+            <mat-form-field hidden>
+                <mat-label for="title">Title</mat-label>
+                <input matInput type="text" formControlName="title">
+                <mat-error *ngIf="taskForm.get('title').invalid && taskForm.get('title').touched">Title is required
+                </mat-error>
+            </mat-form-field>
+
+            <mat-form-field>
+                <mat-label for="notes">Notes</mat-label>
+                <textarea matInput type="text" formControlName="notes" name="notes" rows="3"></textarea>
+                <mat-error *ngIf="taskForm.get('notes').invalid && taskForm.get('notes').touched">Place is
+                    required</mat-error>
+            </mat-form-field>
+
+            <div formGroupName="schedule">
+                <mat-form-field>
+                    <mat-label for="startdate">Start Date</mat-label>
+                    <input matInput type="date" name="startdate" formControlName="startDate" [min]="today" [max]="taskForm.get('schedule.dueDate').value">
+                    <mat-error
+                        *ngIf="taskForm.get('schedule.startDate').invalid && taskForm.get('schedule.startDate').touched">
+                        Please enter valid start date</mat-error>
+                </mat-form-field>
+                <mat-form-field>
+                    <mat-label for="duedate">Due Date</mat-label>
+                    <input matInput type="date" name="duedate" formControlName="dueDate" [min]="taskForm.get('schedule.startDate').value">
+                    <mat-error
+                        *ngIf="taskForm.get('schedule.dueDate').invalid && taskForm.get('schedule.dueDate').touched">
+                        Please enter valid due date</mat-error>
+                </mat-form-field>
+                <mat-form-field>
+                    <mat-label for="starttime">Start Time</mat-label>
+                    <input matInput type="time" name="starttime" formControlName="startTime" [max]="taskForm.get('schedule.startTime').value">
+                    <mat-error
+                        *ngIf="taskForm.get('schedule.startTime').invalid && taskForm.get('schedule.startTime').touched">
+                        Please enter valid start time</mat-error>
+                </mat-form-field>
+                <mat-form-field [ngClass]="{'ng-invalid':true}">
+                    <mat-label for="endtime">End Time</mat-label>
+                    <input matInput type="time" name="endtime" formControlName="endTime" 
+                        [min]="taskForm.get('schedule.startTime').value">
+                </mat-form-field>
+                <div class="task-input-error" *ngIf="taskForm.get('schedule.endTime').value < taskForm.get('schedule.startTime').value">
+                    End time must be after the start time
+                </div>
+            </div>
+        </form>
+    </div>
+</mat-dialog-content>
+
+<!-- ACTION BUTTONS -->
+<mat-dialog-actions align="end">
+    <button mat-raised-button type="button" (click)="onClose()" [disabled]="loading"
+        style="float: right;">Close</button>
+    <button mat-raised-button type="submit" color="primary" style="float: right" (click)="onSubmit(taskForm)"
+        [disabled]="loading || taskForm.invalid || taskForm.get('schedule.endTime').value < taskForm.get('schedule.startTime').value" >{{loading ? 'Please wait..' : 'Submit'}}</button>
+</mat-dialog-actions>

@@ -25,7 +25,7 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 }
 
 .empty-record-container {
-    height: -webkit-fill-available;
+    // height: -webkit-fill-available;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -36,4 +36,14 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
         height: auto;
     }
     h4 {margin: 0;}
+}
+
+form {
+    width: 100%;
+    mat-form-field {
+        width: 100%;
+    }
+    button {
+        margin-left: 10px;
+    }
 }

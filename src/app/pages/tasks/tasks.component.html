@@ -1,0 +1,68 @@
+
+<!-- ADD NEW RECORD -->
+<div class="fab-button-bottom-right">
+    <button mat-fab color="primary" (click)="openTask()">
+        <mat-icon>add</mat-icon>
+    </button>
+</div>
+
+<!-- ITEMS -->
+<mat-grid-list [cols]="gridCols" rowHeight="225px" *ngIf="tasks">
+    <mat-grid-tile
+        *ngFor="let task of tasks"
+        colspan="1"
+        rowspan="1"
+        gutterSize="15px"
+    >
+        <mat-card class="list-card">
+            <div class="card-content-container">
+                <mat-card-header>
+                    <mat-card-title>
+                        <div class="record-status">
+                            {{task.title | uppercase}}
+                        </div>
+                        <!-- <div class="record-payment" >
+                            {{task.purpose}}
+                        </div> -->
+                    </mat-card-title>
+                </mat-card-header>
+                <mat-card-content>
+                    <div class="record-purpose">
+                        {{task.notes}}
+                    </div>
+                </mat-card-content>
+                <mat-card-actions>
+                    <div class="record-footer">
+                        <!-- &#x20B9; {{task.payment.amount | number}} | {{task.payment?.method}} -->
+                        <span style="float: right;">{{task.startDate | date:'dd MMM, yyyy'}}</span>
+                    </div>  
+                </mat-card-actions>
+            </div>
+        </mat-card>
+        <div class="record-action-button" >
+            <button mat-mini-fab aria-label="Example icon button with a menu icon" [matMenuTriggerFor]="menu">
+                <mat-icon>more_vert</mat-icon>
+            </button>
+            <button mat-mini-fab color="primary" aria-label="Manange task item">
+                <mat-icon>menu</mat-icon>
+            </button>
+            <mat-menu #menu="matMenu" xPosition="before">
+                <button mat-menu-item (click)="openTask(task)"><mat-icon>edit</mat-icon>Edit</button>
+                <button mat-menu-item (click)="onDelete(task)"><mat-icon>delete</mat-icon>Remove</button>
+            </mat-menu>
+        </div>
+    </mat-grid-tile>
+</mat-grid-list>
+
+<!-- EMPTY RECORDS -->
+<div class="empty-record-container" *ngIf="tasks && tasks.length == 0">
+    <img src="assets/icons/files.svg">
+    <h2>No tasks found here</h2>
+    <h4>Any new task will appear here</h4>
+</div>
+
+
+<!-- SPINNER -->
+<div class="spinner-container" *ngIf="!tasks">
+    <mat-spinner></mat-spinner>
+</div>
