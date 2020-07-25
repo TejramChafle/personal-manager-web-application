@@ -42,13 +42,14 @@ export class LoginComponent implements OnInit {
   }
 
   ngOnInit() {
+    console.log(window.history.state);
   }
 
   onLogin(form: NgForm) {
     this.loading = true;
     this._authService.login(form).subscribe((response) => {
       this.loading = false;
-      this._router.navigate(['/']);
+      this._router.navigate([window.history.state.url || '/']);
     }, (error) => {
       this.loading = false;
       this._snackbar.open('Username or password is incorrect!', 'Close', {

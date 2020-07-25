@@ -18,39 +18,54 @@
             <div class="card-content-container">
                 <mat-card-header>
                     <mat-card-title>
-                        <div class="record-status">
+                        <div class="record-status" [ngClass]="{'task-is-done' : task.isDone}">
                             {{task.title | uppercase}}
                         </div>
-                        <!-- <div class="record-payment" >
-                            {{task.purpose}}
-                        </div> -->
+                        <button mat-icon-button class="more-button" [matMenuTriggerFor]="menu" aria-label="Toggle menu">
+                            <mat-icon>more_vert</mat-icon>
+                        </button>
+                        <mat-menu #menu="matMenu" xPosition="before">
+                            <button mat-menu-item (click)="openTask(task)"><mat-icon>edit</mat-icon>Edit</button>
+                            <button mat-menu-item (click)="onDelete(task)"><mat-icon>delete</mat-icon>Remove</button>
+
+                            <button mat-menu-item (click)="editTask(task, 'isStarred')" >
+                                <mat-icon *ngIf="!task.isStarred">star_outline</mat-icon>
+                                <mat-icon *ngIf="task.isStarred" color="accent">star</mat-icon>
+                                {{task.isStarred ? 'Remove star' : 'Add star'}}
+                            </button>
+                            <button mat-menu-item (click)="editTask(task, 'isImportant')" >
+                                <mat-icon *ngIf="!task.isImportant">error_outline</mat-icon>
+                                <mat-icon *ngIf="task.isImportant" color="warn">error</mat-icon>
+                                {{task.isImportant ? 'Remove important' : 'Add important'}}
+                            </button>
+                            <button mat-menu-item (click)="editTask(task, 'isDone')">
+                                <mat-icon *ngIf="task.isDone">check_box</mat-icon>
+                                <mat-icon *ngIf="!task.isDone">check_box_outline_blank</mat-icon>
+                                {{task.isDone ? 'Mark as undone' : 'Mark as done'}}
+                            </button>
+                        </mat-menu>
                     </mat-card-title>
                 </mat-card-header>
                 <mat-card-content>
-                    <div class="record-purpose">
+                    <div class="record-purpose" [ngClass]="{'task-is-done' : task.isDone}">
                         {{task.notes}}
                     </div>
+                    <div class="tags-container">
+                        <div *ngFor="let label of task.labels">
+                            <div class="tag-container" *ngIf="label.isChecked">
+                                <div class="tag-color" [ngStyle]="{ backgroundColor: label.color }"></div>
+                                <div class="tag-label">{{label.name}}</div>
+                            </div>
+                        </div>
+                    </div>
                 </mat-card-content>
-                <mat-card-actions>
+                <!-- <mat-card-actions>
                     <div class="record-footer">
-                        <!-- &#x20B9; {{task.payment.amount | number}} | {{task.payment?.method}} -->
                         <span style="float: right;">{{task.startDate | date:'dd MMM, yyyy'}}</span>
                     </div>  
-                </mat-card-actions>
+                </mat-card-actions> -->
             </div>
         </mat-card>
-        <div class="record-action-button" >
-            <button mat-mini-fab aria-label="Example icon button with a menu icon" [matMenuTriggerFor]="menu">
-                <mat-icon>more_vert</mat-icon>
-            </button>
-            <button mat-mini-fab color="primary" aria-label="Manange task item">
-                <mat-icon>menu</mat-icon>
-            </button>
-            <mat-menu #menu="matMenu" xPosition="before">
-                <button mat-menu-item (click)="openTask(task)"><mat-icon>edit</mat-icon>Edit</button>
-                <button mat-menu-item (click)="onDelete(task)"><mat-icon>delete</mat-icon>Remove</button>
-            </mat-menu>
-        </div>
     </mat-grid-tile>
 </mat-grid-list>
 

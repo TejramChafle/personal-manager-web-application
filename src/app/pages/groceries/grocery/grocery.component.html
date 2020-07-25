@@ -26,18 +26,18 @@
 
             <div>
                 <mat-label for="item">ITEMS</mat-label>
-                <div class="item-container" *ngFor="let itemCtrl of groceryForm.get('items').controls; let i = index;">
-                    <input type="text" [name]="i" [formControl]="groceryForm.get('items').controls[i]">
+                <div class="item-container" *ngFor="let itemCtrl of groceryControl; let i = index;">
+                    <input type="text" [name]="i" [formControl]="groceryControl[i]">
                     <button mat-mini-fab type="button" color="warn" aria-label="Remove" (click)="removeItem(itemCtrl)"
                         *ngIf="!data.isPaid">
                         <mat-icon>delete</mat-icon>
                     </button>
                     <mat-error
-                        *ngIf="groceryForm.get('items').controls[i].invalid && groceryForm.get('items').controls[i].touched">
+                        *ngIf="groceryControl[i].invalid && groceryControl[i].touched">
                         Item is required</mat-error>
                 </div>
                 <div class="add-item-alert"
-                    *ngIf="groceryForm.get('items').controls && groceryForm.get('items').controls.length==0">Add items
+                    *ngIf="groceryControl && groceryControl.length==0">Add items
                     in grocery list</div>
             </div>
 

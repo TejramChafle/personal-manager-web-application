@@ -77,5 +77,6 @@ export class AuthService {
 
   logout() {
     localStorage.clear();
+    this.auth.next(null);
   }
 }

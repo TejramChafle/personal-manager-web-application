@@ -108,4 +108,23 @@ export class TasksComponent implements OnInit {
       }
     })
   }
+
+  editTask(task, field) {
+    task[field] = !task[field];
+    let data: any = { ...task };
+    data.updatedDate = new Date();
+    let snak = this._snakBar.open('Updating, Please wait...', 'Close');
+    this._taskService.updateTask(data).subscribe((response) => {
+      console.log(response);
+      task = response;
+      snak.dismiss();
+    }, (error) => {
+      if (error.status == 401 && error.statusText == "Unauthorized") {
+      } else {
+        this._appService.actionMessage({ title: 'Error!', text: 'Failed to get tasks information' });
+      }
+      console.log(error);
+      snak.dismiss();
+    });
+  }
 }

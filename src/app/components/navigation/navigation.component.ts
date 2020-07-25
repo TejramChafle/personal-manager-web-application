@@ -13,14 +13,21 @@ import { AuthService } from '../../pages/auth/auth.service';
 export class NavigationComponent implements AfterContentChecked {
   pageTitle = 'Personal Manager';
   isHandset: boolean;
+  isTablet: boolean;
   isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
     .pipe(
       map((result) => { this.isHandset = result.matches; return result.matches; }),
       shareReplay()
     );
 
+    isTablet$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Tablet)
+    .pipe(
+      map((result) => { this.isTablet = result.matches; return result.matches; }),
+      shareReplay()
+    );
+
   constructor(private breakpointObserver: BreakpointObserver, public _authService: AuthService) {
-    console.log(history.state);
+    // console.log(history.state);
   }
 
   ngAfterContentChecked() {

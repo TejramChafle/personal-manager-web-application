@@ -1,4 +1,4 @@
-import { Component, OnInit, Inject } from '@angular/core';
+import { Component, OnInit, Inject, ViewEncapsulation } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { FormControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { TaskService } from '../task.service';
@@ -7,7 +7,8 @@ import { AppService } from '../../../app.service';
 @Component({
   selector: 'personal-manager-task',
   templateUrl: './task.component.html',
-  styleUrls: ['./task.component.scss']
+  styleUrls: ['./task.component.scss'],
+  encapsulation: ViewEncapsulation.None
 })
 
 export class TaskComponent implements OnInit {
@@ -40,7 +41,31 @@ export class TaskComponent implements OnInit {
       })
     });
 
-    if (!this.data.task) {
+    console.log('this.data : ', this.data.task);
+
+    if (this.data.task) {
+      // SET id for update
+      this.id = this.data.task.id;
+      // Initialize labels dropdown by comparing existing selected labels
+      this.labels = [];
+      this._taskService.labels.forEach((label) => {
+        if (this.data.task.labels) { 
+          this.labels.push({ isChecked: this.data.task.labels.find((lab) => { return lab.name == label.name; }) ? true: false, name: label.name, color: label.color }); 
+        } else {
+          this.labels.push({ isChecked: false, name: label.name, color: label.color });
+        }
+      });
+      // Initialize form
+      this.taskForm.patchValue({
+        title: this.data.task.title,
+        notes: this.data.task.notes,
+        schedule: this.data.task.schedule || {}
+      });
+      // SET task header actions
+      this.isStarred = this.data.task.isStarred;
+      this.isImportant = this.data.task.isImportant;
+      this.isDone = this.data.task.isDone;
+    } else {
       this.labels = [];
       this._taskService.labels.forEach((label) => {
         this.labels.push({ isChecked: false, name: label.name, color: label.color });
@@ -65,6 +90,7 @@ export class TaskComponent implements OnInit {
   }
 
   onSubmit(form: FormGroup) {
+    this.loading = true;
     console.log(form);
     let data: any = {
       title: form.value.title,

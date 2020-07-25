@@ -33,8 +33,13 @@ import { MatTableModule } from '@angular/material/table';
 import { MatSortModule } from '@angular/material/sort';
 import { MatPaginatorModule } from '@angular/material/paginator';
 
+
+// import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+
 let material = [
-    BrowserAnimationsModule,
+    // BrowserAnimationsModule,
     MatCheckboxModule,
     MatCheckboxModule,
     MatButtonModule,
@@ -69,8 +74,18 @@ let material = [
 ];
 
 @NgModule({
-    imports: [...material],
-    exports: [...material]
+    imports: [
+        ...material,
+        FormsModule,
+        ReactiveFormsModule,
+        HttpClientModule
+    ],
+    exports: [
+        ...material,
+        FormsModule,
+        ReactiveFormsModule,
+        HttpClientModule
+    ]
 })
 
 export class AppMaterialModule { }

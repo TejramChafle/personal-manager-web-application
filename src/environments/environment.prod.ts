@@ -1,7 +1,7 @@
 export const environment = {
   production: true,
-  API_URL: 'https://ng-application-f729b.firebaseio.com/',
-  API_KEY: 'AIzaSyD1QPoL7lDboFVH-0y-6qCiHVpGIyrko_8',
+  API_URL: 'https://ng-personal-manager.firebaseio.com/',
+  API_KEY: 'AIzaSyDrF3MrUSxyKzSCnHZjWy8gcynUUxknr_g',
   FIREBASE_CONFIG: {
     apiKey: 'AIzaSyDrF3MrUSxyKzSCnHZjWy8gcynUUxknr_g',
     authDomain: 'AIzaSyDrF3MrUSxyKzSCnHZjWy8gcynUUxknr_g',

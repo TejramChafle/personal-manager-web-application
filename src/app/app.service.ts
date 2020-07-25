@@ -8,7 +8,8 @@ import { Router } from '@angular/router';
 
 export class AppService {
 
-  constructor( private _snackBar: MatSnackBar, private _router: Router) { }
+  constructor( private _snackBar: MatSnackBar, private _router: Router) {
+  }
 
   public actionMessage(message: { title: string, text: string }) {
     this._snackBar.open(message.text, 'Close', {
@@ -19,15 +20,17 @@ export class AppService {
   }
 
   public handleError(error) {
-    console.log(error);
-    // this._router.navigate(['/login']);
+    // console.log(error);
+    console.log(this._router.url);
     if (error.error.error.message == 'INVALID_ID_TOKEN') {
       localStorage.clear();
-      this._router.navigate(['/login']);
+      // this._router.navigate(['/login']);
+      this._router.navigateByUrl('login', { state: { url: location.pathname } });
     } else if (error.statusText == 'Unauthorized' && error.error.error == 'Auth token is expired') {
       this.actionMessage({ text: 'Login expired, Please login again.', title: 'Close' });
       localStorage.clear();
-      this._router.navigate(['/login']);
+      // this._router.navigate(['/login']);
+      this._router.navigateByUrl('login', { state: { url: location.pathname } });
     }
   }
 

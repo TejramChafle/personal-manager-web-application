@@ -180,4 +180,9 @@ export class GroceryComponent implements OnInit {
 		});
 	}
 
+	get groceryControl() {
+		return this.groceryForm.get('items')['controls'];
+		// groceryForm.get('items').controls
+	}
+
 }
