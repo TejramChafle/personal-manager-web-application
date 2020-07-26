@@ -2,11 +2,13 @@
 <!-- TASK HEADER -->
 <div class="task-header" align="right">
     <mat-checkbox (change)="isDone=!isDone" [checked]="isDone">Mark as Done</mat-checkbox>
-    <button mat-icon-button [color]="isImportant?'accent':''" (click)="isImportant=!isImportant">
-        <mat-icon >error_outline</mat-icon>
+    <button mat-icon-button [color]="isImportant?'warn':''" (click)="isImportant=!isImportant">
+        <mat-icon *ngIf="!isImportant">error_outline</mat-icon>
+        <mat-icon *ngIf="isImportant">error</mat-icon>
     </button>
     <button mat-icon-button [color]="isStarred?'accent':''" (click)="isStarred=!isStarred">
-        <mat-icon color>start_outline</mat-icon>
+        <mat-icon *ngIf="!isStarred">star_outline</mat-icon>
+        <mat-icon *ngIf="isStarred">star</mat-icon>
     </button>
 
     <button mat-icon-button class="more-button" [matMenuTriggerFor]="menu" aria-label="Toggle menu">
@@ -45,8 +47,8 @@
             <mat-form-field>
                 <mat-label for="notes">Notes</mat-label>
                 <textarea matInput type="text" formControlName="notes" name="notes" rows="3"></textarea>
-                <mat-error *ngIf="taskForm.get('notes').invalid && taskForm.get('notes').touched">Place is
-                    required</mat-error>
+                <mat-error *ngIf="taskForm.get('notes').invalid && taskForm.get('notes').touched">
+                    Notes is required</mat-error>
             </mat-form-field>
 
             <div formGroupName="schedule">
@@ -86,8 +88,11 @@
 
 <!-- ACTION BUTTONS -->
 <mat-dialog-actions align="end">
-    <button mat-raised-button type="button" (click)="onClose()" [disabled]="loading"
-        style="float: right;">Close</button>
+    <button mat-raised-button type="button" (click)="onClose()" [disabled]="loading" style="float: right;">
+        Close
+    </button>
     <button mat-raised-button type="submit" color="primary" style="float: right" (click)="onSubmit(taskForm)"
-        [disabled]="loading || taskForm.invalid || taskForm.get('schedule.endTime').value < taskForm.get('schedule.startTime').value" >{{loading ? 'Please wait..' : id? 'Update': 'Submit'}}</button>
+        [disabled]="loading || taskForm.invalid || taskForm.get('schedule.endTime').value < taskForm.get('schedule.startTime').value" >
+        {{loading ? 'Please wait..' : id? 'Update': 'Submit'}}
+    </button>
 </mat-dialog-actions>

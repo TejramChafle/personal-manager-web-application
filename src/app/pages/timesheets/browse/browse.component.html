@@ -1,1 +1,70 @@
-<p>browse works!</p>
+
+<!-- TASK HEADER -->
+<div class="task-header" align="right">
+    <input type="search" [(ngModel)]="search">
+    <button type="button" mat-raised-button color="primary">Search</button>
+</div>
+<hr>
+<!-- TASK COMPOSE FORM -->
+<mat-dialog-content>
+    <div class="task-option-list">
+        <!-- <mat-selection-list #taskList >
+            <mat-list-option checkboxPosition="before" *ngFor="let task of tasks">
+                {{task.title}}<br>{{task.schedule.date|date}}
+            </mat-list-option>
+        </mat-selection-list>-->
+    </div>
+
+    <mat-card class="task-list-card" *ngFor="let task of tasks" (click)="task.isChecked=!task.isChecked">
+        <div class="card-content-container">
+            <mat-card-header>
+                <mat-card-title>
+                    <div class="record-status" [ngClass]="{'task-is-done' : task.isDone}">
+                        <mat-checkbox [(ngModel)]="task.isChecked"></mat-checkbox>  {{task.title | uppercase}}
+                    </div>
+                </mat-card-title>
+            </mat-card-header>
+            <mat-card-content>
+                <div class="record-purpose" [ngClass]="{'task-is-done' : task.isDone}">
+                    {{task.notes}}
+                </div>
+                <div class="tags-container">
+                    <span class="task-date" *ngIf="task.schedule && task.schedule.startDate">{{task.schedule?.startDate|date}}</span>
+                    <div *ngFor="let label of task.labels">
+                        <div class="tag-container" *ngIf="label.isChecked">
+                            <div class="tag-color" [ngStyle]="{ backgroundColor: label.color }"></div>
+                            <div class="tag-label">{{label.name}}</div>
+                        </div>
+                    </div>
+                </div>
+            </mat-card-content>
+        </div>
+    </mat-card>
+
+    <!-- EMPTY RECORDS -->
+    <div class="empty-record-container" *ngIf="tasks && tasks.length == 0">
+        <img src="assets/icons/files.svg">
+        <h2>No tasks found here</h2>
+    </div>
+
+
+    <!-- SPINNER -->
+    <div class="spinner-container" *ngIf="!tasks">
+        <mat-spinner></mat-spinner>
+    </div>
+</mat-dialog-content>
+
+<!-- ACTION BUTTONS -->
+<mat-dialog-actions align="end">
+    <button mat-raised-button type="button" (click)="onClose()" [disabled]="loading" style="float: right;">
+        Close
+    </button>
+    <button mat-raised-button type="submit" color="primary" style="float: right" 
+    (click)="onSubmit()"
+    *ngIf="isChecked" >
+        Submit
+    </button>
+    <!-- (click)="onSubmit(taskList.selectedOptions.selected)"
+        *ngIf="taskList.selectedOptions.selected.length" -->
+</mat-dialog-actions>
+

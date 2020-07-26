@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
+import { AppMaterialModule } from '../../app.material';
 
 import { TimesheetsComponent } from './timesheets.component';
 import { TimesheetComponent } from './timesheet/timesheet.component';
@@ -20,10 +21,15 @@ const routes: Routes = [
   ],
   imports: [
     CommonModule,
-    RouterModule.forChild(routes)
+    RouterModule.forChild(routes),
+    AppMaterialModule
   ],
   exports: [
     RouterModule
+  ],
+  entryComponents: [
+    TimesheetComponent,
+    BrowseComponent
   ]
 })
 

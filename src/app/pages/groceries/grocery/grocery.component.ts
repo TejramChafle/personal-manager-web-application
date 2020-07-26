@@ -29,13 +29,7 @@ export class GroceryComponent implements OnInit {
 			date: new FormControl(null),
 			purpose: new FormControl( this.data.grocery && this.data.grocery.purpose || 'Grocery' ),
 			place: new FormControl(null, Validators.required),
-			items: new FormArray([], Validators.required),
-			/* payment: new FormGroup({
-				amount: new FormControl(null, Validators.required),
-				status: new FormControl('Paid', Validators.required),
-				method: new FormControl(null, Validators.required),
-				// bill: new FormControl(null)
-			}) */
+			items: new FormArray([], Validators.required)
 		})
 
 		if (this.data && this.data.isPaid) {

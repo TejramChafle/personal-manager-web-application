@@ -1,1 +1,76 @@
-<p>timesheet works!</p>
+<form [formGroup]="timesheetForm" (ngSubmit)="onSubmit(timesheetForm)">
+    <mat-dialog-content>
+        <div class="timesheet-form">
+            <mat-form-field>
+                <mat-label for="date">Date</mat-label>
+                <input matInput type="date" formControlName="date" [max]="today">
+                <mat-error *ngIf="timesheetForm.get('date').invalid && timesheetForm.get('date').touched">
+                    Date is required
+                </mat-error>
+            </mat-form-field>
+            <mat-form-field>
+                <mat-label for="description">Description</mat-label>
+                <textarea matInput formControlName="description" ></textarea>
+                <mat-error *ngIf="timesheetForm.get('description').invalid && timesheetForm.get('description').touched">
+                    Description is required
+                </mat-error>
+            </mat-form-field>
+
+            <div class="task-container-outer">
+                <mat-label for="task" *ngIf="timesheetControl && timesheetControl.length">TASKS</mat-label>
+                <!-- <div class="task-container" *ngFor="let taskCtrl of timesheetControl; let i = index;">
+                    <input type="text" [name]="i" [formControl]="timesheetControl[i]">
+                    {{timesheetControl[i].value.title}}
+                    <button mat-mini-fab type="button" color="warn" aria-label="Remove" (click)="removeTask(taskCtrl)">
+                        <mat-icon>delete</mat-icon>
+                    </button>
+                    <mat-error *ngIf="timesheetControl[i].invalid && timesheetControl[i].touched">
+                        Task is required
+                    </mat-error>
+                </div> -->
+
+                <mat-card class="task-list-card" *ngFor="let taskCtrl of timesheetControl; let i = index;">
+                    <div class="card-content-container">
+                        <mat-card-header>
+                            <mat-card-title>
+                                <div class="record-status" [ngClass]="{'task-is-done' : timesheetControl[i].value.isDone}">
+                                    {{timesheetControl[i].value.title | uppercase}}
+                                </div>
+                                <button mat-icon-button class="more-button" (click)="removeTask(i)" aria-label="Delete record" color="warn">
+                                    <mat-icon>remove_circle_outline</mat-icon>
+                                </button>
+                            </mat-card-title>
+                        </mat-card-header>
+                        <mat-card-content>
+                            <div class="record-purpose" [ngClass]="{'task-is-done' : timesheetControl[i].value.isDone}">
+                                {{taskCtrl.value.notes}}
+                            </div>
+                            <div class="tags-container">
+                                <span class="task-date" *ngIf="timesheetControl[i].value.schedule && timesheetControl[i].value.schedule.startDate">{{timesheetControl[i].value.schedule?.startDate|date}}</span>
+                                <div *ngFor="let label of timesheetControl[i].value.labels">
+                                    <div class="tag-container" *ngIf="label.isChecked">
+                                        <div class="tag-color" [ngStyle]="{ backgroundColor: label.color }"></div>
+                                        <div class="tag-label">{{label.name}}</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </mat-card-content>
+                    </div>
+                </mat-card>
+
+                <div class="add-task-alert" *ngIf="timesheetControl && timesheetControl.length==0">
+                    Add tasks in timesheet list
+                </div>
+            </div>
+        </div>
+    </mat-dialog-content>
+    <mat-dialog-actions align="end">
+        <button class="add-task-btn" mat-raised-button type="button" color="accent" aria-label="Add task"
+            (click)="onAddTask()" >
+            Add Task
+        </button>
+        <button mat-raised-button type="button" (click)="onClose()" [disabled]="loading" style="float: right;">Close</button>
+        <button mat-raised-button type="submit" color="primary" style="float: right"
+            [disabled]="loading || timesheetForm.invalid">{{loading ? 'Please wait..' : 'Submit'}}</button>
+    </mat-dialog-actions>
+</form>
