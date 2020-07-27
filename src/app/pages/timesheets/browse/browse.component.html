@@ -7,14 +7,6 @@
 <hr>
 <!-- TASK COMPOSE FORM -->
 <mat-dialog-content>
-    <div class="task-option-list">
-        <!-- <mat-selection-list #taskList >
-            <mat-list-option checkboxPosition="before" *ngFor="let task of tasks">
-                {{task.title}}<br>{{task.schedule.date|date}}
-            </mat-list-option>
-        </mat-selection-list>-->
-    </div>
-
     <mat-card class="task-list-card" *ngFor="let task of tasks" (click)="task.isChecked=!task.isChecked">
         <div class="card-content-container">
             <mat-card-header>

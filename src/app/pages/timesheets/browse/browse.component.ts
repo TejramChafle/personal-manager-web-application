@@ -12,6 +12,8 @@ import { AppService } from '../../../app.service';
 
 export class BrowseComponent implements OnInit {
   tasks: Array<any>;
+  search: string;
+  loading = false;
 
   constructor(
     private _dialogRef: MatDialogRef<BrowseComponent>,
@@ -25,6 +27,7 @@ export class BrowseComponent implements OnInit {
       this.tasks = response;
     }, (error) => {
       if (error.status == 401 && error.statusText == "Unauthorized") {
+        this.onClose();
       } else {
         this._appService.actionMessage({ title: 'Error!', text: 'Failed to get tasks information' });
       }

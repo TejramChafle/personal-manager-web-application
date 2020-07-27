@@ -3,10 +3,9 @@ import { MatDialog } from '@angular/material/dialog';
 import { AppService } from '../../app.service';
 import { Breakpoints, BreakpointObserver } from '@angular/cdk/layout';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { ConfirmComponent } from '../../components/confirm/confirm.component';
 
+import { ConfirmComponent } from '../../components/confirm/confirm.component';
 import { TimesheetComponent } from './timesheet/timesheet.component';
-import { BrowseComponent } from './browse/browse.component';
 
 import { TimesheetService } from './timesheet.service';
 

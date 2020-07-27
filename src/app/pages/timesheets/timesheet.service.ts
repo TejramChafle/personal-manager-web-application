@@ -28,16 +28,13 @@ export class TimesheetService {
   public getTimesheets(): Observable<any> {
     return this._http.get(environment.API_URL + 'timesheets.json/?user=' + this._authService.user.localId).pipe(
       map((response) => {
+        console.log(response);
         let result: Array<any> = [];
         for (let key in response) {
           let task: any = {
-            title: response[key]['title'],
-            notes: response[key]['notes'],
-            labels: response[key]['labels'],
-            isDone: response[key]['isDone'],
-            isStarred: response[key]['isStarred'],
-            isImportant: response[key]['isImportant'],
-            schedule: response[key]['schedule'],
+            date: response[key]['date'],
+            description: response[key]['description'],
+            tasks: response[key]['tasks'],
             createdDate: response[key]['createdDate'],
             updatedDate: response[key]['updatedDate'],
             user: response[key]['user'],

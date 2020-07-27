@@ -41,6 +41,13 @@ export class TimesheetComponent implements OnInit {
     if (this.data.timesheet) {
       // SET id for update
       this.id = this.data.timesheet.id;
+
+      do {
+        // this.onAddTask()
+        const control = new FormControl(null, Validators.required);
+        (<FormArray>this.timesheetForm.get('tasks')).push(control);
+			} while (this.timesheetForm.get('tasks')['controls'].length < this.data.timesheet.tasks);
+
       // Initialize form
       this.timesheetForm.patchValue({
         date: this.data.timesheet.date,

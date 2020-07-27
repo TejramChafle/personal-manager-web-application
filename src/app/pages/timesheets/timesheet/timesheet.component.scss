@@ -1,20 +1,20 @@
+@mixin task-list-panel($color) {
+    font-weight: bold;
+    padding: 10px;
+    background-color: $color;
+    box-shadow: 0 2px 1px -1px rgba(0,0,0,.2), 0 1px 1px 0 rgba(0,0,0,.14), 0 1px 3px 0 rgba(0,0,0,.12);
+    margin-bottom: 5px;
+}
+
 .task-container-outer {
     font-family: 'Open Sans Condensed', sans-serif;
     mat-label {
-        font-weight: bold;
         display: block;
-        padding: 10px;
-        background-color: #fefefe;
-        box-shadow: 0 2px 1px -1px rgba(0,0,0,.2), 0 1px 1px 0 rgba(0,0,0,.14), 0 1px 3px 0 rgba(0,0,0,.12);
-        margin-bottom: 5px;
+        @include task-list-panel(#fefefe);
     }
 
     .add-task-alert {
-        font-weight: bold;
-        background-color: salmon;
-        padding: 10px;
-        box-shadow: 0 2px 1px -1px rgba(0,0,0,.2), 0 1px 1px 0 rgba(0,0,0,.14), 0 1px 3px 0 rgba(0,0,0,.12);
-        margin-bottom: 5px;
+        @include task-list-panel(salmon);
     }
 
     .record-status {
