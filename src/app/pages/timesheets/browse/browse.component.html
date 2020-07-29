@@ -22,12 +22,13 @@
                 </div>
                 <div class="tags-container">
                     <span class="task-date" *ngIf="task.schedule && task.schedule.startDate">{{task.schedule?.startDate|date}}</span>
-                    <div *ngFor="let label of task.labels">
+                    <!-- <div *ngFor="let label of task.labels">
                         <div class="tag-container" *ngIf="label.isChecked">
                             <div class="tag-color" [ngStyle]="{ backgroundColor: label.color }"></div>
                             <div class="tag-label">{{label.name}}</div>
                         </div>
-                    </div>
+                    </div> -->
+                    <div class="tag-container" *ngIf="task.time && (task.time.hours || task.time.minutes)">{{task.time.days}} Days, {{task.time.hours}} Hours, {{task.time.minutes}} Minutes</div>
                 </div>
             </mat-card-content>
         </div>

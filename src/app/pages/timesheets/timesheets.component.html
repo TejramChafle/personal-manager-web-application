@@ -82,7 +82,11 @@
         >
         <mat-card-header>
             <div class="timesheet-header">{{timesheet.date | date:'dd MMM, yyyy'}}</div>
-            <button mat-icon-button class="more-button" [matMenuTriggerFor]="menu" aria-label="Toggle menu" *ngIf="timesheet.showDetail">
+            <div class="time-container" 
+                *ngIf="timesheet.time && (timesheet.time.hours || timesheet.time.minutes)">
+                {{timesheet.time.days}} Days, {{timesheet.time.hours}} Hours, {{timesheet.time.minutes}} Minutes
+            </div>
+            <!-- <button mat-icon-button class="more-button" [matMenuTriggerFor]="menu" aria-label="Toggle menu" *ngIf="timesheet.showDetail">
                 <mat-icon>more_vert</mat-icon>
             </button>
             <mat-menu #menu="matMenu" xPosition="before">
@@ -104,7 +108,7 @@
                     <mat-icon *ngIf="!timesheet.isDone">check_box_outline_blank</mat-icon>
                     {{timesheet.isDone ? 'Mark as undone' : 'Mark as done'}}
                 </button>
-            </mat-menu>
+            </mat-menu> -->
         </mat-card-header>
         <mat-card-content>
             <div class="timesheet-description">

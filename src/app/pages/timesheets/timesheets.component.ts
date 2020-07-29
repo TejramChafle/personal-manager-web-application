@@ -52,7 +52,22 @@ export class TimesheetsComponent implements OnInit {
   ngOnInit() {
     this._timesheetService.getTimesheets().subscribe((response) => {
       console.log(response);
-      this.timesheets = response;
+      this.timesheets = [];
+      response.forEach(sheet => {
+        var hours = 0, minutes = 0, days = 0;
+        sheet.tasks.forEach(task => {
+          if (task.schedule) {
+            task.time = this._appService.timeDifference(task.schedule);
+            days += task.time.days ? parseInt(task.time.days) : 0;
+            hours += task.time.hours ? parseInt(task.time.hours) : 0;
+            minutes += task.time.minutes ? parseInt(task.time.minutes) : 0;
+          };
+        });
+        sheet.time = { days: days, hours: hours, minutes: minutes };
+        console.log(sheet);
+        this.timesheets.push(sheet);
+      });
+      // this.timesheets = response;
     }, (error) => {
       if (error.status == 401 && error.statusText == "Unauthorized") {
       } else {

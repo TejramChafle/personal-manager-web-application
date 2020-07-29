@@ -47,11 +47,15 @@
                             </div>
                             <div class="tags-container">
                                 <span class="task-date" *ngIf="timesheetControl[i].value.schedule && timesheetControl[i].value.schedule.startDate">{{timesheetControl[i].value.schedule?.startDate|date}}</span>
-                                <div *ngFor="let label of timesheetControl[i].value.labels">
+                                <!-- <div *ngFor="let label of timesheetControl[i].value.labels">
                                     <div class="tag-container" *ngIf="label.isChecked">
                                         <div class="tag-color" [ngStyle]="{ backgroundColor: label.color }"></div>
                                         <div class="tag-label">{{label.name}}</div>
                                     </div>
+                                </div> -->
+                                <div class="tag-container" 
+                                    *ngIf="timesheetControl[i].value.time && (timesheetControl[i].value.time.hours || timesheetControl[i].value.time.minutes)">
+                                    {{timesheetControl[i].value.time.days}} Days, {{timesheetControl[i].value.time.hours}} Hours, {{timesheetControl[i].value.time.minutes}} Minutes
                                 </div>
                             </div>
                         </mat-card-content>

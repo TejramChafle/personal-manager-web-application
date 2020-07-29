@@ -24,7 +24,13 @@ export class BrowseComponent implements OnInit {
   ngOnInit() {
     this._taskService.getTasks().subscribe((response) => {
       console.log(response);
-      this.tasks = response;
+      this.tasks = [];
+      response.forEach(task => {
+        task.time = task.schedule ? this._appService.timeDifference(task.schedule) : task.schedule;
+        console.log(task);
+        this.tasks.push(task);
+      });
+      // this.tasks = response;
     }, (error) => {
       if (error.status == 401 && error.statusText == "Unauthorized") {
         this.onClose();
