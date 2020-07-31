@@ -18,7 +18,7 @@ export class LoginComponent implements OnInit {
   loading = false;
 
   constructor(
-    private _authService: AuthService,
+    public _authService: AuthService,
     private _router: Router,
     private _snackbar: MatSnackBar,
     private _breakpointObserver: BreakpointObserver) {
@@ -42,7 +42,7 @@ export class LoginComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log(window.history.state);
+    // console.log(window.history.state);
   }
 
   onLogin(form: NgForm) {
@@ -58,6 +58,10 @@ export class LoginComponent implements OnInit {
         verticalPosition: "bottom"
       })
     })
+  }
+
+  onSignup() {
+    this._router.navigate(['signup']);
   }
 
 }

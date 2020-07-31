@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { AppService } from '../../app.service';
 import { Breakpoints, BreakpointObserver } from '@angular/cdk/layout';
@@ -12,7 +12,8 @@ import { TimesheetService } from './timesheet.service';
 @Component({
   selector: 'personal-manager-timesheets',
   templateUrl: './timesheets.component.html',
-  styleUrls: ['./timesheets.component.scss']
+  styleUrls: ['./timesheets.component.scss'],
+  encapsulation: ViewEncapsulation.None
 })
 
 export class TimesheetsComponent implements OnInit {
@@ -64,7 +65,6 @@ export class TimesheetsComponent implements OnInit {
           };
         });
         sheet.time = { days: days, hours: hours, minutes: minutes };
-        console.log(sheet);
         this.timesheets.push(sheet);
       });
       // this.timesheets = response;

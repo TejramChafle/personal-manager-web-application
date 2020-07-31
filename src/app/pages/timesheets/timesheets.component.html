@@ -75,77 +75,93 @@
 </div>
 
 
-<div class="timesheet-brief-list">
-    <mat-card class="timesheet" 
-        *ngFor="let timesheet of timesheets"
-        (click)="timesheet.showDetail=!timesheet.showDetail"
-        >
+<div class="timesheet" *ngFor="let timesheet of timesheets">
+
+    <!-- TIMESHEET BRIEF CARD -->
+    <mat-card class="timesheet-brief" (click)="timesheet.showDetail=!timesheet.showDetail" *ngIf="!timesheet.showDetail">
         <mat-card-header>
-            <div class="timesheet-header">{{timesheet.date | date:'dd MMM, yyyy'}}</div>
-            <div class="time-container" 
+            <div class="timesheet-brief-header">{{timesheet.date | date:'dd MMM, yyyy'}}</div>
+            <div class="timesheet-brief-time-consumed" *ngIf="timesheet.time && (timesheet.time.hours || timesheet.time.minutes)">
+                {{timesheet.time.days}} Days, {{timesheet.time.hours}} Hours, {{timesheet.time.minutes}} Minutes
+            </div>
+        </mat-card-header>
+        <mat-card-content>
+            <div class="timesheet-brief-description">
+                {{timesheet.description}}
+            </div>
+            <button mat-mini-fab class="fab-action-button" (click)="timesheet.showDetail=!timesheet.showDetail">
+                <mat-icon>expand_more</mat-icon>
+            </button>
+        </mat-card-content>
+    </mat-card>
+
+    <!-- TIMESHEET DETAIL CARD -->
+    <mat-card class="timesheet-detail" *ngIf="timesheet.showDetail">
+        <mat-card-header>
+            <div class="timesheet-brief-header">{{timesheet.date | date:'dd MMM, yyyy'}}</div>
+            <div class="timesheet-brief-time-consumed" 
                 *ngIf="timesheet.time && (timesheet.time.hours || timesheet.time.minutes)">
                 {{timesheet.time.days}} Days, {{timesheet.time.hours}} Hours, {{timesheet.time.minutes}} Minutes
             </div>
-            <!-- <button mat-icon-button class="more-button" [matMenuTriggerFor]="menu" aria-label="Toggle menu" *ngIf="timesheet.showDetail">
+            <!-- <button mat-icon-button class="more-button" [matMenuTriggerFor]="menu" aria-label="Toggle menu" >
                 <mat-icon>more_vert</mat-icon>
             </button>
             <mat-menu #menu="matMenu" xPosition="before">
                 <button mat-menu-item (click)="openTimesheet(timesheet)"><mat-icon>edit</mat-icon>Edit</button>
                 <button mat-menu-item (click)="onDelete(timesheet)"><mat-icon>delete</mat-icon>Remove</button>
-
-                <button mat-menu-item (click)="editTimesheet(timesheet, 'isStarred')" >
-                    <mat-icon *ngIf="!timesheet.isStarred">star_outline</mat-icon>
-                    <mat-icon *ngIf="timesheet.isStarred" color="accent">star</mat-icon>
-                    {{timesheet.isStarred ? 'Remove star' : 'Add star'}}
-                </button>
-                <button mat-menu-item (click)="editTimesheet(timesheet, 'isImportant')" >
-                    <mat-icon *ngIf="!timesheet.isImportant">error_outline</mat-icon>
-                    <mat-icon *ngIf="timesheet.isImportant" color="warn">error</mat-icon>
-                    {{timesheet.isImportant ? 'Remove important' : 'Add important'}}
-                </button>
-                <button mat-menu-item (click)="editTimesheet(timesheet, 'isDone')">
-                    <mat-icon *ngIf="timesheet.isDone">check_box</mat-icon>
-                    <mat-icon *ngIf="!timesheet.isDone">check_box_outline_blank</mat-icon>
-                    {{timesheet.isDone ? 'Mark as undone' : 'Mark as done'}}
-                </button>
             </mat-menu> -->
         </mat-card-header>
         <mat-card-content>
-            <div class="timesheet-description">
+            <div class="timesheet-detail-description">
                 {{timesheet.description}}
             </div>
-            <div class="timesheet-detail" *ngIf="timesheet.showDetail">
-                <div class="tasks-list-seperator">TASKS</div>
-                <mat-card class="task-list-card" *ngFor="let task of timesheet.tasks">
-                    <mat-card-header>
-                        <mat-card-title>
-                            <!-- <div class="record-status" [ngClass]="{'task-is-done' : task.isDone}">
-                                {{task.title | uppercase}}
-                            </div> -->
-                            <div class="task-date" *ngIf="task.schedule && task.schedule.startDate">{{task.schedule?.startDate|date}}</div>
-                        </mat-card-title>
-                    </mat-card-header>
-                    <mat-card-content>
-                        <div class="record-status" [ngClass]="{'task-is-done' : task.isDone}">
-                            {{task.title | uppercase}}
+            <div class="tasks-list-seperator">
+                TASKS
+                <button mat-mini-fab class="fab-action-button" (click)="timesheet.showDetail=!timesheet.showDetail">
+                    <mat-icon>expand_less</mat-icon>
+                </button>
+            </div>
+            <mat-card class="task-list-card" *ngFor="let task of timesheet.tasks">
+                <mat-card-header>
+                    <mat-card-title>
+                        <div class="task-date" *ngIf="task.schedule && task.schedule.startDate">{{task.schedule?.startDate|date}}</div>
+                        <div class="task-time-consumed" 
+                            *ngIf="task.time && (task.time.hours || task.time.minutes)">
+                            {{task.time.days}} Days, {{task.time.hours}} Hours, {{task.time.minutes}} Minutes
                         </div>
-                        <div class="record-purpose" [ngClass]="{'task-is-done' : task.isDone}">
-                            {{task.notes}}
-                        </div>
-                        <div class="tags-container">
-                            <div *ngFor="let label of task.labels">
-                                <div class="tag-container" *ngIf="label.isChecked">
-                                    <div class="tag-color" [ngStyle]="{ backgroundColor: label.color }"></div>
-                                    <div class="tag-label">{{label.name}}</div>
-                                </div>
+                    </mat-card-title>
+                </mat-card-header>
+                <mat-card-content>
+                    <div class="record-status" [ngClass]="{'task-is-done' : task.isDone}">
+                        {{task.title | uppercase}}
+                    </div>
+                    <div class="record-purpose" [ngClass]="{'task-is-done' : task.isDone}">
+                        {{task.notes}}
+                    </div>
+                    <div class="tags-container">
+                        <div *ngFor="let label of task.labels">
+                            <div class="tag-container" *ngIf="label.isChecked">
+                                <div class="tag-color" [ngStyle]="{ backgroundColor: label.color }"></div>
+                                <div class="tag-label">{{label.name}}</div>
                             </div>
                         </div>
-                    </mat-card-content>
-                </mat-card>
-                <!-- <div class="timesheet-actions">
-                    <button mat-flat-button color="primary" (click)="showDetail=!showDetail">HIDE</button>
-                </div> -->
-            </div>
+                    </div>
+                </mat-card-content>
+            </mat-card>
+            
         </mat-card-content>
+        <mat-card-actions align="end">
+            <div class="timesheet-actions">
+                <!-- <button mat-flat-button color="accent" (click)="timesheet.showDetail=!timesheet.showDetail">HIDE</button>
+                <button mat-flat-button color="primary" (click)="openTimesheet(timesheet)">EDIT</button>
+                <button mat-flat-button color="warn" (click)="onDelete(timesheet)">DELETE</button> -->
+                <button mat-mini-fab color="primary" (click)="openTimesheet(timesheet)">
+                    <mat-icon>edit</mat-icon>
+                </button>
+                <button mat-mini-fab color="warn" (click)="onDelete(timesheet)">
+                    <mat-icon>delete</mat-icon>
+                </button>
+            </div>
+        </mat-card-actions>
     </mat-card>
 </div>

@@ -26,7 +26,7 @@ export class TimesheetService {
 
 
   public getTimesheets(): Observable<any> {
-    return this._http.get(environment.API_URL + 'timesheets.json/?user=' + this._authService.user.localId).pipe(
+    return this._http.get(environment.API_URL + 'timesheets.json/').pipe(
       map((response) => {
         console.log(response);
         let result: Array<any> = [];

@@ -58,14 +58,13 @@
                     <button mat-raised-button type="submit" color="primary" class="login-form-field" [disabled]="loading" >{{loading ? 'Please wait..' : 'Login'}}</button>
                 </div>
             </form>
-            <!-- <div class="login-form-field" align="center">
-                <br><br>
-                <a routerLink="signup"><b>CREATE AN ACCOUNT</b></a>
-                <br><br>
-            </div> -->
         </mat-card-content>
         <mat-card-actions align="center">
-            <button mat-button color="primary" routerLink="/signup"><b>NOT REGISTERED? CREATE AN ACCOUNT</b></button>
+            <button type="button" mat-button color="primary" (click)="onSignup()"><b>Not registered? Create an account</b></button>
+            <br>
+            <button type="button" class="google-login-btn" mat-button (click)="_authService.googleAuth()">
+                <img src="assets/brand/google.webp" height="24" width="24"> Signin with Google
+            </button>
         </mat-card-actions>
     </mat-card>
 </div>

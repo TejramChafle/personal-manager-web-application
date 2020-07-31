@@ -5,6 +5,9 @@ import { Observable, BehaviorSubject, throwError } from 'rxjs';
 import { tap, take, catchError } from 'rxjs/operators';
 import { AppService } from '../../app.service';
 
+import { auth } from 'firebase/app';
+import { AngularFireAuth } from '@angular/fire/auth';
+
 @Injectable({
   providedIn: 'root'
 })
@@ -12,13 +15,14 @@ import { AppService } from '../../app.service';
 export class AuthService {
   auth = new BehaviorSubject<any>(null);
 
-  constructor(private _http: HttpClient, private _appService: AppService) { }
+  constructor(private _http: HttpClient, private _appService: AppService, private _firebaseAuth: AngularFireAuth) { }
 
 
   public login(param): Observable<any> {
     const auth = { email: param.username, password: param.password, returnSecureToken: true };
     return this._http.post('https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=' + environment.API_KEY, auth).pipe(
       tap((auth) => {
+        console.log('auth', auth);
         this.auth.next(auth);
       }),
       catchError((error) => {
@@ -78,5 +82,31 @@ export class AuthService {
   logout() {
     localStorage.clear();
     this.auth.next(null);
+  }
+
+
+  // signin with Google
+  googleAuth() {
+    return this.AuthLogin(new auth.GoogleAuthProvider());
+  }
+
+  // Auth logic to run auth provider
+  AuthLogin(provider) {
+    return this._firebaseAuth.auth.signInWithPopup(provider)
+    .then((response) => {
+      
+      const auth = {
+        displayName: response.user.displayName,
+        email: response.user.email,
+        profilePicture: response.user.photoURL,
+        /* expiresIn: '3600',
+        refreshToken: response.credential['accessToken'], */
+        ...response.credential
+      };
+      console.log(response, auth);
+      this.auth.next(auth);
+    }).catch(error => {
+      console.log(error);
+    })
   }
 }

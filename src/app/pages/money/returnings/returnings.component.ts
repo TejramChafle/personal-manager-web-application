@@ -64,7 +64,7 @@ export class ReturningsComponent implements OnInit {
     const extra: NavigationExtras = {
       state: { returning }
     }
-    this._router.navigate(['returnings/returning', returning.id], extra);
+    this._router.navigate(['money/returnings/returning', returning.id], extra);
   }
 
   onDelete(returning) {

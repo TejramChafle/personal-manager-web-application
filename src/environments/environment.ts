@@ -7,12 +7,18 @@ export const environment = {
   API_URL: 'https://ng-personal-manager.firebaseio.com/',
   API_KEY: 'AIzaSyDrF3MrUSxyKzSCnHZjWy8gcynUUxknr_g',
   FIREBASE_CONFIG: {
-    apiKey: 'AIzaSyDrF3MrUSxyKzSCnHZjWy8gcynUUxknr_g',
-    authDomain: 'AIzaSyDrF3MrUSxyKzSCnHZjWy8gcynUUxknr_g',
-    storageBucket: 'ng-personal-manager.appspot.com',
-    projectId: 'ng-personal-manager'
+    apiKey: "AIzaSyDrF3MrUSxyKzSCnHZjWy8gcynUUxknr_g",
+    authDomain: "ng-personal-manager.firebaseapp.com",
+    databaseURL: "https://ng-personal-manager.firebaseio.com",
+    projectId: "ng-personal-manager",
+    storageBucket: "ng-personal-manager.appspot.com",
+    messagingSenderId: "1072996084283",
+    appId: "1:1072996084283:web:7f4aa09a1f540309008a1e",
+    measurementId: "G-ER0C9LMQVZ"
   }
 };
+
+// authDomain: 'ng-personal-manager.firebaseapp.com',
 
 /*
  * For easier debugging in development mode, you can import the following file

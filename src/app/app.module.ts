@@ -33,6 +33,7 @@ import { ConfirmComponent } from '../app/components/confirm/confirm.component';
 
 // import { TasksModule } from './pages/tasks/tasks.module';
 import { AuthModule } from './pages/auth/auth.module';
+import { AngularFireAuthModule } from '@angular/fire/auth';
 
 @NgModule({
   declarations: [
@@ -56,7 +57,8 @@ import { AuthModule } from './pages/auth/auth.module';
     AngularFireStorageModule,
     // FlexLayoutModule,
     // TasksModule,
-    AuthModule
+    AuthModule,
+    AngularFireAuthModule
   ],
   providers: [AuthGuard, { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }],
   bootstrap: [AppComponent],

@@ -1,6 +1,6 @@
 @import '../../../styles.scss';
 
-.timesheet-list-card {
+/* .timesheet-list-card {
     position: absolute;
     top: 5px;
     left: 5px;
@@ -81,186 +81,245 @@
             padding-left: 15px;
         }
     }
-}
+} */
 
-.timesheet-brief-list {
-    .timesheet {
-        margin: 5px;
-        margin-bottom: 5px;
-        // background-color: #E0E0E0;
-        font-family: 'Open Sans Condensed', sans-serif;
-        padding: 0px 0px 10px;
-        // border-radius: 0;
-        mat-card-header {
-            .mat-card-header-text {
-                margin: 0;
-                display: none;
+$primary-color: #7E57C2;
+$secondary-color: lightgray;
+$font-family-primary: Roboto, "Helvetica Neue", sans-serif;
+$font-family-secondary: 'Open Sans Condensed', sans-serif;
+$font-size-large-extra: 18px;
+$font-size-large:   16px;
+$font-size-medium:  14px;
+$font-size-small:   12px;
+
+$padding-medium: 16px;
+$padding-small: 5px;
+$margin-medium: 16px;
+$margin-small: 5px;
+
+.timesheet {
+    margin: 5px;
+    // margin-bottom: 5px;
+    // padding: 0px 0px 10px;
+
+    mat-card { 
+        padding: 5px 0px 15px;
+        font-family: $font-family-secondary; 
+    }
+
+    &-brief {
+        .mat-card-header-text {
+            margin: 0;
+            display: none;
+        }
+        &-header {
+            font-size: 16px;
+            margin-top: 15px;
+            padding: 5px 10px 5px;
+            border-radius: 0px;
+            max-width: 275px;
+            margin-left: -16px;
+            overflow: hidden;
+            position: relative;
+            display: inline-block;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            font-weight: bold;
+            background-color: lightgrey;
+        }
+
+        &-time-consumed {
+            margin-right: 15px;
+            color: #fefefe;
+            background-color: #7E57C2;
+            margin-top: 15px;
+            padding: 5px 10px;
+            right: 0;
+            position: absolute;
+        }
+
+        .more-button {
+            position: absolute;
+            top: 0px;
+            right: 0px;
+        }
+    
+        &-description {
+            max-height: 75px;
+            @media screen and (max-width: 540px) {
+                height: auto;
             }
-            .timesheet-header {
-                font-size: 16px;
-                margin-top: 15px;
-                padding: 5px 10px 5px;
-                border-radius: 0px;
-                max-width: 275px;
-                margin-left: -16px;
-                overflow: hidden;
-                position: relative;
-                display: inline-block;
-                text-overflow: ellipsis;
-                white-space: nowrap;
-                font-weight: bold;
-                background-color: lightgrey;
-            }
-            .more-button {
-                position: absolute;
-                top: 0px;
-                right: 0px;
-            }
+            @include four-lines-paragraph();
+        }
+
+        .fab-action-button {
+            position: absolute;
+            right: 5px;
+            bottom: 5px;
+            background-color: $secondary-color;
+        }
+    }
+
+
+    &-detail {
+        .mat-card-header-text {
+            margin: 0;
+            // display: none;
+        }
+        .more-button {
+            position: absolute;
+            top: 0px;
+            right: 0px;
+        }
+        &-description {
+            line-height: 21px;
+            padding: 8px 16px 10px;
         }
 
         mat-card-content {
-            .timesheet-description {
-                max-height: 75px;
-                @media screen and (max-width: 540px) {
-                    height: auto;
-                }
-                @include four-lines-paragraph();
-    
-                /* animation-name: open-card;
-                animation-duration: 1s;
-                transition: transform .5s ease-out; */
-            }
-            .timesheet-detail {
-                margin-top: 1px;
-                /* animation-name: open-card;
-                animation-duration: 1s;
-                transition: transform .5s ease-out; */
-                .tasks-list-seperator {
-                    background-color: #777;
-                    padding: 5px 16px;
-                    font-weight: bold;
-                    color: #fff;
-                }
-                .task-list-card {
-                    /* position: absolute;
-                    top: 5px;
-                    left: 5px;
-                    right: 5px;
-                    bottom: 5px; */
-                    font-family: 'Open Sans Condensed', sans-serif;
-                    padding: 5px !important;
-                    margin-bottom: 1px;
-                    box-shadow: none;
-                    border-radius: 0;
-                    display: flex;
-                    height: 100%;
-                    flex-direction: column;
-                    
-                    mat-card-header {
-                        // background-color: #B39DDB;
-                        // color: #fefefe;
-                        color: #777;
-                        margin-top: 10px;
-                        .task-date {
-                            display: inline-block;
-                            padding: 3px 8px;
-                            background-color: darkgrey;
-                            margin: 2px 3px 5px -5px;
-                            font-size: 11px;
-                            font-weight: 900;
-                        }
-                    }
+            margin-bottom: 0px;
+        }
 
-                    mat-card-content {
-                        margin-bottom: 0px !important;
-                        .record-status {
-                            padding: 0px 10px;
-                            font-weight: bold;
-                            line-height: 18px;
-                            font-family: Roboto, "Helvetica Neue", sans-serif;
-                            margin: 10px 0 -10px;
-                            font-size: 12px;
-                        }
-                        .record-purpose {
-                            height: auto;
-                            // Below solution manage the multiline text wrap with ellipses on paragraph
-                            /* display: block;
-                            display: -webkit-box;
-                            -webkit-line-clamp: 2;
-                            -webkit-box-orient: vertical;
-                            overflow: hidden;
-                            text-overflow: ellipsis; */
-                            line-height: 21px;
-                            padding: 8px 10px 10px; // padding: 8px 16px 10px;
-                        }
-            
-                        .tags-container {
-                            height: 100%;
-                            min-height: 100%;
-                            min-width: 100%;
-                            width: 100%;
-                            flex-flow: row wrap;
-                            box-sizing: border-box;
-                            display: flex;
-                            padding: 5px 10px 5px; // padding: 5px 16px 5px;
-                        
-                            .tag-container {
-                                flex-direction: row;
-                                box-sizing: border-box;
-                                display: flex;
-                                place-content: center flex-start;
-                                align-items: center;
-                                background-color: lightgray;
-                                padding: 3px 8px;
-                                font-size: 12px;
-                                margin: 2px 3px 5px 0;
-                                .tag-color {
-                                    width: 8px;
-                                    height: 8px;
-                                    margin-right: 8px;
-                                    border-radius: 50%;
-                                    background-color: rgb(244, 67, 54);
-                                }
-                                .tags-label {
-                                    font-size: 11px;
-                                    border-radius: 2px;
-                                    margin: 8px 4px 0 0;
-                                    padding: 3px 8px;
-                                }
-                            }
-                        }
-                        
-                        .task-is-done {
-                            text-decoration: line-through;
-                        }
-                    }
-            
-                    .mat-card-header .mat-card-title {
-                        margin-bottom: -10px;
+        .tasks-list-seperator {
+            background-color: #777;
+            padding: 5px 16px;
+            font-weight: bold;
+            color: #fff;  
+            height: 40px;
+            font-size: 16px;
+            line-height: 40px;
+        }
+        .task-list-card {
+            font-family: $font-family-secondary;
+            padding: 5px !important;
+            margin-bottom: 1px;
+            box-shadow: none;
+            border-radius: 0;
+            display: flex;
+            height: 100%;
+            flex-direction: column;
+            border-bottom: 0.5px solid $secondary-color;
+
+            mat-card-header {
+                // background-color: #B39DDB;
+                // color: #fefefe;
+                color: #777;
+                margin-top: 10px;
+                .task-date {
+                    display: inline-block;
+                    padding: 3px 8px;
+                    background-color: darkgrey;
+                    margin: 2px 3px 5px -5px;
+                    font-size: 11px;
+                    font-weight: 900;
+                    color: black;
+                }
+                .task-time-consumed {
+                    margin-right: 15px;
+                    color: #fefefe;
+                    background-color: #7E57C2;
+                    margin-top: -27px;
+                    padding: 3px 8px;
+                    right: 0;
+                    position: absolute;
+                }
+            }
+
+            mat-card-content {
+                margin-bottom: 0px !important;
+                .record-status {
+                    padding: 0px 10px;
+                    font-weight: bold;
+                    line-height: 18px;
+                    font-family: Roboto, "Helvetica Neue", sans-serif;
+                    margin: 10px 0 -10px;
+                    font-size: 12px;
+                }
+                .record-purpose {
+                    height: auto;
+                    line-height: 21px;
+                    padding: 8px 10px 10px; // padding: 8px 16px 10px;
+                }
+    
+                .tags-container {
+                    height: 100%;
+                    min-height: 100%;
+                    min-width: 100%;
+                    width: 100%;
+                    flex-flow: row wrap;
+                    box-sizing: border-box;
+                    display: flex;
+                    padding: 5px 10px 5px; // padding: 5px 16px 5px;
+                
+                    .tag-container {
+                        flex-direction: row;
+                        box-sizing: border-box;
+                        display: flex;
+                        place-content: center flex-start;
+                        align-items: center;
+                        background-color: lightgray;
+                        padding: 3px 8px;
                         font-size: 12px;
-                    }
-                
-                    .more-button {
-                        position: absolute;
-                        /* top: 15px;
-                        right: 10px; */
-                        top: 0px;
-                        right: -4px;
-                    }
-                
-                    mat-card-actions {
-                        bottom: 0;
-                        margin-bottom: 0px;
-                        position: absolute;
-                        button {
-                            border-radius: 0px;
+                        margin: 2px 3px 5px 0;
+                        .tag-color {
+                            width: 8px;
+                            height: 8px;
+                            margin-right: 8px;
+                            border-radius: 50%;
+                            background-color: rgb(244, 67, 54);
+                        }
+                        .tags-label {
+                            font-size: 11px;
+                            border-radius: 2px;
+                            margin: 8px 4px 0 0;
+                            padding: 3px 8px;
                         }
                     }
                 }
+                
+                .task-is-done {
+                    text-decoration: line-through;
+                }
+            }
+    
+            .mat-card-header .mat-card-title {
+                margin-bottom: -10px;
+                font-size: 12px;
+            }
+        
+            .more-button {
+                position: absolute;
+                /* top: 15px;
+                right: 10px; */
+                top: 0px;
+                right: -4px;
+            }
+        }
+
+        .fab-action-button {
+            position: absolute;
+            margin-right: -10px;
+            background-color: $secondary-color;
+            right: 20px;
+        }
+
+        // transition-delay: .5s;
+        animation-name: open-with-delay;
+        animation-duration: 1s;
+        // animation-delay: 0.5s;
+    }
+
+    &-actions {
+        margin: 0px;
+        padding: 0px 15px;
+        // background-color: $secondary-color;
+        button {
+            // border-radius: 0px;
+            &:not(:first-child) {
+                margin-left: 10px;
             }
         }
     }
-        
 }
 
 @keyframes open-card {
@@ -271,12 +330,164 @@
     // 100% { transform: rotateX(180deg); }
 }
 
-.time-container {
-    margin-right: 10px;
-    color: #fefefe;
-    background-color: #7E57C2;
-    margin-top: 15px;
-    padding: 5px 10px;
-    right: 0;
-    position: absolute;
+.task-list-card {
+    /* position: absolute;
+    top: 5px;
+    left: 5px;
+    right: 5px;
+    bottom: 5px; */
+    font-family: 'Open Sans Condensed', sans-serif;
+    padding: 5px !important;
+    margin-bottom: 10px;
+
+    .mat-card-header .mat-card-title {
+        margin-bottom: -10px;
+        font-size: 12px;
+    }
+
+    .more-button {
+        position: absolute;
+        /* top: 15px;
+        right: 10px; */
+        top: 0px;
+        right: -4px;
+    }
+
+    mat-card-actions {
+        bottom: 0;
+        margin-bottom: 0px;
+        position: absolute;
+        button {
+            border-radius: 0px;
+        }
+    }
+
+    .card-content-container {
+        display: flex;
+        height: 100%;
+        flex-direction: column;
+        // background-color: #D1C4E9;
+
+        mat-card-header {
+            // background-color: #B39DDB;
+            // color: #fefefe;
+            margin: 0 -6px !important;
+            color: #777;
+            .record-status {
+                padding-top: 10px;
+                border-radius: 0px;
+                max-width: 275px;
+                overflow: hidden;
+                position: relative;
+                display: inline-block;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+                font-weight: bold;  
+
+                line-height: 24px;
+                font-family: Roboto,"Helvetica Neue",sans-serif;
+            }
+            /* .mat-card-header-text {
+                margin: 0 !important;
+            } */
+        }
+
+        
+
+        mat-card-content {
+            margin-bottom: 0px !important;
+            .record-purpose {
+                max-height: 30px;
+                // border-bottom: 0.5px solid #9E9E9E;
+    
+                // Below solution manage the multiline text wrap with ellipses on paragraph
+                display: block;
+                display: -webkit-box;
+                -webkit-line-clamp: 2;
+                -webkit-box-orient: vertical;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                line-height: 21px;
+                padding: 8px 10px 10px; // padding: 8px 16px 10px;
+            }
+
+            .tags-container {
+                height: 100%;
+                min-height: 100%;
+                min-width: 100%;
+                width: 100%;
+                flex-flow: row wrap;
+                box-sizing: border-box;
+                display: flex;
+                padding: 5px 10px 5px; // padding: 5px 16px 5px;
+            
+                .tag-container {
+                    flex-direction: row;
+                    box-sizing: border-box;
+                    display: flex;
+                    place-content: center flex-start;
+                    align-items: center;
+                    background-color: lightgray;
+                    padding: 3px 8px;
+                    font-size: 12px;
+                    margin: 2px 3px 5px 0;
+                    .tag-color {
+                        width: 8px;
+                        height: 8px;
+                        margin-right: 8px;
+                        border-radius: 50%;
+                        background-color: rgb(244, 67, 54);
+                    }
+                    .tags-label {
+                        font-size: 11px;
+                        border-radius: 2px;
+                        margin: 8px 4px 0 0;
+                        padding: 3px 8px;
+                    }
+                }
+            }
+            
+            .task-is-done {
+                text-decoration: line-through;
+            }
+            
+            .task-date {
+                display: inline-block;
+                padding: 3px 8px;
+                background-color: darkgrey;
+                margin: 2px 3px 5px 0;
+                font-size: 11px;
+                font-weight: 900;
+            }
+        }
+    }
 }
+
+@keyframes open-with-delay {
+    0% {
+        height: 0%; 
+        opacity: 0; 
+        // transform: rotateX(-25deg); 
+    }
+    25% { 
+        height: 25%;
+        opacity: 0.25;
+        // transform: rotateX(45deg); 
+    }
+    50% {
+        height: 50%; 
+        opacity: 0.5;
+        // transform: rotateX(90deg); 
+    }
+    75% { 
+        height: 75%;
+        opacity: 0.75;
+        // transform: rotateX(-25deg); 
+    }
+    100% { 
+        height: 100%;
+        opacity: 1;
+        // transform: rotateX(180deg);
+    }
+}
+

@@ -1,5 +1,5 @@
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-import { MatDialogRef } from '@angular/material/dialog';
+import { Component, OnInit, ViewEncapsulation, Inject } from '@angular/core';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { TaskService } from '../../tasks/task.service';
 import { AppService } from '../../../app.service';
 
@@ -17,6 +17,7 @@ export class BrowseComponent implements OnInit {
 
   constructor(
     private _dialogRef: MatDialogRef<BrowseComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: any,
     private _taskService: TaskService,
     private _appService: AppService
   ) { }
@@ -27,7 +28,12 @@ export class BrowseComponent implements OnInit {
       this.tasks = [];
       response.forEach(task => {
         task.time = task.schedule ? this._appService.timeDifference(task.schedule) : task.schedule;
-        console.log(task);
+        if (this.data.tasks && this.data.tasks.length) {
+          let item = this.data.tasks.find((t) => { return t.id == task.id });
+          if (item) {
+            task.isChecked = true;
+          }
+        }
         this.tasks.push(task);
       });
       // this.tasks = response;

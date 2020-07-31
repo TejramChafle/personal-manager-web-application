@@ -23,13 +23,11 @@
                             <button mat-raised-button type="submit" color="primary" class="login-form-field" [disabled]="loading">
                                 {{loading ? 'Please wait..' : 'Register'}}</button>
                         </div>
-                        <div class="login-form-field" align="center">
-                            <hr><br>
-                            <a routerLink="/login"><b>ALREADY HAVING ACCOUNT? LOGIN</b></a>
-                            <br><br>
-                        </div>
                     </form>
                 </mat-card-content>
+                <mat-card-actions align="center">
+                    <button type="button" mat-button color="primary" (click)="onSignin()"><b>Already having account? Signin</b></button>
+                </mat-card-actions>
             </mat-card>
         </mat-grid-tile>
     </mat-grid-list>
