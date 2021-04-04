@@ -3,6 +3,9 @@ import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Observable } from 'rxjs';
 import { map, shareReplay } from 'rxjs/operators';
 import { AuthService } from '../../pages/auth/auth.service';
+import { MatDialog } from '@angular/material/dialog';
+import { SearchComponent } from '../search/search.component';
+import { AppService } from 'src/app/app.service';
 
 @Component({
   selector: 'personal-manager-navigation',
@@ -26,12 +29,33 @@ export class NavigationComponent implements AfterContentChecked {
       shareReplay()
     );
 
-  constructor(private breakpointObserver: BreakpointObserver, public _authService: AuthService) {
+  constructor(
+    private breakpointObserver: BreakpointObserver,
+    public _authService: AuthService,
+    private _appService: AppService,
+    private _dialog: MatDialog) {
     // console.log(history.state);
   }
 
   ngAfterContentChecked() {
     this.pageTitle = history.state.title || 'Personal Manager';
+  }
+
+  onNavbarButtonClick(param) {
+    // console.log('onNavbarButtonClick param: ', param);
+    let dialogRef = this._dialog.open(SearchComponent, {
+      width: '90%',
+      /* data: {
+        title: 'Delete?',
+        message: 'Are you sure you want to delete this grocery record?',
+        okayText: 'Yes',
+        cancelText: 'No'
+      } */
+    });
+    
+    dialogRef.afterClosed().subscribe((response) => {
+      this._appService.dialogRef.emit({ path: window.location.pathname, action: param, data: response });
+    });
   }
 
 }

@@ -1,7 +1,7 @@
 
 <!-- ADD NEW RECORD -->
 <div class="fab-button-bottom-right">
-    <button mat-fab color="primary" (click)="openTimesheet()">
+    <button mat-fab color="primary" (click)="openTimesheet()" title="Add a new timesheet">
         <mat-icon>add</mat-icon>
     </button>
 </div>
@@ -60,28 +60,12 @@
 </mat-grid-list> -->
 
 
-
-<!-- EMPTY RECORDS -->
-<div class="empty-record-container" *ngIf="timesheets && timesheets.length == 0">
-    <img src="assets/icons/files.svg">
-    <h2>No timesheets found here</h2>
-    <h4>Any new timesheet will appear here</h4>
-</div>
-
-
-<!-- SPINNER -->
-<div class="spinner-container" *ngIf="!timesheets">
-    <mat-spinner></mat-spinner>
-</div>
-
-
 <div class="timesheet" *ngFor="let timesheet of timesheets">
-
     <!-- TIMESHEET BRIEF CARD -->
     <mat-card class="timesheet-brief" (click)="timesheet.showDetail=!timesheet.showDetail" *ngIf="!timesheet.showDetail">
         <mat-card-header>
             <div class="timesheet-brief-header">{{timesheet.date | date:'dd MMM, yyyy'}}</div>
-            <div class="timesheet-brief-time-consumed" *ngIf="timesheet.time && (timesheet.time.hours || timesheet.time.minutes)">
+            <div class="timesheet-brief-time-consumed" *ngIf="timesheet.time && (timesheet.time.hours || timesheet.time.minutes)" title="Total time logged">
                 {{timesheet.time.days}} Days, {{timesheet.time.hours}} Hours, {{timesheet.time.minutes}} Minutes
             </div>
         </mat-card-header>
@@ -89,7 +73,7 @@
             <div class="timesheet-brief-description">
                 {{timesheet.description}}
             </div>
-            <button mat-mini-fab class="fab-action-button" (click)="timesheet.showDetail=!timesheet.showDetail">
+            <button mat-mini-fab class="fab-action-button" (click)="timesheet.showDetail=!timesheet.showDetail" title="Expand">
                 <mat-icon>expand_more</mat-icon>
             </button>
         </mat-card-content>
@@ -100,7 +84,7 @@
         <mat-card-header>
             <div class="timesheet-brief-header">{{timesheet.date | date:'dd MMM, yyyy'}}</div>
             <div class="timesheet-brief-time-consumed" 
-                *ngIf="timesheet.time && (timesheet.time.hours || timesheet.time.minutes)">
+                *ngIf="timesheet.time && (timesheet.time.hours || timesheet.time.minutes)" title="Total time logged">
                 {{timesheet.time.days}} Days, {{timesheet.time.hours}} Hours, {{timesheet.time.minutes}} Minutes
             </div>
             <!-- <button mat-icon-button class="more-button" [matMenuTriggerFor]="menu" aria-label="Toggle menu" >
@@ -117,7 +101,7 @@
             </div>
             <div class="tasks-list-seperator">
                 TASKS
-                <button mat-mini-fab class="fab-action-button" (click)="timesheet.showDetail=!timesheet.showDetail">
+                <button mat-mini-fab class="fab-action-button" (click)="timesheet.showDetail=!timesheet.showDetail" title="Collapse">
                     <mat-icon>expand_less</mat-icon>
                 </button>
             </div>
@@ -126,7 +110,7 @@
                     <mat-card-title>
                         <div class="task-date" *ngIf="task.schedule && task.schedule.startDate">{{task.schedule?.startDate|date}}</div>
                         <div class="task-time-consumed" 
-                            *ngIf="task.time && (task.time.hours || task.time.minutes)">
+                            *ngIf="task.time && (task.time.hours || task.time.minutes)" title="Time taken for task">
                             {{task.time.days}} Days, {{task.time.hours}} Hours, {{task.time.minutes}} Minutes
                         </div>
                     </mat-card-title>
@@ -155,13 +139,25 @@
                 <!-- <button mat-flat-button color="accent" (click)="timesheet.showDetail=!timesheet.showDetail">HIDE</button>
                 <button mat-flat-button color="primary" (click)="openTimesheet(timesheet)">EDIT</button>
                 <button mat-flat-button color="warn" (click)="onDelete(timesheet)">DELETE</button> -->
-                <button mat-mini-fab color="primary" (click)="openTimesheet(timesheet)">
+                <button mat-mini-fab color="primary" (click)="openTimesheet(timesheet)" title="Edit">
                     <mat-icon>edit</mat-icon>
                 </button>
-                <button mat-mini-fab color="warn" (click)="onDelete(timesheet)">
+                <button mat-mini-fab color="warn" (click)="onDelete(timesheet)" title="Delete">
                     <mat-icon>delete</mat-icon>
                 </button>
             </div>
         </mat-card-actions>
     </mat-card>
+</div>
+
+<!-- EMPTY RECORDS -->
+<div class="empty-record-container" *ngIf="timesheets && timesheets.length == 0">
+    <img src="assets/icons/files.svg">
+    <h2>No timesheets found</h2>
+    <h4>Any new timesheet will appear here</h4>
+</div>
+
+<!-- SPINNER -->
+<div class="spinner-container" *ngIf="!timesheets">
+    <mat-spinner></mat-spinner>
 </div>

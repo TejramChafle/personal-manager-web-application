@@ -21,6 +21,16 @@
                         <div class="record-status" [ngClass]="{'task-is-done' : task.isDone}">
                             {{task.title | uppercase}}
                         </div>
+                        <div class="card-action-buttons">
+                            <button mat-icon-button (click)="editTask(task, 'isStarred')">
+                                <mat-icon *ngIf="!task.isStarred">star_outline</mat-icon>
+                                <mat-icon *ngIf="task.isStarred" color="accent">star</mat-icon>
+                            </button>
+                            <button mat-icon-button (click)="editTask(task, 'isImportant')">
+                                <mat-icon *ngIf="!task.isImportant">error_outline</mat-icon>
+                                <mat-icon *ngIf="task.isImportant" color="warn">error</mat-icon>
+                            </button>
+                        </div>
                         <button mat-icon-button class="more-button" [matMenuTriggerFor]="menu" aria-label="Toggle menu">
                             <mat-icon>more_vert</mat-icon>
                         </button>
@@ -72,7 +82,7 @@
 <!-- EMPTY RECORDS -->
 <div class="empty-record-container" *ngIf="tasks && tasks.length == 0">
     <img src="assets/icons/files.svg">
-    <h2>No tasks found here</h2>
+    <h2>No tasks found</h2>
     <h4>Any new task will appear here</h4>
 </div>
 

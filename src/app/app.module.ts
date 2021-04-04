@@ -34,6 +34,7 @@ import { ConfirmComponent } from '../app/components/confirm/confirm.component';
 // import { TasksModule } from './pages/tasks/tasks.module';
 import { AuthModule } from './pages/auth/auth.module';
 import { AngularFireAuthModule } from '@angular/fire/auth';
+import { SearchComponent } from './components/search/search.component';
 
 @NgModule({
   declarations: [
@@ -44,7 +45,8 @@ import { AngularFireAuthModule } from '@angular/fire/auth';
     // SignupComponent,
     ProfileComponent,
     UploadPhotoComponent,
-    ConfirmComponent
+    ConfirmComponent,
+    SearchComponent
   ],
   imports: [
     BrowserModule,
@@ -64,7 +66,8 @@ import { AngularFireAuthModule } from '@angular/fire/auth';
   bootstrap: [AppComponent],
   entryComponents: [
     UploadPhotoComponent,
-    ConfirmComponent
+    ConfirmComponent,
+    SearchComponent
   ]
 })
 export class AppModule { }

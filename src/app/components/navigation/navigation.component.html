@@ -6,7 +6,12 @@
 				<div class="profile-picture">
 					<img [src]="_authService.user.profilePicture || 'http://www.cse.mrt.ac.lk/images/people/profile.jpg'" alt="Profile picture of user">
 				</div>
-				{{_authService.user.displayName}}
+				<div *ngIf="_authService.user.displayName; else buttonTemplate">{{_authService.user.displayName}}</div>
+				<ng-template #buttonTemplate>
+					<a routerLink="profile">
+						<button mat-button class="edit-profile-button" (click)="(isHandset || isTablet) && drawer.toggle()" >Edit Profile</button>
+					</a>
+				</ng-template>
 			</div>
 			<!-- Menu -->
 		</mat-toolbar>
@@ -57,6 +62,14 @@
 				<mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
 			</button>
 			<span>{{pageTitle}}</span>
+			<div class="navbar-button">
+				<button mat-icon-button (click)="onNavbarButtonClick('filter')">
+					<mat-icon>filter_list_alt</mat-icon>
+				</button>
+				<button mat-icon-button (click)="onNavbarButtonClick('search')">
+					<mat-icon>search</mat-icon>
+				</button>
+			</div>
 		</mat-toolbar>
 		<!-- Add Content Here -->
 		<div style="padding:10px; background-color: #ebebeb;"><router-outlet></router-outlet></div>

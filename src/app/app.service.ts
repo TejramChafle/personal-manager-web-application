@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, EventEmitter } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 
@@ -7,6 +7,8 @@ import { Router } from '@angular/router';
 })
 
 export class AppService {
+  
+  dialogRef = new EventEmitter();
 
   constructor(private _snackBar: MatSnackBar, private _router: Router) {
   }

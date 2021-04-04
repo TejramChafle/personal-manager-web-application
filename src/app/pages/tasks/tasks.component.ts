@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { TaskComponent } from './task/task.component';
 import { AppService } from '../../app.service';
@@ -6,6 +6,7 @@ import { Breakpoints, BreakpointObserver } from '@angular/cdk/layout';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ConfirmComponent } from '../../components/confirm/confirm.component';
 import { TaskService } from './task.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'personal-manager-tasks',
@@ -13,10 +14,11 @@ import { TaskService } from './task.service';
   styleUrls: ['./tasks.component.scss']
 })
 
-export class TasksComponent implements OnInit {
+export class TasksComponent implements OnInit, OnDestroy {
   tasks: Array<any>;
   loading = false;
   gridCols: number;
+  subscription: Subscription;
 
   constructor(
     private _dialog: MatDialog,
@@ -43,6 +45,11 @@ export class TasksComponent implements OnInit {
           this.gridCols = 3;
         }
       }
+    });
+
+    // On model service subsciorion
+    this.subscription = this._appService.dialogRef.subscribe((response) => {
+      console.log('dialogRef task.component', response);
     });
   }
 
@@ -126,5 +133,9 @@ export class TasksComponent implements OnInit {
       console.log(error);
       snak.dismiss();
     });
+  }
+
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
   }
 }

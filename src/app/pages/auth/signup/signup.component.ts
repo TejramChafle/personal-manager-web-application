@@ -18,7 +18,7 @@ export class SignupComponent implements OnInit {
   loading = false;
 
   constructor(
-    private _authService: AuthService, 
+    public _authService: AuthService, 
     private _appSerivce: AppService, 
     private _router: Router, 
     private _breakpointObserver: BreakpointObserver) { 

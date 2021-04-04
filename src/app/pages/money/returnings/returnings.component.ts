@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { MoneyService } from '../money.service';
 import { Breakpoints, BreakpointObserver } from '@angular/cdk/layout';
 import { Router, NavigationExtras } from '@angular/router';
@@ -6,6 +6,7 @@ import { AppService } from '../../../app.service';
 import { DomSanitizer } from '@angular/platform-browser';
 import { ConfirmComponent } from '../../../components/confirm/confirm.component';
 import { MatDialog } from '@angular/material/dialog';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'personal-assistant-returnings',
@@ -13,9 +14,10 @@ import { MatDialog } from '@angular/material/dialog';
   styleUrls: ['./returnings.component.scss']
 })
 
-export class ReturningsComponent implements OnInit {
+export class ReturningsComponent implements OnInit, OnDestroy {
   returnings: Array<any>;
   gridCols: number;
+  subscription: Subscription;
 
   constructor(
     public _moneyService: MoneyService,
@@ -48,14 +50,22 @@ export class ReturningsComponent implements OnInit {
 
   ngOnInit() {
     this._moneyService.getReturnings().subscribe((response) => {
-      // console.log(response);
-      this.returnings = response;
-      this.returnings.forEach((returning) => {
-        returning.expectedReturnDate = this._appService.formatDate(returning.expectedReturnDate);
-        returning['whatsAppUrl'] = this._domSanitizer.bypassSecurityTrustResourceUrl('whatsapp://send?abid=+919482153795&text=Dear+' + returning.person.replace(" ", "+") + '%2C+This+is+a+reminder+to+the+borrowings+of+Rs.+' + returning.amount + '+due+on+dated+' + returning.expectedReturnDate + '.+Kindly+return+the+amount+on+or+before+the+due+date.');
-        returning['smsUrl'] = this._domSanitizer.bypassSecurityTrustResourceUrl('sms://+919482153795?body=Dear+' + returning.person.replace(" ", "+") + '%2C+This+is+a+reminder+to+the+borrowings+of+Rs.+' + returning.amount + '+due+on+dated+' + returning.expectedReturnDate + '.+Kindly+return+the+amount+on+or+before+the+due+date.');
+      console.log(response);
+      this.returnings = [];
+      response.forEach((returning) => {
+        returning.expectedReturnDateInWords = this._appService.formatDate(returning.expectedReturnDate);
+        returning['whatsAppUrl'] = this._domSanitizer.bypassSecurityTrustResourceUrl('whatsapp://send?abid=+919482153795&text=Dear+' + returning.person.replace(" ", "+") + '%2C+This+is+a+reminder+to+the+borrowings+of+Rs.+' + returning.amount + '+due+on+dated+' + returning.expectedReturnDateInWords + '.+Kindly+return+the+amount+on+or+before+the+due+date.');
+        returning['smsUrl'] = this._domSanitizer.bypassSecurityTrustResourceUrl('sms://+919482153795?body=Dear ' + returning.person+ '%2C This is a reminder to the borrowings of Rs. ' + returning.amount + ' due on dated ' + returning.expectedReturnDateInWords + '. Kindly return the amount on or before the due date.');
         // console.log(returning['smsUrl']);
-      })
+        this.returnings.push(returning);
+      });
+      console.log(this.returnings);
+    });
+
+    
+    // On model service subsciorion
+    this.subscription = this._appService.dialogRef.subscribe((response) => {
+      console.log('dialogRef returnings.component', response);
     });
   }
 
@@ -95,5 +105,8 @@ export class ReturningsComponent implements OnInit {
     });
   }
 
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
+  }
 
 }

@@ -5,7 +5,7 @@
 </div>
 
 <!-- ITEMS -->
-<mat-grid-list [cols]="gridCols" rowHeight="225px" *ngIf="returnings">
+<mat-grid-list [cols]="gridCols" rowHeight="225px" *ngIf="returnings && returnings.length !== 0">
     <mat-grid-tile
         *ngFor="let returning of returnings"
         colspan="1"
@@ -110,6 +110,13 @@
         </mat-card>
     </mat-grid-tile>
 </mat-grid-list>
+
+<!-- EMPTY RECORDS -->
+<div class="empty-record-container" *ngIf="returnings && returnings.length == 0">
+    <img src="assets/icons/files.svg">
+    <h2>No returnings found</h2>
+    <h4>Any new returning will appear here</h4>
+</div>
 
 
 <!-- SPINNER -->

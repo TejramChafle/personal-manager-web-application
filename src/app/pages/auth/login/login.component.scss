@@ -32,16 +32,10 @@
 
     .login-card {
         @media screen and (max-width: 640px){
-            margin-top: 25%;
+            // margin-top: 25%;
         }
         @media screen and (min-width: 641px){
             margin-top: 5%;
         }
     }
-}
-
-.google-login-btn {
-    width: 95%;
-    border: 1px solid #eee;
-    color: #777;
 }

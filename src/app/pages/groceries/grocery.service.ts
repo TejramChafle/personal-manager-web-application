@@ -19,7 +19,7 @@ export class GroceryService {
 
   public saveGrocery(data): Observable<any> {
     data.user = this._authService.user.localId;
-    return this._http.post(environment.API_URL + 'groceries.json', data).pipe(
+    return this._http.post(environment.API_URL + 'groceries.json?', data).pipe(
       catchError((error) => {
         this._appService.handleError(error);
         return throwError(error);
@@ -29,7 +29,9 @@ export class GroceryService {
 
 
   public getGroceries(): Observable<any> {
-    return this._http.get(environment.API_URL + 'groceries.json/?user=' + this._authService.user.localId).pipe(
+    let filter = 'orderBy="user"&equalTo="' + this._authService.user.localId + '"';
+    // filter += 'limitToFirst=10';
+    return this._http.get(environment.API_URL + 'groceries.json?' + filter).pipe(
       map((response) => {
         let result: Array<any> = [];
         for (let key in response) {
@@ -56,7 +58,7 @@ export class GroceryService {
 
   // DELETE
   public deleteGrocery(data): Observable<any> {
-    return this._http.delete(environment.API_URL + 'groceries/' + data.id + '.json').pipe(
+    return this._http.delete(environment.API_URL + 'groceries/' + data.id + '.json?').pipe(
       catchError((error) => {
         this._appService.handleError(error);
         return throwError(error);
@@ -67,7 +69,7 @@ export class GroceryService {
   // UPDATE
   public updateGrocery(data): Observable<any> {
     data.user = this._authService.user.localId;
-    return this._http.put(environment.API_URL + 'groceries/' + data.id + '.json', data).pipe(
+    return this._http.put(environment.API_URL + 'groceries/' + data.id + '.json?', data).pipe(
       catchError((error) => {
         this._appService.handleError(error);
         return throwError(error);

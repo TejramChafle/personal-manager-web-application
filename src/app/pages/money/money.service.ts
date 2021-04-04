@@ -21,7 +21,7 @@ export class MoneyService {
   }
 
   public saveReturning(data): Observable<any> {
-    return this._http.post(environment.API_URL + 'returnings.json', data).pipe(
+    return this._http.post(environment.API_URL + 'returnings.json?', data).pipe(
       catchError((error) => {
         this._appService.handleError(error);
         return throwError(error);
@@ -31,7 +31,8 @@ export class MoneyService {
 
 
   public getReturnings(): Observable<any> {
-    return this._http.get(environment.API_URL + 'returnings.json/?user=' + this._authService.user.localId).pipe(
+    let filter = 'orderBy="user"&equalTo="' + this._authService.user.localId + '"';
+    return this._http.get(environment.API_URL + 'returnings.json?' + filter).pipe(
       map((response) => {
         let result: Array<Returning> = [];
         for (let key in response) {
@@ -60,7 +61,7 @@ export class MoneyService {
 
   // DELETE
   public deleteReturning(data): Observable<any> {
-    return this._http.delete(environment.API_URL + 'returnings/' + data.id + '.json').pipe(
+    return this._http.delete(environment.API_URL + 'returnings/' + data.id + '.json?').pipe(
       catchError((error) => {
         this._appService.handleError(error);
         return throwError(error);
@@ -70,7 +71,7 @@ export class MoneyService {
 
   // UPDATE
   public updateReturning(data): Observable<any> {
-    return this._http.put(environment.API_URL + 'returnings/' + data.id + '.json', data).pipe(
+    return this._http.put(environment.API_URL + 'returnings/' + data.id + '.json?', data).pipe(
       catchError((error) => {
         this._appService.handleError(error);
         return throwError(error);
@@ -82,7 +83,7 @@ export class MoneyService {
   // SAVE EXPENDITURE
   public saveExpenditure(data): Observable<any> {
     data.user = this._authService.user.localId;
-    return this._http.post(environment.API_URL + 'expenditures.json', data).pipe(
+    return this._http.post(environment.API_URL + 'expenditures.json?', data).pipe(
       catchError((error) => {
         this._appService.handleError(error);
         return throwError(error);
@@ -92,7 +93,8 @@ export class MoneyService {
 
   // GET EXPENDITURE
   public getExpenditures(): Observable<any> {
-    return this._http.get(environment.API_URL + 'expenditures.json').pipe(
+    let filter = 'orderBy="user"&equalTo="' + this._authService.user.localId + '"';
+    return this._http.get(environment.API_URL + 'expenditures.json?' + filter).pipe(
       map((response) => {
         let result = [];
         for (let key in response) {
@@ -116,7 +118,7 @@ export class MoneyService {
 
   // DELETE EXPENDITURE
   public deleteExpenditure(data): Observable<any> {
-    return this._http.delete(environment.API_URL + 'expenditures/' + data.id + '.json').pipe(
+    return this._http.delete(environment.API_URL + 'expenditures/' + data.id + '.json?').pipe(
       catchError((error) => {
         this._appService.handleError(error);
         return throwError(error);
@@ -127,7 +129,7 @@ export class MoneyService {
   // UPDATE EXPENDITURE
   public updateExpenditure(data): Observable<any> {
     data.user = this._authService.user.localId;
-    return this._http.put(environment.API_URL + 'expenditures/' + data.id + '.json', data).pipe(
+    return this._http.put(environment.API_URL + 'expenditures/' + data.id + '.json?', data).pipe(
       catchError((error) => {
         this._appService.handleError(error);
         return throwError(error);

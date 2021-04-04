@@ -16,7 +16,7 @@ export class TimesheetService {
 
   public saveTimesheet(data): Observable<any> {
     data.user = this._authService.user.localId;
-    return this._http.post(environment.API_URL + 'timesheets.json', data).pipe(
+    return this._http.post(environment.API_URL + 'timesheets.json?', data).pipe(
       catchError((error) => {
         this._appService.handleError(error);
         return throwError(error);
@@ -26,7 +26,8 @@ export class TimesheetService {
 
 
   public getTimesheets(): Observable<any> {
-    return this._http.get(environment.API_URL + 'timesheets.json/').pipe(
+    let filter = 'orderBy="user"&equalTo="' + this._authService.user.localId + '"';
+    return this._http.get(environment.API_URL + 'timesheets.json?' + filter).pipe(
       map((response) => {
         console.log(response);
         let result: Array<any> = [];
@@ -53,7 +54,7 @@ export class TimesheetService {
 
   // DELETE
   public deleteTimesheet(data): Observable<any> {
-    return this._http.delete(environment.API_URL + 'timesheets/' + data.id + '.json').pipe(
+    return this._http.delete(environment.API_URL + 'timesheets/' + data.id + '.json?').pipe(
       catchError((error) => {
         this._appService.handleError(error);
         return throwError(error);
@@ -64,7 +65,7 @@ export class TimesheetService {
   // UPDATE
   public updateTimesheet(data): Observable<any> {
     data.user = this._authService.user.localId;
-    return this._http.put(environment.API_URL + 'timesheets/' + data.id + '.json', data).pipe(
+    return this._http.put(environment.API_URL + 'timesheets/' + data.id + '.json?', data).pipe(
       catchError((error) => {
         this._appService.handleError(error);
         return throwError(error);

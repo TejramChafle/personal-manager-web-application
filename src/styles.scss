@@ -59,3 +59,26 @@ form {
     line-height: 21px;
     padding: 8px 16px 10px;
 }
+
+.custom-btn, .mat-stroked-button {
+    margin: 5px auto !important;
+    width: 95%;
+}
+
+.google-login-btn {
+    width: 95%;
+    border: 1px solid #eee !important;
+    color: #777;
+}
+
+.facebook-login-btn {
+    width: 95%;
+    // border: ;
+    color: #fff;
+    background-color: #3b5998;
+}
+
+.navbar-button {
+    position: absolute;
+    right: 15px;
+}

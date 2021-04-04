@@ -105,6 +105,9 @@ export class GroceryComponent implements OnInit {
 			data.id = this.id;
 			data.updatedDate = new Date();
 			data.createdDate = this.data.grocery.createdDate;
+
+			console.log('data:', data );
+
 			// this.submitInExpenditure(data);
 			this._groceryService.updateGrocery(data).subscribe((response) => {
 				console.log(response);

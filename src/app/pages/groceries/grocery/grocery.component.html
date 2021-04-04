@@ -26,7 +26,7 @@
 
             <div>
                 <mat-label for="item">ITEMS</mat-label>
-                <div class="item-container" *ngFor="let itemCtrl of groceryControl; let i = index;">
+                <div class="item-container grocery-items" *ngFor="let itemCtrl of groceryControl; let i = index;" [ngClass]="{'grocery-items-is-paid':data.isPaid}">
                     <input type="text" [name]="i" [formControl]="groceryControl[i]">
                     <button mat-mini-fab type="button" color="warn" aria-label="Remove" (click)="removeItem(itemCtrl)"
                         *ngIf="!data.isPaid">

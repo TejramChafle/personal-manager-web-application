@@ -42,3 +42,15 @@
     position: absolute;
     bottom: 0;
 }
+
+.grocery-items {
+    input {
+        width: 83%;
+        box-sizing: border-box;
+    }
+    &-is-paid {
+        input {
+            width: 100%;
+        }
+    }
+}

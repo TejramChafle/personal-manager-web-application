@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { AuthService } from '../auth.service';
 import { Router } from '@angular/router';
@@ -9,7 +9,8 @@ import { map } from 'rxjs/operators';
 @Component({
   selector: 'personal-assistant-login',
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.scss']
+  styleUrls: ['./login.component.scss'],
+  // encapsulation: ViewEncapsulation.None
 })
 
 export class LoginComponent implements OnInit {
