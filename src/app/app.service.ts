@@ -1,6 +1,7 @@
 import { Injectable, EventEmitter } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
+import { pages } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -9,8 +10,21 @@ import { Router } from '@angular/router';
 export class AppService {
   
   dialogRef = new EventEmitter();
+  searchFieldsEnabler = {
+    date: [pages.EXPENDITURE, pages.RETURNING, pages.REMINDER, pages.TASK, pages.GROCERY, pages.LEARNING, pages.TIMESHEET],
+    type: [pages.RETURNING],
+    amount: [pages.EXPENDITURE, pages.GROCERY, pages.RETURNING],
+    person: [pages.RETURNING],
+    expectedReturnDate: [pages.RETURNING],
+    paymentMethod: [pages.EXPENDITURE, pages.RETURNING],
+    paymentStatus: [pages.EXPENDITURE],
+    purpose: [pages.EXPENDITURE, pages.GROCERY],
+    place: [pages.EXPENDITURE, pages.GROCERY]
+  };
 
-  constructor(private _snackBar: MatSnackBar, private _router: Router) {
+  constructor(
+    private _snackBar: MatSnackBar, 
+    private _router: Router) {
   }
 
   public actionMessage(message: { title: string, text: string }) {

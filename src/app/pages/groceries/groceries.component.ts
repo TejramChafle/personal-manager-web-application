@@ -53,7 +53,12 @@ export class GroceriesComponent implements OnInit {
       response.forEach(element => {
         element.itemDescription = element.items.toString().replace(/,/g,", ");
       });
-      this.groceries = response;
+      // Sort the data by created date
+      this.groceries = response.sort((a, b) => {
+        let da = new Date(a.createdDate);
+        let db = new Date(b.createdDate);
+        return db.getTime() - da.getTime();
+      });
     }, (error) => {
       if (error.status == 401 && error.statusText == "Unauthorized") {
       } else {

@@ -1,15 +1,13 @@
-<!-- <mat-card class="returnings-card">
-    <mat-card-header>
-        <mat-card-title>Search</mat-card-title>
-    </mat-card-header>
-
-    <mat-card-content>
-        
-    </mat-card-content>
-</mat-card> -->
 <form [formGroup]="searchForm" (ngSubmit)="onSubmit(searchForm)">
 
-    <mat-form-field class="form-field">
+    <mat-form-field class="form-field" *ngIf="enabledFields.date">
+        <mat-label>Date</mat-label>
+        <input matInput type="date" formControlName="date">
+        <mat-error *ngIf="searchForm.get('date').invalid && searchForm.get('date').touched">Please enter date</mat-error>
+    </mat-form-field>
+
+    <!-- BORROWING FILEDS -->
+    <mat-form-field class="form-field" *ngIf="enabledFields.type">
         <mat-label>Type</mat-label>
         <mat-select formControlName="type">
             <mat-option value="Borrowed">Borrowed</mat-option>
@@ -18,46 +16,60 @@
         <mat-error *ngIf="searchForm.get('type').invalid">Please select returning type</mat-error>
     </mat-form-field>
 
-    <mat-form-field class="form-field">
+    <mat-form-field class="form-field" *ngIf="enabledFields.amount">
         <mat-label>Amount</mat-label>
         <input matInput type="number" formControlName="amount">
         <mat-error *ngIf="searchForm.get('amount').invalid && searchForm.get('amount').touched">Please enter amount</mat-error>
     </mat-form-field>
 
-    <mat-form-field class="form-field">
-        <mat-label>Date</mat-label>
-        <input matInput type="date" formControlName="date">
-        <mat-error *ngIf="searchForm.get('date').invalid && searchForm.get('date').touched">Please enter date</mat-error>
-    </mat-form-field>
-
-    <mat-form-field class="form-field">
+    <mat-form-field class="form-field" *ngIf="enabledFields.person">
         <mat-label>Person</mat-label>
         <input matInput type="text" formControlName="person">
         <mat-error *ngIf="searchForm.get('person').invalid && searchForm.get('person').touched">Please enter person</mat-error>
     </mat-form-field>
 
-    <mat-form-field class="form-field">
-        <mat-label>Purpose</mat-label>
-        <textarea matInput type="text" formControlName="purpose"></textarea>
-        <mat-error *ngIf="searchForm.get('purpose').invalid && searchForm.get('purpose').touched">Please enter purpose</mat-error>
-    </mat-form-field>
-
-    <mat-form-field class="form-field">
+    <mat-form-field class="form-field" *ngIf="enabledFields.expectedReturnDate">
         <mat-label>Expected Return Date</mat-label>
         <input matInput type="date" formControlName="expectedReturnDate">
         <mat-error *ngIf="searchForm.get('expectedReturnDate').invalid && searchForm.get('expectedReturnDate').touched">Please enter expected return date</mat-error>
     </mat-form-field>
 
-    <mat-form-field class="form-field">
+    <mat-form-field class="form-field" *ngIf="enabledFields.paymentMethod">
         <mat-label type="method">Method</mat-label>
         <mat-select formControlName="paymentMethod" >
             <mat-option *ngFor="let method of _moneyService.paymentMethods" value="{{method}}">{{method}}</mat-option>
         </mat-select>
         <mat-error *ngIf="searchForm.get('paymentMethod').invalid">Please select payment method</mat-error>
     </mat-form-field>
+
+    <!-- GROCERY FIELD -->
+    <mat-form-field  *ngIf="enabledFields.purpose">
+        <mat-label for="purpose">Purpose</mat-label>
+        <mat-select name="purpose" formControlName="purpose">
+            <mat-option *ngFor="let type of _moneyService.purposeTypes" [value]="type">{{type}}</mat-option>
+        </mat-select>
+        <mat-error *ngIf="searchForm.get('purpose').invalid && searchForm.get('purpose').touched">Purpose is
+            required</mat-error>
+    </mat-form-field>
+
+    <!-- EXPENDITURE FIELD -->
+    <mat-form-field *ngIf="enabledFields.place">
+        <mat-label for="place">Place</mat-label>
+        <input matInput type="text" formControlName="place" name="place">
+        <mat-error *ngIf="searchForm.get('place').invalid && searchForm.get('place').touched">Place is
+            required</mat-error>
+    </mat-form-field>
+
+    <mat-form-field *ngIf="enabledFields.paymentStatus">
+        <mat-label for="status">Status</mat-label>
+        <mat-select name="status" formControlName="paymentStatus">
+            <mat-option value="Paid">Paid</mat-option>
+            <mat-option value="Unpaid">Unpaid</mat-option>
+        </mat-select>
+        <mat-error *ngIf="searchForm.get('paymentStatus').invalid && searchForm.get('paymentStatus').touched">Please select payment status</mat-error>
+    </mat-form-field>
     <br>
-    <button type="submit" mat-raised-button color="primary" 
-        [disabled]="searchForm.invalid || loading" class="form-field">
-        {{loading ? 'Please wait..' : 'Search'}}
+    <button type="submit" mat-raised-button color="primary" class="form-field">
+        Search
     </button>
 </form>

@@ -30,6 +30,7 @@ export class GroceryService {
 
   public getGroceries(): Observable<any> {
     let filter = 'orderBy="user"&equalTo="' + this._authService.user.localId + '"';
+    // let filter = 'orderBy="updatedDate"&orderBy="user"&equalTo="' + this._authService.user.localId + '';
     // filter += 'limitToFirst=10';
     return this._http.get(environment.API_URL + 'groceries.json?' + filter).pipe(
       map((response) => {
