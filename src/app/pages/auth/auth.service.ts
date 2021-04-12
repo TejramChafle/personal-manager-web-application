@@ -19,7 +19,7 @@ export class AuthService {
 
 
   public login(param): Observable<any> {
-    const auth = { email: param.username, password: param.password, returnSecureToken: true };
+    /* const auth = { email: param.username, password: param.password, returnSecureToken: true };
     return this._http.post('https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=' + environment.API_KEY, auth).pipe(
       tap((auth) => {
         console.log('auth', auth);
@@ -28,12 +28,36 @@ export class AuthService {
       catchError((error) => {
         return throwError(error);
       })
+    ) */
+
+    const auth = { email: param.username, password: param.password };
+    return this._http.post(environment.API_URL + 'auth/login', auth).pipe(
+      tap((auth) => {
+        // console.log('auth', auth);
+        this.auth.next(auth);
+      }),
+      catchError((error) => {
+        console.log(error);
+        // return throwError(error);
+        this._appService.handleError(error);
+        return error;
+      })
     )
   }
 
   public signup(params): Observable<any> {
-    const auth = { email: params.username, password: params.password, returnSecureToken: true };
+    /* const auth = { email: params.username, password: params.password, returnSecureToken: true };
     return this._http.post('https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=' + environment.API_KEY, auth).pipe(
+      tap((auth) => {
+        this.auth.next(auth);
+      }),
+      catchError((error) => {
+        return throwError(error);
+      })
+    ) */
+
+    const auth = { name: params.name, email: params.username, password: params.password, device: params.device };
+    return this._http.post(environment.API_URL + 'auth/signup', auth).pipe(
       tap((auth) => {
         this.auth.next(auth);
       }),

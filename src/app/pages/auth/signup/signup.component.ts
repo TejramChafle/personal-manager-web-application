@@ -48,7 +48,7 @@ export class SignupComponent implements OnInit {
     this.loading = true;
     this._authService.signup(form).subscribe((response) => {
       this.loading = false;
-      console.log(response);
+      // console.log(response);
       if (response) {
         this._appSerivce.actionMessage({ title: 'Success!', text: 'Account created successfully.' });
         this._router.navigate(['']);
@@ -56,14 +56,14 @@ export class SignupComponent implements OnInit {
     }, (error) => {
       console.log(error);
       this.loading = false;
-      if (error.error.error.message == 'EMAIL_EXISTS') {
+      /* if (error.error.error.message == 'EMAIL_EXISTS') {
         this._appSerivce.actionMessage({ title: 'Error!', text: 'Email address is already in use. Please login.' });
       } else if (error.error.error.message == 'INVALID_EMAIL') {
         this._appSerivce.actionMessage({ title: 'Error!', text: 'Email address is invalid.' });
       } else {
         this._appSerivce.actionMessage({ title: 'Error!', text: 'Please enter valid inputs.' });
-      }
-      
+      } */
+      this._appSerivce.actionMessage({ title: 'Error!', text: error.error.message });
     })
   }
 

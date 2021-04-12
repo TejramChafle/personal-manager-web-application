@@ -13,3 +13,13 @@ export const environment = {
     measurementId: "G-ER0C9LMQVZ"
   }
 };
+
+export const pages = {
+  RETURNING: 'returnings',
+  EXPENDITURE: 'expenditures',
+  REMINDER: 'reminders',
+  TASK: 'tasks',
+  GROCERY: 'groceries',
+  LEARNING: 'learnings',
+  TIMESHEET: 'timesheets'
+}

@@ -9,6 +9,11 @@
                     </div>
                     <form class="login-form" #signupForm="ngForm" (ngSubmit)="onSignup(signupForm.value)">
                         <mat-form-field class="login-form-field" appearance="outline">
+                            <mat-label>Name</mat-label>
+                            <input matInput type="text" name="name" ngModel #name="ngModel" required>
+                            <mat-error *ngIf="name.invalid && name.touched">Name is required!</mat-error>
+                        </mat-form-field>
+                        <mat-form-field class="login-form-field" appearance="outline">
                             <mat-label>Email</mat-label>
                             <input matInput type="text" name="username" ngModel #username="ngModel" required>
                             <mat-error *ngIf="username.invalid && username.touched">Email address required!</mat-error>
