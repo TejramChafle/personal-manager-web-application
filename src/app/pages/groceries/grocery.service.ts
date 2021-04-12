@@ -13,13 +13,13 @@ import { AuthService } from '../auth/auth.service';
 export class GroceryService {
 
   constructor(private _http: HttpClient, private _appService: AppService, private _authService: AuthService) {
-
   }
 
 
   public saveGrocery(data): Observable<any> {
     data.user = this._authService.user.localId;
-    return this._http.post(environment.API_URL + 'groceries.json?', data).pipe(
+    // environment.API_URL + 'groceries.json?
+    return this._http.post(environment.API_URL + 'groceries', data).pipe(
       catchError((error) => {
         this._appService.handleError(error);
         return throwError(error);
@@ -29,10 +29,10 @@ export class GroceryService {
 
 
   public getGroceries(): Observable<any> {
-    let filter = 'orderBy="user"&equalTo="' + this._authService.user.localId + '"';
-    // let filter = 'orderBy="updatedDate"&orderBy="user"&equalTo="' + this._authService.user.localId + '';
+    // let filter = 'orderBy="user"&equalTo="' + this._authService.user.localId + '"';
     // filter += 'limitToFirst=10';
-    return this._http.get(environment.API_URL + 'groceries.json?' + filter).pipe(
+    let filter = '&createdBy=' + this._authService.user.localId;
+    return this._http.get(environment.API_URL + 'groceries' + filter).pipe(
       map((response) => {
         let result: Array<any> = [];
         for (let key in response) {
