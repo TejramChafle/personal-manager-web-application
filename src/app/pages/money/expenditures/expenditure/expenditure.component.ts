@@ -27,7 +27,7 @@ export class ExpenditureComponent implements OnInit {
 			date: new FormControl(null, Validators.required),
 			purpose: new FormControl(null, Validators.required),
 			place: new FormControl(null, Validators.required),
-			description: new FormControl(null),
+			description: new FormControl(),
 			payment: new FormGroup({
 				amount: new FormControl(null, Validators.required),
 				status: new FormControl('Paid', Validators.required),
@@ -47,7 +47,14 @@ export class ExpenditureComponent implements OnInit {
 			delete this.data.expenditure.id;
 			delete this.data.expenditure.createdDate;
 			delete this.data.expenditure.user;
-			this.expenditureForm.setValue(this.data.expenditure);
+			// this.expenditureForm.setValue(this.data.expenditure);
+			this.expenditureForm.patchValue({
+				date: this._appService.inputDate(new Date(this.data.expenditure.date)),
+				purpose: this.data.expenditure.purpose,
+				description: this.data.expenditure.description,
+				place: this.data.expenditure.place,
+				payment: this.data.expenditure.payment
+			});
 		}
 	}
 

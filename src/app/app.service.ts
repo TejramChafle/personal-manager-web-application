@@ -2,6 +2,7 @@ import { Injectable, EventEmitter } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { pages } from 'src/environments/environment';
+import { paymentMethods, purposeTypes } from 'src/app/app.contstant';
 
 @Injectable({
   providedIn: 'root'
@@ -21,6 +22,8 @@ export class AppService {
     purpose: [pages.EXPENDITURE, pages.GROCERY],
     place: [pages.EXPENDITURE, pages.GROCERY]
   };
+  paymentMethods: Array<string> = paymentMethods;
+  purposeTypes: Array<string> = purposeTypes;
 
   constructor(
     private _snackBar: MatSnackBar, 

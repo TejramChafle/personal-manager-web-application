@@ -6,6 +6,7 @@ import { AppService } from '../../../app.service';
 import { Breakpoints, BreakpointObserver } from '@angular/cdk/layout';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ConfirmComponent } from '../../../components/confirm/confirm.component';
+import { HttpService } from 'src/app/http.service';
 
 
 @Component({
@@ -24,7 +25,8 @@ export class ExpendituresComponent implements OnInit {
     private _moneyService: MoneyService,
     private _appService: AppService,
     private _breakpointObserver: BreakpointObserver,
-    private _snakBar: MatSnackBar) {
+    private _snakBar: MatSnackBar,
+    private _httpService: HttpService) {
     let breakpoint = { ...Breakpoints };
     _breakpointObserver.observe(
       Object.values(breakpoint)
@@ -47,7 +49,7 @@ export class ExpendituresComponent implements OnInit {
   }
 
   ngOnInit() {
-    this._moneyService.getExpenditures().subscribe((response) => {
+    /* this._moneyService.getExpenditures().subscribe((response) => {
       console.log(response);
       this.expenditures = response;
     }, (error) => {
@@ -56,7 +58,16 @@ export class ExpendituresComponent implements OnInit {
         this._appService.actionMessage({ title: 'Error!', text: 'Failed to get expenditure information' });
       }
       console.log(error);
-    })
+    }) */
+
+    const params = { order: 'desc', page: 1, limit: 10 };
+    this._httpService.getRecords('expenditures', params).subscribe((response) => {
+      console.log(response);
+      this.expenditures = response.docs;
+    }, (error) => {
+      this._appService.actionMessage({ title: 'Error!', text: 'Failed to get expenditure information' });
+      console.log(error);
+    });
   }
 
 

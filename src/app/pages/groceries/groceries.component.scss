@@ -59,10 +59,27 @@
             color: #7E57C2;
         }
 
-        .record-purpose {
+        /* .record-purpose {
             max-height: 50px;
             overflow-y: auto;
             padding: 16px;
+        } */
+
+        .record-purpose {
+            height: 70px;
+            overflow-y: auto;
+            padding: 16px;
+            // padding-bottom: 15px;
+            // border-bottom: 0.5px solid #9E9E9E;
+
+            // Below solution manage the multiline text wrap with ellipses on paragraph
+            display: block;
+            display: -webkit-box;
+            -webkit-line-clamp: 4;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            line-height: 21px;
         }
 
         .record-payment {

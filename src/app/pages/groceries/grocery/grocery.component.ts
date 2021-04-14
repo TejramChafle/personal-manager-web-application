@@ -4,6 +4,7 @@ import { GroceryService } from '../grocery.service';
 import { FormGroup, FormBuilder, FormControl, Validators, FormArray } from '@angular/forms';
 import { AppService } from '../../../app.service';
 import { MoneyService } from '../../money/money.service';
+import { HttpService } from 'src/app/http.service';
 
 @Component({
 	selector: 'personal-manager-grocery',
@@ -23,7 +24,8 @@ export class GroceryComponent implements OnInit {
 		private _dialogRef: MatDialogRef<GroceryComponent>,
 		@Inject(MAT_DIALOG_DATA) public data: any,
 		private _appService: AppService,
-		public _moneyService: MoneyService
+		public _moneyService: MoneyService,
+		private _httpService: HttpService
 	) {
 		this.groceryForm = this._formBuilder.group({
 			date: new FormControl(null),
@@ -50,7 +52,7 @@ export class GroceryComponent implements OnInit {
 	ngOnInit() {
 		console.log(this.data);
 		if (this.data.grocery) {
-			this.id = this.data.grocery.id;
+			this.id = this.data.grocery._id;
 			// Populate the items
 			do {
 				this.onAddItem()
@@ -58,12 +60,13 @@ export class GroceryComponent implements OnInit {
 
 			// Add the payment form control since user has opted to add payment detail
 			this.groceryForm.patchValue({
-				date: this.data.grocery.date,
-				purspose: this.data.grocery.purpose,
+				date: this._appService.inputDate(new Date(this.data.grocery.expenditure.date)),
+				purspose: this.data.grocery.expenditure.purpose,
 				items: this.data.grocery.items,
-				place: this.data.grocery.place,
+				place: this.data.grocery.expenditure.place,
 				payment: this.data.grocery.payment
 			});
+			console.log('this.groceryForm', this.groceryForm);
 		}
 	}
 
@@ -100,16 +103,16 @@ export class GroceryComponent implements OnInit {
 			});
 		}
 		data.items = items;
-
+		console.log('this.id', this.id);
 		if (this.id) {
 			data.id = this.id;
 			data.updatedDate = new Date();
 			data.createdDate = this.data.grocery.createdDate;
-
+			data.expenditure = this.data.grocery.expenditure;
 			console.log('data:', data );
 
 			// this.submitInExpenditure(data);
-			this._groceryService.updateGrocery(data).subscribe((response) => {
+			/* this._groceryService.updateGrocery(data).subscribe((response) => {
 				console.log(response);
 				if (data.payment) {
 					this.submitInExpenditure(data);
@@ -126,10 +129,24 @@ export class GroceryComponent implements OnInit {
 				}
 				console.log(error);
 				this.loading = false;
+			}); */
+
+			this._httpService.updateRecord('purchases', data).subscribe((response) => {
+				this.loading = false;
+				console.log(response);
+				if (response.result) {
+					this._appService.actionMessage({ title: 'Success!', text: 'Grocery record created successfully.' });
+					this._dialogRef.close(true);
+				}
+			}, (error) => {
+				console.log(error);
+				this.loading = false;
+				this._appService.actionMessage({ title: 'Error!', text: 'Failed to add purchase item.' });
 			});
 		} else {
 			data.createdDate = new Date();
-			this._groceryService.saveGrocery(data).subscribe((response) => {
+			data.updatedDate = new Date();
+			/* this._groceryService.saveGrocery(data).subscribe((response) => {
 				this.loading = false;
 				console.log(response);
 				if (response.name) {
@@ -144,6 +161,19 @@ export class GroceryComponent implements OnInit {
 				}
 				console.log(error);
 				this.loading = false;
+			}); */
+
+			this._httpService.saveRecord('purchases', data).subscribe((response) => {
+				this.loading = false;
+				console.log(response);
+				if (response.result) {
+					this._appService.actionMessage({ title: 'Success!', text: 'Grocery list created successfully.' });
+					this._dialogRef.close(true);
+				}
+			}, (error) => {
+				console.log(error);
+				this.loading = false;
+				this._appService.actionMessage({ title: 'Error!', text: 'Failed to add purchase item.' });
 			});
 		}
 	}

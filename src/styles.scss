@@ -82,3 +82,18 @@ form {
     position: absolute;
     right: 15px;
 }
+
+.record-purpose {
+    height: 50px;
+    padding-bottom: 15px;
+    // border-bottom: 0.5px solid #9E9E9E;
+
+    // Below solution manage the multiline text wrap with ellipses on paragraph
+    display: block;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    line-height: 21px;
+}

@@ -5,7 +5,8 @@
 export const environment = {
   production: false,
   // API_URL: 'https://ng-personal-manager.firebaseio.com/',
-  API_URL: 'https://personal-manager-services.herokuapp.com/',
+  // API_URL: 'https://personal-manager-services.herokuapp.com/',
+  API_URL: 'http://localhost:3000/',
   API_KEY: 'AIzaSyDrF3MrUSxyKzSCnHZjWy8gcynUUxknr_g',
   FIREBASE_CONFIG: {
     apiKey: "AIzaSyDrF3MrUSxyKzSCnHZjWy8gcynUUxknr_g",

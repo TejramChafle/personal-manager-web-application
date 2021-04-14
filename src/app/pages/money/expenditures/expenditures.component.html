@@ -33,9 +33,10 @@
                         <img src="assets/icons/other.svg" *ngIf="expenditure.purpose == 'Other'">
                         <img src="assets/icons/rent.svg" *ngIf="expenditure.purpose == 'Rent'">
                     </div>
-                    <div class="record-type">
+                    <div class="record-type" *ngIf="expenditure.payment">
                         <h1>&#x20B9; {{expenditure.payment?.amount | number}}</h1>
                     </div>
+                    <div class="record-unpaid" *ngIf="!expenditure.payment">Unpaid</div>
                 </div>
                 <div class="record-detail">
                     <mat-card-header>
@@ -54,7 +55,7 @@
                     </mat-card-header>
                     <mat-card-content>
                         <h4>{{expenditure.place | uppercase}}</h4>
-                        <h5>{{expenditure.date | date:'dd MMM, yyyy'}} | {{expenditure.payment.method}}</h5>
+                        <h5>{{expenditure.date | date:'dd MMM, yyyy'}} | {{expenditure.payment?.method}}</h5>
                         <div class="record-purpose">
                             {{expenditure.description}}
                         </div>

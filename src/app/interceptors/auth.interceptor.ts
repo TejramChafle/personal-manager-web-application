@@ -11,7 +11,10 @@ export class AuthInterceptor implements HttpInterceptor {
     intercept(req: HttpRequest<any>, next: HttpHandler):Observable<HttpEvent<any>> {
         if (!req.url.includes('auth')) {
             let request = req.clone({
-                params: new HttpParams().set('auth', this._authService.user.idToken)
+                // params: new HttpParams().set('auth', this._authService.user.idToken),
+                setHeaders: {
+                    'Authorization': 'Bearer ' + this._authService.user.token
+                }
             })
             return next.handle(request);
         }

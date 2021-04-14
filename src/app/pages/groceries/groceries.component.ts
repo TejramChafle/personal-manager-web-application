@@ -7,6 +7,7 @@ import { Breakpoints, BreakpointObserver } from '@angular/cdk/layout';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ConfirmComponent } from '../../components/confirm/confirm.component';
 import { ManageItemComponent } from './manage-item/manage-item.component';
+import { HttpService } from 'src/app/http.service';
 
 @Component({
   selector: 'personal-manager-groceries',
@@ -15,7 +16,7 @@ import { ManageItemComponent } from './manage-item/manage-item.component';
 })
 
 export class GroceriesComponent implements OnInit {
-  groceries: Array<any>;
+  purchases: Array<any>;
   loading = false;
   gridCols: number;
 
@@ -24,7 +25,8 @@ export class GroceriesComponent implements OnInit {
     private _groceryService: GroceryService,
     private _appService: AppService,
     private _breakpointObserver: BreakpointObserver,
-    private _snakBar: MatSnackBar) {
+    private _snakBar: MatSnackBar,
+    private _httpService: HttpService) {
     let breakpoint = { ...Breakpoints };
     _breakpointObserver.observe(
       Object.values(breakpoint)
@@ -47,7 +49,7 @@ export class GroceriesComponent implements OnInit {
   }
 
   ngOnInit() {
-    this._groceryService.getGroceries().subscribe((response) => {
+    /* this._groceryService.getGroceries().subscribe((response) => {
       console.log(response);
       // SET the items descriptions from available items array
       response.forEach(element => {
@@ -64,6 +66,19 @@ export class GroceriesComponent implements OnInit {
       } else {
         this._appService.actionMessage({ title: 'Error!', text: 'Failed to get expenditure information' });
       }
+      console.log(error);
+    }); */
+    const params = { order: 'desc', page: 1, limit: 10 };
+    this._httpService.getRecords('purchases', params).subscribe((response) => {
+      console.log(response);
+
+      response.docs.forEach(element => {
+        element.itemDescription = element.items.toString().replace(/,/g,", ");
+      });
+      this.purchases = response.docs;
+      console.log('this.purchases', this.purchases);
+    }, (error) => {
+      this._appService.actionMessage({ title: 'Error!', text: 'Failed to get purchases information' });
       console.log(error);
     });
   }
