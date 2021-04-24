@@ -33,8 +33,10 @@ export class HttpService {
     public getRecords(pathname, data): Observable<any> {
         let filter = '?createdBy=' + this._authService.user.user.id;
         filter += '&sortOrder=' + data.order;
-        filter += '&page=' + data.page;
-        filter += '&limit=' + data.limit;
+        // Append the filter in URL via params
+        for (let key in data) {
+            filter += '&' + [key] + '=' + data[key]
+        }
         return this._http.get(environment.API_URL + pathname + filter).pipe(
             map((response) => {
                 return response;
@@ -48,7 +50,7 @@ export class HttpService {
 
     // DELETE
     public deleteRecord(pathname, data): Observable<any> {
-        return this._http.delete(environment.API_URL + pathname + '/' + data.id).pipe(
+        return this._http.delete(environment.API_URL + pathname + '/' + data._id).pipe(
             catchError((error) => {
                 this._appService.handleError(error);
                 return throwError(error);

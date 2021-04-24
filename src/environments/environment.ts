@@ -20,16 +20,6 @@ export const environment = {
   }
 };
 
-export const pages = {
-  RETURNING: 'returnings',
-  EXPENDITURE: 'expenditures',
-  REMINDER: 'reminders',
-  TASK: 'tasks',
-  GROCERY: 'groceries',
-  LEARNING: 'learnings',
-  TIMESHEET: 'timesheets'
-}
-
 // authDomain: 'ng-personal-manager.firebaseapp.com',
 
 /*

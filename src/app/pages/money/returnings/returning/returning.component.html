@@ -48,7 +48,7 @@
             <mat-form-field class="form-field">
                 <mat-label type="method">Method</mat-label>
                 <mat-select formControlName="paymentMethod" >
-                    <mat-option *ngFor="let method of _moneyService.paymentMethods" value="{{method}}">{{method}}</mat-option>
+                    <mat-option *ngFor="let method of _appService.paymentMethods" value="{{method}}">{{method}}</mat-option>
                 </mat-select>
                 <mat-error *ngIf="returningForm.get('paymentMethod').invalid">Please select payment method</mat-error>
             </mat-form-field>

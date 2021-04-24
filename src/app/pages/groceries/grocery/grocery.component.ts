@@ -1,6 +1,5 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { GroceryService } from '../grocery.service';
 import { FormGroup, FormBuilder, FormControl, Validators, FormArray } from '@angular/forms';
 import { AppService } from '../../../app.service';
 import { MoneyService } from '../../money/money.service';
@@ -19,7 +18,6 @@ export class GroceryComponent implements OnInit {
 	today
 
 	constructor(
-		private _groceryService: GroceryService,
 		private _formBuilder: FormBuilder,
 		private _dialogRef: MatDialogRef<GroceryComponent>,
 		@Inject(MAT_DIALOG_DATA) public data: any,
@@ -111,26 +109,6 @@ export class GroceryComponent implements OnInit {
 			data.expenditure = this.data.grocery.expenditure;
 			console.log('data:', data );
 
-			// this.submitInExpenditure(data);
-			/* this._groceryService.updateGrocery(data).subscribe((response) => {
-				console.log(response);
-				if (data.payment) {
-					this.submitInExpenditure(data);
-				} else {
-					this.loading = false;
-					this._appService.actionMessage({ title: 'Success!', text: 'Grocery record updated successfully.' });
-					this._dialogRef.close(true);
-				}
-			}, (error) => {
-				if (error.status == 401 && error.statusText == "Unauthorized") {
-					this.onClose();
-				} else {
-					this._appService.actionMessage({ title: 'Error!', text: 'Failed to update grocery record.' });
-				}
-				console.log(error);
-				this.loading = false;
-			}); */
-
 			this._httpService.updateRecord('purchases', data).subscribe((response) => {
 				this.loading = false;
 				console.log(response);
@@ -146,22 +124,6 @@ export class GroceryComponent implements OnInit {
 		} else {
 			data.createdDate = new Date();
 			data.updatedDate = new Date();
-			/* this._groceryService.saveGrocery(data).subscribe((response) => {
-				this.loading = false;
-				console.log(response);
-				if (response.name) {
-					this._appService.actionMessage({ title: 'Success!', text: 'Grocery list created successfully.' });
-					this._dialogRef.close(true);
-				}
-			}, (error) => {
-				if (error.status == 401 && error.statusText == "Unauthorized") {
-					this.onClose();
-				} else {
-					this._appService.actionMessage({ title: 'Error!', text: 'Failed to create grocery list.' });
-				}
-				console.log(error);
-				this.loading = false;
-			}); */
 
 			this._httpService.saveRecord('purchases', data).subscribe((response) => {
 				this.loading = false;

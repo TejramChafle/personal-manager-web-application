@@ -35,6 +35,7 @@ import { ConfirmComponent } from '../app/components/confirm/confirm.component';
 import { AuthModule } from './pages/auth/auth.module';
 import { AngularFireAuthModule } from '@angular/fire/auth';
 import { SearchComponent } from './components/search/search.component';
+import { SortComponent } from './components/sort/sort.component';
 
 @NgModule({
   declarations: [
@@ -46,7 +47,8 @@ import { SearchComponent } from './components/search/search.component';
     ProfileComponent,
     UploadPhotoComponent,
     ConfirmComponent,
-    SearchComponent
+    SearchComponent,
+    SortComponent
   ],
   imports: [
     BrowserModule,
@@ -67,7 +69,8 @@ import { SearchComponent } from './components/search/search.component';
   entryComponents: [
     UploadPhotoComponent,
     ConfirmComponent,
-    SearchComponent
+    SearchComponent,
+    SortComponent
   ]
 })
 export class AppModule { }

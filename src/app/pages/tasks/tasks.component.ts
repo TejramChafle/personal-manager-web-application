@@ -5,8 +5,8 @@ import { AppService } from '../../app.service';
 import { Breakpoints, BreakpointObserver } from '@angular/cdk/layout';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ConfirmComponent } from '../../components/confirm/confirm.component';
-import { TaskService } from './task.service';
 import { Subscription } from 'rxjs';
+import { HttpService } from 'src/app/http.service';
 
 @Component({
   selector: 'personal-manager-tasks',
@@ -22,7 +22,7 @@ export class TasksComponent implements OnInit, OnDestroy {
 
   constructor(
     private _dialog: MatDialog,
-    private _taskService: TaskService,
+    private _httpService: HttpService,
     private _appService: AppService,
     private _breakpointObserver: BreakpointObserver,
     private _snakBar: MatSnackBar
@@ -54,15 +54,14 @@ export class TasksComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this._taskService.getTasks().subscribe((response) => {
+    this._httpService.getRecords('tasks', {}).subscribe((response) => {
+      this.loading = false;
       console.log(response);
-      this.tasks = response;
+      this.tasks = response.docs;
     }, (error) => {
-      if (error.status == 401 && error.statusText == "Unauthorized") {
-      } else {
-        this._appService.actionMessage({ title: 'Error!', text: 'Failed to get tasks information' });
-      }
       console.log(error);
+      this.loading = false;
+      this._appService.actionMessage({ title: 'Error!', text: 'Failed to add expenditure item.' });
     });
   }
 
@@ -96,22 +95,16 @@ export class TasksComponent implements OnInit, OnDestroy {
       console.log(response);
       if (response) {
         let snak = this._snakBar.open('Deleting, Please wait...', 'Close');
-        this._taskService.deleteTask(task).subscribe((response) => {
+        this._httpService.deleteRecord('tasks', task).subscribe((response) => {
           console.log(response);
+          this.ngOnInit();
           snak.dismiss();
-
-          // Refresh the list once deleted
-          if (response == null) {
-            this.ngOnInit();
-          }
+          this._appService.actionMessage({ title: 'Success!', text: 'Task deleted successfully.' });
         }, (error) => {
-          if (error.status == 401 && error.statusText == "Unauthorized") {
-          } else {
-            this._appService.actionMessage({ title: 'Error!', text: 'Failed to delete task information' });
-          }
+          this._appService.actionMessage({ title: 'Error!', text: 'Failed to delete task information' });
           console.log(error);
           snak.dismiss();
-        })
+        });
       }
     })
   }
@@ -121,17 +114,16 @@ export class TasksComponent implements OnInit, OnDestroy {
     let data: any = { ...task };
     data.updatedDate = new Date();
     let snak = this._snakBar.open('Updating, Please wait...', 'Close');
-    this._taskService.updateTask(data).subscribe((response) => {
+    this._httpService.updateRecord('tasks', data).subscribe((response) => {
       console.log(response);
-      task = response;
+      if (response.result) {
+        this._appService.actionMessage({ title: 'Success!', text: 'Task updated successfully.' });
+      }
       snak.dismiss();
     }, (error) => {
-      if (error.status == 401 && error.statusText == "Unauthorized") {
-      } else {
-        this._appService.actionMessage({ title: 'Error!', text: 'Failed to get tasks information' });
-      }
       console.log(error);
       snak.dismiss();
+      this._appService.actionMessage({ title: 'Error!', text: 'Failed to update task item.' });
     });
   }
 

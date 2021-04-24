@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ExpenditureComponent } from './expenditure/expenditure.component';
-import { MoneyService } from '../money.service';
 import { AppService } from '../../../app.service';
 import { Breakpoints, BreakpointObserver } from '@angular/cdk/layout';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -22,7 +21,6 @@ export class ExpendituresComponent implements OnInit {
 
   constructor(
     private _dialog: MatDialog,
-    private _moneyService: MoneyService,
     private _appService: AppService,
     private _breakpointObserver: BreakpointObserver,
     private _snakBar: MatSnackBar,
@@ -49,17 +47,6 @@ export class ExpendituresComponent implements OnInit {
   }
 
   ngOnInit() {
-    /* this._moneyService.getExpenditures().subscribe((response) => {
-      console.log(response);
-      this.expenditures = response;
-    }, (error) => {
-      if (error.status == 401 && error.statusText == "Unauthorized") {
-      } else {
-        this._appService.actionMessage({ title: 'Error!', text: 'Failed to get expenditure information' });
-      }
-      console.log(error);
-    }) */
-
     const params = { order: 'desc', page: 1, limit: 10 };
     this._httpService.getRecords('expenditures', params).subscribe((response) => {
       console.log(response);
@@ -102,22 +89,16 @@ export class ExpendituresComponent implements OnInit {
       console.log(response);
       if (response) {
         let snak = this._snakBar.open('Deleting, Please wait...', 'Close');
-        this._moneyService.deleteExpenditure(expenditure).subscribe((response) => {
+        this._httpService.deleteRecord('expenditures', expenditure).subscribe((response) => {
           console.log(response);
+          this.ngOnInit();
           snak.dismiss();
-
-          // Refresh the list once deleted
-          if (response == null) {
-            this.ngOnInit();
-          }
+          this._appService.actionMessage({ title: 'Success!', text: 'Expenditure information deleted successfully.' });
         }, (error) => {
-          if (error.status == 401 && error.statusText == "Unauthorized") {
-          } else {
-            this._appService.actionMessage({ title: 'Error!', text: 'Failed to delete expenditure information' });
-          }
+          this._appService.actionMessage({ title: 'Error!', text: 'Failed to delete expenditure information' });
           console.log(error);
           snak.dismiss();
-        })
+        });
       }
     })
   }

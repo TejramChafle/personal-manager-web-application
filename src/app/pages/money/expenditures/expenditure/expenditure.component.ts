@@ -1,8 +1,8 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { MoneyService } from '../../money.service';
 import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
 import { AppService } from '../../../../app.service';
+import { HttpService } from 'src/app/http.service';
 
 @Component({
 	selector: 'personal-manager-expenditure',
@@ -17,7 +17,7 @@ export class ExpenditureComponent implements OnInit {
 	today: string;
 
 	constructor(
-		public _moneyService: MoneyService,
+		public _httpService: HttpService,
 		private _formBuilder: FormBuilder,
 		private _dialogRef: MatDialogRef<ExpenditureComponent>,
 		@Inject(MAT_DIALOG_DATA) public data: any,
@@ -73,27 +73,22 @@ export class ExpenditureComponent implements OnInit {
 			data.updatedDate = new Date();
 			data.id = this.id;
 			console.log('updating..', data);
-			this._moneyService.updateExpenditure(data).subscribe((response) => {
+			this._httpService.updateRecord('expenditures', data).subscribe((response) => {
+				this.loading = false;
 				console.log(response);
-				// If the result contain id with field name then close dialog
-				if (response) {
-					this._appService.actionMessage({ title: 'Success!', text: 'Expenditure information updated successfully' });
+				if (response.result) {
+					this._appService.actionMessage({ title: 'Success!', text: 'Expenditures added successfully.' });
 					this._dialogRef.close(true);
 				}
-				this.loading = false;
 			}, (error) => {
-				if (error.status == 401 && error.statusText == "Unauthorized") {
-					this.onClose();
-				} else {
-					this._appService.actionMessage({ title: 'Error!', text: 'Failed to save expenditure information' });
-				}
 				console.log(error);
 				this.loading = false;
-			})
+				this._appService.actionMessage({ title: 'Error!', text: 'Failed to add expenditure item.' });
+			});
 		} else {
 			this.loading = true;
 			data.createdDate = new Date();
-			this._moneyService.saveExpenditure(data).subscribe((response) => {
+			/* this._moneyService.saveExpenditure(data).subscribe((response) => {
 				console.log(response);
 				// If the result contain id with field name then close dialog
 				if (response.name) {
@@ -109,7 +104,19 @@ export class ExpenditureComponent implements OnInit {
 				}
 				console.log(error);
 				this.loading = false;
-			})
+			}) */
+			this._httpService.saveRecord('expenditures', data).subscribe((response) => {
+				this.loading = false;
+				console.log(response);
+				if (response.result) {
+					this._appService.actionMessage({ title: 'Success!', text: 'Expenditure updated successfully.' });
+					this._dialogRef.close(true);
+				}
+			}, (error) => {
+				console.log(error);
+				this.loading = false;
+				this._appService.actionMessage({ title: 'Error!', text: 'Failed to add expenditure item.' });
+			});
 		}
 	}
 

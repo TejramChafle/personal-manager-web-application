@@ -65,7 +65,7 @@ export class SearchComponent implements OnInit {
     }
     const data = {
       ...searchfor,
-      user: this._authService.user.localId
+      // user: this._authService.user.localId
     };
     // Close the search form
     this._matRef.close({ ...data });

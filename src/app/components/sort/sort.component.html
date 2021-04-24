@@ -1,0 +1,9 @@
+<h3>Sort by</h3>
+<mat-list>
+    <mat-list-item matRipple *ngFor="let option of sortby" (click)="openLink($event, option)">
+        <mat-icon mat-list-icon>{{option.icon}}</mat-icon>
+        <h3 mat-line>{{option.name}}</h3>
+        <p mat-line>{{option.type}}</p>
+        <mat-icon mat-list-icon class="icon-end">{{option.endicon}}</mat-icon>
+    </mat-list-item>
+</mat-list>

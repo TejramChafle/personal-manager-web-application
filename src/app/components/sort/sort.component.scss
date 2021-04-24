@@ -1,0 +1,16 @@
+
+$font: 'Open Sans Condensed', sans-serif;
+mat-list-item {
+    border-bottom: 0.5px solid #E6E6E6;
+    height: 50px !important;
+    font-family: $font;
+}
+
+h3 {
+    font-family: $font;
+}
+
+.icon-end {
+    position: absolute;
+    right: 10px;
+}

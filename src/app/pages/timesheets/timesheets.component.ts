@@ -6,8 +6,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 
 import { ConfirmComponent } from '../../components/confirm/confirm.component';
 import { TimesheetComponent } from './timesheet/timesheet.component';
-
-import { TimesheetService } from './timesheet.service';
+import { HttpService } from 'src/app/http.service';
 
 @Component({
   selector: 'personal-manager-timesheets',
@@ -24,7 +23,7 @@ export class TimesheetsComponent implements OnInit {
 
   constructor(
     private _dialog: MatDialog,
-    private _timesheetService: TimesheetService,
+    private _httpService: HttpService,
     private _appService: AppService,
     private _breakpointObserver: BreakpointObserver,
     private _snakBar: MatSnackBar
@@ -51,10 +50,11 @@ export class TimesheetsComponent implements OnInit {
   }
 
   ngOnInit() {
-    this._timesheetService.getTimesheets().subscribe((response) => {
+    const params = { order: 'desc', page: 1, limit: 10 };
+    this._httpService.getRecords('timesheets', params).subscribe((response) => {
       console.log(response);
       this.timesheets = [];
-      response.forEach(sheet => {
+      response.docs.forEach(sheet => {
         var hours = 0, minutes = 0, days = 0;
         sheet.tasks.forEach(task => {
           if (task.schedule) {
@@ -66,14 +66,10 @@ export class TimesheetsComponent implements OnInit {
         });
         sheet.time = { days: days, hours: hours, minutes: minutes };
         this.timesheets.push(sheet);
-      });
-      // this.timesheets = response;
+      })
     }, (error) => {
-      if (error.status == 401 && error.statusText == "Unauthorized") {
-      } else {
-        this._appService.actionMessage({ title: 'Error!', text: 'Failed to get timesheets information' });
-      }
       console.log(error);
+      this._appService.actionMessage({ title: 'Error!', text: 'Failed to get timesheets.' });
     });
   }
 
@@ -107,22 +103,18 @@ export class TimesheetsComponent implements OnInit {
       console.log(response);
       if (response) {
         let snak = this._snakBar.open('Deleting, Please wait...', 'Close');
-        this._timesheetService.deleteTimesheet(timesheet).subscribe((response) => {
+        this._httpService.deleteRecord('timesheets', timesheet).subscribe((response) => {
           console.log(response);
+          if (response.result) {
+            this._appService.actionMessage({ title: 'Success!', text: 'Expenditures added successfully.' });
+          }
+          this.ngOnInit();
           snak.dismiss();
-
-          // Refresh the list once deleted
-          if (response == null) {
-            this.ngOnInit();
-          }
         }, (error) => {
-          if (error.status == 401 && error.statusText == "Unauthorized") {
-          } else {
-            this._appService.actionMessage({ title: 'Error!', text: 'Failed to delete timesheet information' });
-          }
           console.log(error);
           snak.dismiss();
-        })
+          this._appService.actionMessage({ title: 'Error!', text: 'Failed to add expenditure item.' });
+        });
       }
     })
   }
@@ -132,17 +124,17 @@ export class TimesheetsComponent implements OnInit {
     let data: any = { ...timesheet };
     data.updatedDate = new Date();
     let snak = this._snakBar.open('Updating, Please wait...', 'Close');
-    this._timesheetService.updateTimesheet(data).subscribe((response) => {
+    this._httpService.updateRecord('timesheets', data).subscribe((response) => {
       console.log(response);
-      timesheet = response;
+      if (response.result) {
+        this._appService.actionMessage({ title: 'Success!', text: 'Timesheet updated successfully.' });
+      }
+      this.ngOnInit();
       snak.dismiss();
     }, (error) => {
-      if (error.status == 401 && error.statusText == "Unauthorized") {
-      } else {
-        this._appService.actionMessage({ title: 'Error!', text: 'Failed to get timesheets information' });
-      }
       console.log(error);
       snak.dismiss();
+      this._appService.actionMessage({ title: 'Error!', text: 'Failed to update timesheet.' });
     });
   }
 

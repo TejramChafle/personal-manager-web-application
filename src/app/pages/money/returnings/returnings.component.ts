@@ -7,6 +7,7 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { ConfirmComponent } from '../../../components/confirm/confirm.component';
 import { MatDialog } from '@angular/material/dialog';
 import { Subscription } from 'rxjs';
+import { HttpService } from 'src/app/http.service';
 
 @Component({
   selector: 'personal-assistant-returnings',
@@ -25,7 +26,8 @@ export class ReturningsComponent implements OnInit, OnDestroy {
     private _router: Router,
     private _appService: AppService,
     private _domSanitizer: DomSanitizer,
-    private _dialog: MatDialog
+    private _dialog: MatDialog,
+    private _httpService: HttpService
   ) {
     let breakpoint = { ...Breakpoints };
     _breakpointObserver.observe(
@@ -49,17 +51,13 @@ export class ReturningsComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this._moneyService.getReturnings().subscribe((response) => {
+    const params = { order: 'desc', page: 1, limit: 10 };
+    this._httpService.getRecords('returnings', params).subscribe((response) => {
       console.log(response);
-      this.returnings = [];
-      response.forEach((returning) => {
-        returning.expectedReturnDateInWords = this._appService.formatDate(returning.expectedReturnDate);
-        returning['whatsAppUrl'] = this._domSanitizer.bypassSecurityTrustResourceUrl('whatsapp://send?abid=+919482153795&text=Dear+' + returning.person.replace(" ", "+") + '%2C+This+is+a+reminder+to+the+borrowings+of+Rs.+' + returning.amount + '+due+on+dated+' + returning.expectedReturnDateInWords + '.+Kindly+return+the+amount+on+or+before+the+due+date.');
-        returning['smsUrl'] = this._domSanitizer.bypassSecurityTrustResourceUrl('sms://+919482153795?body=Dear ' + returning.person+ '%2C This is a reminder to the borrowings of Rs. ' + returning.amount + ' due on dated ' + returning.expectedReturnDateInWords + '. Kindly return the amount on or before the due date.');
-        // console.log(returning['smsUrl']);
-        this.returnings.push(returning);
-      });
-      console.log(this.returnings);
+      this.returnings = response.docs;
+    }, (error) => {
+      this._appService.actionMessage({ title: 'Error!', text: 'Failed to get returnings information' });
+      console.log(error);
     });
 
     
@@ -92,14 +90,13 @@ export class ReturningsComponent implements OnInit, OnDestroy {
     dialogRef.afterClosed().subscribe((response) => {
       console.log(response);
       if (response) {
-        this._moneyService.deleteReturning(returning).subscribe((response) => {
+        this._httpService.deleteRecord('returnings', returning).subscribe((response) => {
           console.log(response);
           this.ngOnInit();
           this._appService.actionMessage({ title: 'Success!', text: 'Returning information deleted successfully.' });
         }, (error) => {
-          if (error.statusText !== 'Unauthorized' || error.error.error !== 'Auth token is expired') {
-            this._appService.actionMessage({ title: 'Error!', text: 'Oops. Something went wrong. Unable to delete information.' });
-          }
+          this._appService.actionMessage({ title: 'Error!', text: 'Oops. Something went wrong. Unable to delete information.' });
+          console.log(error);
         });
       }
     });

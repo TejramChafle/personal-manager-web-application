@@ -1,13 +1,13 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { GroceryComponent } from './grocery/grocery.component';
-import { GroceryService } from './grocery.service';
 import { AppService } from '../../app.service';
 import { Breakpoints, BreakpointObserver } from '@angular/cdk/layout';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ConfirmComponent } from '../../components/confirm/confirm.component';
 import { ManageItemComponent } from './manage-item/manage-item.component';
 import { HttpService } from 'src/app/http.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'personal-manager-groceries',
@@ -15,14 +15,15 @@ import { HttpService } from 'src/app/http.service';
   styleUrls: ['./groceries.component.scss']
 })
 
-export class GroceriesComponent implements OnInit {
+export class GroceriesComponent implements OnInit, OnDestroy {
   purchases: Array<any>;
   loading = false;
   gridCols: number;
+  page: number;
+  subscription: Subscription;
 
   constructor(
     private _dialog: MatDialog,
-    private _groceryService: GroceryService,
     private _appService: AppService,
     private _breakpointObserver: BreakpointObserver,
     private _snakBar: MatSnackBar,
@@ -46,37 +47,40 @@ export class GroceriesComponent implements OnInit {
         }
       }
     });
+
+    // Set the page to 1
+    this.page = 1
   }
 
   ngOnInit() {
-    /* this._groceryService.getGroceries().subscribe((response) => {
-      console.log(response);
-      // SET the items descriptions from available items array
-      response.forEach(element => {
-        element.itemDescription = element.items.toString().replace(/,/g,", ");
-      });
-      // Sort the data by created date
-      this.groceries = response.sort((a, b) => {
-        let da = new Date(a.createdDate);
-        let db = new Date(b.createdDate);
-        return db.getTime() - da.getTime();
-      });
-    }, (error) => {
-      if (error.status == 401 && error.statusText == "Unauthorized") {
-      } else {
-        this._appService.actionMessage({ title: 'Error!', text: 'Failed to get expenditure information' });
-      }
-      console.log(error);
-    }); */
     const params = { order: 'desc', page: 1, limit: 10 };
+    this.getRecords(params);
+
+    // On model service subsciorion
+    this.subscription = this._appService.dialogRef.subscribe((response) => {
+      console.log('dialogRef groceries.component', response);
+      if (response.action === 'search' && response.data) {
+        this.page = 1;
+        const params = { order: 'desc', page: this.page, limit: 10, ...response.data };
+        this.getRecords(params);
+      }
+    });
+  }
+
+  getRecords(params) {
     this._httpService.getRecords('purchases', params).subscribe((response) => {
       console.log(response);
-
+      // Modify the result for item description. This will generate text from items array
       response.docs.forEach(element => {
         element.itemDescription = element.items.toString().replace(/,/g,", ");
       });
-      this.purchases = response.docs;
-      console.log('this.purchases', this.purchases);
+      // Adjust purchase array based on page number.
+      if (response.page > 1) {
+        this.purchases = this.purchases.concat(response.docs);
+      } else {
+        this.purchases = response.docs;
+      }
+      // console.log('this.purchases', this.purchases);
     }, (error) => {
       this._appService.actionMessage({ title: 'Error!', text: 'Failed to get purchases information' });
       console.log(error);
@@ -113,22 +117,16 @@ export class GroceriesComponent implements OnInit {
       console.log(response);
       if (response) {
         let snak = this._snakBar.open('Deleting, Please wait...', 'Close');
-        this._groceryService.deleteGrocery(grocery).subscribe((response) => {
+        this._httpService.deleteRecord('purchases', grocery).subscribe((response) => {
           console.log(response);
+          this.ngOnInit();
           snak.dismiss();
-
-          // Refresh the list once deleted
-          if (response == null) {
-            this.ngOnInit();
-          }
+          this._appService.actionMessage({ title: 'Success!', text: 'Grocery information deleted successfully.' });
         }, (error) => {
-          if (error.status == 401 && error.statusText == "Unauthorized") {
-          } else {
-            this._appService.actionMessage({ title: 'Error!', text: 'Failed to delete grocery information' });
-          }
+          this._appService.actionMessage({ title: 'Error!', text: 'Failed to delete grocery information' });
           console.log(error);
           snak.dismiss();
-        })
+        });
       }
     })
   }
@@ -146,5 +144,35 @@ export class GroceriesComponent implements OnInit {
         this.ngOnInit();
       }
     })
+  }
+
+  onScrollDown() {
+    this.page = this.page + 1;
+    const params = { order: 'desc', page: this.page, limit: 10 };
+    this.getRecords(params);
+  }
+
+  onUp() {
+    console.log('scrolled up!!');
+  }
+
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
+  }
+
+  onShare(purchase) {
+
+  }
+
+  onCopy(purchase) {
+    console.log('purchase', purchase);
+    let param = {
+      expenditure: {
+        place: purchase.expenditure.place,
+        purpose: purchase.expenditure.purpose
+      },
+      items: purchase.items
+    }
+    this.openGrocery(param);
   }
 }

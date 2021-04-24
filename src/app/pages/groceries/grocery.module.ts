@@ -6,6 +6,7 @@ import { AppMaterialModule } from './../../app.material';
 import { GroceriesComponent } from './groceries.component';
 import { GroceryComponent } from './grocery/grocery.component';
 import { ManageItemComponent } from './manage-item/manage-item.component';
+import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 
 const routes: Routes = [
     { path: '', component: GroceriesComponent }
@@ -20,7 +21,8 @@ const routes: Routes = [
     imports: [
         CommonModule,
         AppMaterialModule,
-        RouterModule.forChild(routes)
+        RouterModule.forChild(routes),
+        InfiniteScrollModule
     ],
     exports: [
         RouterModule

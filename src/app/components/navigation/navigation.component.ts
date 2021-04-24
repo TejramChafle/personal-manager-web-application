@@ -3,9 +3,10 @@ import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Observable } from 'rxjs';
 import { map, shareReplay } from 'rxjs/operators';
 import { AuthService } from '../../pages/auth/auth.service';
-import { MatDialog } from '@angular/material/dialog';
+import { MatDialog, MatBottomSheet } from '@angular/material';
 import { SearchComponent } from '../search/search.component';
 import { AppService } from 'src/app/app.service';
+import { SortComponent } from '../sort/sort.component';
 
 @Component({
   selector: 'personal-manager-navigation',
@@ -33,7 +34,8 @@ export class NavigationComponent implements AfterContentChecked {
     private breakpointObserver: BreakpointObserver,
     public _authService: AuthService,
     private _appService: AppService,
-    private _dialog: MatDialog) {
+    private _dialog: MatDialog,
+    private _bottomSheet: MatBottomSheet) {
     // console.log(history.state);
   }
 
@@ -43,19 +45,22 @@ export class NavigationComponent implements AfterContentChecked {
 
   onNavbarButtonClick(param) {
     // console.log('onNavbarButtonClick param: ', param);
-    let dialogRef = this._dialog.open(SearchComponent, {
-      width: '90%',
-      /* data: {
-        title: 'Delete?',
-        message: 'Are you sure you want to delete this grocery record?',
-        okayText: 'Yes',
-        cancelText: 'No'
-      } */
-    });
+    if (param === 'search') {
+      let dialogRef = this._dialog.open(SearchComponent, {
+        width: '90%'
+      });
+      
+      dialogRef.afterClosed().subscribe((response) => {
+        this._appService.dialogRef.emit({ path: window.location.pathname, action: param, data: response });
+      });
+    } else if (param === 'sort') {
+      let sheetRef = this._bottomSheet.open(SortComponent);
+      sheetRef.afterDismissed().subscribe((response) => {
+        console.log('response', response);
+        this._appService.dialogRef.emit({ path: window.location.pathname, action: param, data: response });
+      });
+    }
     
-    dialogRef.afterClosed().subscribe((response) => {
-      this._appService.dialogRef.emit({ path: window.location.pathname, action: param, data: response });
-    });
   }
 
 }

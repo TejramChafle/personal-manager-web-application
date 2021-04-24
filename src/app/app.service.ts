@@ -1,8 +1,7 @@
 import { Injectable, EventEmitter } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
-import { pages } from 'src/environments/environment';
-import { paymentMethods, purposeTypes } from 'src/app/app.contstant';
+import { pages, paymentMethods, purposeTypes, taskLabels, sortOptions } from 'src/app/app.constant';
 
 @Injectable({
   providedIn: 'root'
@@ -24,7 +23,9 @@ export class AppService {
   };
   paymentMethods: Array<string> = paymentMethods;
   purposeTypes: Array<string> = purposeTypes;
-
+  taskLabels = taskLabels;
+  sortOptions = sortOptions;
+  
   constructor(
     private _snackBar: MatSnackBar, 
     private _router: Router) {
@@ -39,17 +40,12 @@ export class AppService {
   }
 
   public handleError(error) {
-    // console.log(error);
-    console.log(this._router.url);
-    if (error.error.error.message == 'INVALID_ID_TOKEN') {
-      localStorage.clear();
-      // this._router.navigate(['/login']);
-      this._router.navigateByUrl('login', { state: { url: location.pathname } });
-    } else if (error.statusText == 'Unauthorized' && error.error.error == 'Auth token is expired') {
+    if (error.status === 401 && error.statusText == 'Unauthorized') {
       this.actionMessage({ text: 'Login expired, Please login again.', title: 'Close' });
       localStorage.clear();
-      // this._router.navigate(['/login']);
       this._router.navigateByUrl('login', { state: { url: location.pathname } });
+    } else {
+      console.log(error);
     }
   }
 

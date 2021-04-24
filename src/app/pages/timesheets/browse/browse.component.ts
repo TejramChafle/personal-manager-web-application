@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewEncapsulation, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { TaskService } from '../../tasks/task.service';
 import { AppService } from '../../../app.service';
+import { HttpService } from 'src/app/http.service';
 
 @Component({
   selector: 'personal-manager-browse',
@@ -18,12 +18,12 @@ export class BrowseComponent implements OnInit {
   constructor(
     private _dialogRef: MatDialogRef<BrowseComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
-    private _taskService: TaskService,
+    private _httpService: HttpService,
     private _appService: AppService
   ) { }
 
   ngOnInit() {
-    this._taskService.getTasks().subscribe((response) => {
+    /* this._taskService.getTasks().subscribe((response) => {
       console.log(response);
       this.tasks = [];
       response.forEach(task => {
@@ -44,6 +44,16 @@ export class BrowseComponent implements OnInit {
         this._appService.actionMessage({ title: 'Error!', text: 'Failed to get tasks information' });
       }
       console.log(error);
+    }); */
+
+    this._httpService.getRecords('tasks', {}).subscribe((response) => {
+      this.loading = false;
+      console.log(response);
+      this.tasks = response.docs;
+    }, (error) => {
+      console.log(error);
+      this.loading = false;
+      this._appService.actionMessage({ title: 'Error!', text: 'Failed to get tasks.' });
     });
   }
 
