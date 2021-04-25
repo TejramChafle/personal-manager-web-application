@@ -10,13 +10,13 @@ import { HttpService } from 'src/app/http.service';
   encapsulation: ViewEncapsulation.None
 })
 
-export class BrowseComponent implements OnInit {
+export class BrowseTaskComponent implements OnInit {
   tasks: Array<any>;
   search: string;
   loading = false;
 
   constructor(
-    private _dialogRef: MatDialogRef<BrowseComponent>,
+    private _dialogRef: MatDialogRef<BrowseTaskComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
     private _httpService: HttpService,
     private _appService: AppService

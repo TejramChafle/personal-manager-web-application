@@ -1,9 +1,10 @@
 import { Component, OnInit, Inject } from '@angular/core';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { FormGroup, FormBuilder, FormControl, Validators, FormArray } from '@angular/forms';
 import { AppService } from '../../../app.service';
 import { MoneyService } from '../../money/money.service';
 import { HttpService } from 'src/app/http.service';
+import { BrowseComponent } from 'src/app/components/browse/browse.component';
 
 @Component({
 	selector: 'personal-manager-grocery',
@@ -23,11 +24,12 @@ export class GroceryComponent implements OnInit {
 		@Inject(MAT_DIALOG_DATA) public data: any,
 		private _appService: AppService,
 		public _moneyService: MoneyService,
-		private _httpService: HttpService
+		private _httpService: HttpService,
+		public _dialog: MatDialog
 	) {
 		this.groceryForm = this._formBuilder.group({
 			date: new FormControl(null),
-			purpose: new FormControl( this.data.grocery && this.data.grocery.purpose || 'Grocery' ),
+			purpose: new FormControl( this.data.grocery && this.data.grocery.expenditure && this.data.grocery.expenditure.purpose || 'Grocery' ),
 			place: new FormControl(null, Validators.required),
 			items: new FormArray([], Validators.required)
 		})
@@ -172,6 +174,32 @@ export class GroceryComponent implements OnInit {
 	get groceryControl() {
 		return this.groceryForm.get('items')['controls'];
 		// groceryForm.get('items').controls
+	}
+
+	onBrowse() {
+		let dialogRef = this._dialog.open(BrowseComponent, {
+			minWidth: '350px',
+			data: { page: 'purchases', purpose: this.groceryForm.get('purpose')['value'], type: 'items', records: this.groceryForm.get('items')['value'] }
+		});
+
+		dialogRef.afterClosed().subscribe((resp) => {
+			console.log(resp);
+			if (resp) {
+				let items = [];
+				// Add new items in the item list
+				resp.forEach(element => {
+					// Add new item in the list only if not present previously
+					if (!this.groceryForm.get('items')['value'].includes(element.name)) {
+						this.onAddItem();
+						items.push(element.name);
+					}
+				});
+				// Add the browsed items in existing form
+				this.groceryForm.patchValue({
+					items: this.groceryForm.get('items')['value'].concat(items).filter((item) => item !== null)
+				});
+			}
+		})
 	}
 
 }

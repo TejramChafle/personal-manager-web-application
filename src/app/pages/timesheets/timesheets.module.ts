@@ -5,7 +5,7 @@ import { AppMaterialModule } from '../../app.material';
 
 import { TimesheetsComponent } from './timesheets.component';
 import { TimesheetComponent } from './timesheet/timesheet.component';
-import { BrowseComponent } from './browse/browse.component';
+import { BrowseTaskComponent } from './browse/browse.component';
 
 import { AuthGuard } from '../../guards/auth.guard';
 
@@ -17,7 +17,7 @@ const routes: Routes = [
   declarations: [
     TimesheetsComponent,
     TimesheetComponent,
-    BrowseComponent
+    BrowseTaskComponent
   ],
   imports: [
     CommonModule,
@@ -29,7 +29,7 @@ const routes: Routes = [
   ],
   entryComponents: [
     TimesheetComponent,
-    BrowseComponent
+    BrowseTaskComponent
   ]
 })
 

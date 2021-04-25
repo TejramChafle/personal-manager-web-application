@@ -1,3 +1,10 @@
+
+<!-- <div class="fab-button-top-right">
+    <button mat-mini-fab color="primary" (click)="onClose()">
+        <mat-icon>close</mat-icon>
+    </button>
+</div> -->
+
 <form [formGroup]="groceryForm" (ngSubmit)="onSubmit(groceryForm)">
     <mat-dialog-content>
         <div class="grocery-form">
@@ -25,7 +32,12 @@
             </mat-form-field>
 
             <div>
-                <mat-label for="item">ITEMS</mat-label>
+                <div class="items-header">
+                    <mat-label for="item">ITEMS</mat-label>
+                    <button mat-mini-fab type="button" color="primary" aria-label="Add item" (click)="onAddItem()" *ngIf="!data.isPaid" style="float: right;">
+                        <mat-icon>add</mat-icon>
+                    </button>
+                </div>
                 <div class="item-container grocery-items" *ngFor="let itemCtrl of groceryControl; let i = index;" [ngClass]="{'grocery-items-is-paid':data.isPaid}">
                     <input type="text" [name]="i" [formControl]="groceryControl[i]">
                     <button mat-mini-fab type="button" color="warn" aria-label="Remove" (click)="removeItem(itemCtrl)"
@@ -86,10 +98,14 @@
         </div>
     </mat-dialog-content>
     <mat-dialog-actions align="right">
-        <button class="add-item-btn" mat-raised-button type="button" color="accent" aria-label="Add item"
+        <button mat-raised-button type="button" color="primary" aria-label="Browse" style="float: right;"
+            (click)="onBrowse()" *ngIf="!data.isPaid">
+            Browse
+        </button>
+        <!-- <button class="add-item-btn" mat-raised-button type="button" color="accent" aria-label="Add item"
             (click)="onAddItem()" *ngIf="!data.isPaid">
             Add Item
-        </button>
+        </button> -->
         <button mat-raised-button type="button" (click)="onClose()" [disabled]="loading" style="float: right;">Close</button>
         <button mat-raised-button type="submit" color="primary" style="float: right"
             [disabled]="loading || groceryForm.invalid">{{loading ? 'Please wait..' : 'Submit'}}</button>

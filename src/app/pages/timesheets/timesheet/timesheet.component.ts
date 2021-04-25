@@ -3,7 +3,7 @@ import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dial
 import { FormControl, FormBuilder, FormGroup, Validators, FormArray } from '@angular/forms';
 import { TimesheetService } from '../timesheet.service';
 import { AppService } from '../../../app.service';
-import { BrowseComponent } from '../browse/browse.component';
+import { BrowseTaskComponent } from '../browse/browse.component';
 
 @Component({
 	selector: 'personal-manager-timesheet',
@@ -121,7 +121,7 @@ export class TimesheetComponent implements OnInit {
 		// const control = new FormControl(null, Validators.required);
 		// (<FormArray>this.timesheetForm.get('tasks')).push(control);
 
-		let dialogRef = this._dialog.open(BrowseComponent, {
+		let dialogRef = this._dialog.open(BrowseTaskComponent, {
 			minWidth: '350px',
 			data: { tasks: this.timesheetForm.get('tasks')['value'] }
 		});

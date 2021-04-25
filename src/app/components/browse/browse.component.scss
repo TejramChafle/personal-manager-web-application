@@ -1,0 +1,15 @@
+
+.task-header {
+    margin: 0 15px 0;
+    .mat-form-field-infix {
+        padding: 0px 5px 10px;
+    }
+    input {
+        padding: 8px;
+        border: 1px solid #777;
+        margin-right: 15px;
+    }
+    input:active {
+        border: 1px solid #777;
+    }
+}
