@@ -7,6 +7,7 @@ import { GroceriesComponent } from './groceries.component';
 import { GroceryComponent } from './grocery/grocery.component';
 import { ManageItemComponent } from './manage-item/manage-item.component';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
+import { IsautofocusedDirective } from 'src/app/directives/isautofocused.directive';
 
 const routes: Routes = [
     { path: '', component: GroceriesComponent }
@@ -16,7 +17,8 @@ const routes: Routes = [
     declarations: [
         GroceriesComponent,
         GroceryComponent,
-        ManageItemComponent
+        ManageItemComponent,
+        IsautofocusedDirective
     ],
     imports: [
         CommonModule,

@@ -17,7 +17,7 @@ export class GroceryComponent implements OnInit {
 	loading = false;
 	id
 	today
-
+	autofocused = [];
 	constructor(
 		private _formBuilder: FormBuilder,
 		private _dialogRef: MatDialogRef<GroceryComponent>,
@@ -73,6 +73,9 @@ export class GroceryComponent implements OnInit {
 	onAddItem() {
 		const control = new FormControl({ value: null, disabled: this.data.isPaid || false }, Validators.required);
 		(<FormArray>this.groceryForm.get('items')).push(control);
+		// Reset other autofocus and set to newly added
+		this.autofocused.forEach((item) => item = false);
+		this.autofocused[this.groceryForm.get('items')['value'].length - 1] = true;
 	}
 
 	onClose() {
