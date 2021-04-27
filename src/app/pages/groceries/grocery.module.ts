@@ -8,9 +8,11 @@ import { GroceryComponent } from './grocery/grocery.component';
 import { ManageItemComponent } from './manage-item/manage-item.component';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { IsautofocusedDirective } from 'src/app/directives/isautofocused.directive';
+import { GroceryDetailComponent } from './grocery-detail/grocery-detail.component';
 
 const routes: Routes = [
-    { path: '', component: GroceriesComponent }
+    { path: '', component: GroceriesComponent},
+    { path: ':id', component: GroceryDetailComponent }
 ]
 
 @NgModule({
@@ -18,7 +20,8 @@ const routes: Routes = [
         GroceriesComponent,
         GroceryComponent,
         ManageItemComponent,
-        IsautofocusedDirective
+        IsautofocusedDirective,
+        GroceryDetailComponent
     ],
     imports: [
         CommonModule,

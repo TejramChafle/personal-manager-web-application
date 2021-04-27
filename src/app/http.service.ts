@@ -48,6 +48,19 @@ export class HttpService {
         )
     }
 
+    // GET SINGLE RECORD
+    public getRecord(pathname, data): Observable<any> {
+        return this._http.get(environment.API_URL + pathname).pipe(
+            map((response) => {
+                return response;
+            }),
+            catchError((error) => {
+                this._appService.handleError(error);
+                return throwError(error);
+            })
+        )
+    }
+
     // DELETE
     public deleteRecord(pathname, data): Observable<any> {
         return this._http.delete(environment.API_URL + pathname + '/' + data._id).pipe(

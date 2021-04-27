@@ -7,7 +7,7 @@
 </div>
 
 <!-- ITEMS -->
-<mat-grid-list [cols]="gridCols" rowHeight="225px" *ngIf="tasks">
+<mat-grid-list [cols]="gridCols" rowHeight="225px" *ngIf="tasks && !tasks.length == 0">
     <mat-grid-tile
         *ngFor="let task of tasks"
         colspan="1"

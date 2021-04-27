@@ -58,6 +58,7 @@
                     <mat-icon>menu</mat-icon>
                 </button>
                 <mat-menu #menu="matMenu" xPosition="before">
+                    <button mat-menu-item (click)="openDetail(purchase)"><mat-icon>details</mat-icon>Detail</button>
                     <button mat-menu-item (click)="openGrocery(purchase)"><mat-icon>edit</mat-icon>Edit</button>
                     <button mat-menu-item (click)="onDelete(purchase)"><mat-icon>delete</mat-icon>Remove</button>
                     <button mat-menu-item (click)="onShare(purchase)"><mat-icon>share</mat-icon>Share</button>

@@ -8,6 +8,7 @@ import { ConfirmComponent } from '../../components/confirm/confirm.component';
 import { ManageItemComponent } from './manage-item/manage-item.component';
 import { HttpService } from 'src/app/http.service';
 import { Subscription } from 'rxjs';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'personal-manager-groceries',
@@ -27,7 +28,9 @@ export class GroceriesComponent implements OnInit, OnDestroy {
     private _appService: AppService,
     private _breakpointObserver: BreakpointObserver,
     private _snakBar: MatSnackBar,
-    private _httpService: HttpService) {
+    private _httpService: HttpService,
+    private _router: Router,
+    private _route: ActivatedRoute) {
     let breakpoint = { ...Breakpoints };
     _breakpointObserver.observe(
       Object.values(breakpoint)
@@ -174,5 +177,10 @@ export class GroceriesComponent implements OnInit, OnDestroy {
       items: purchase.items
     }
     this.openGrocery(param);
+  }
+
+  openDetail(purchase) {
+    localStorage.setItem('purchase', JSON.stringify(purchase));
+    this._router.navigate(['groceries', purchase._id]);
   }
 }

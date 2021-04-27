@@ -14,7 +14,7 @@ const routes: Routes = [
     { path: 'profile', component: ProfileComponent, canActivate: [AuthGuard] },
     { path: 'login', component: LoginComponent },
     { path: 'signup', component: SignupComponent },
-    { path: 'groceries', loadChildren: () => import('./pages/groceries/grocery.module').then(module => module.GroceryModuleClass) },
+    { path: 'groceries', loadChildren: () => import('./pages/groceries/grocery.module').then(module => module.GroceryModuleClass), canActivate: [AuthGuard] },
     { path: 'timesheets', loadChildren: () => import('./pages/timesheets/timesheets.module').then(module => module.TimesheetsModule), canActivate: [AuthGuard] },
     { path: 'tasks', loadChildren: () => import('./pages/tasks/tasks.module').then(module => module.TasksModule), canActivate: [AuthGuard] },
     { path: 'money', loadChildren: () => import('./pages/money/money.module').then(module => module.MoneyModule), canActivate: [AuthGuard] }

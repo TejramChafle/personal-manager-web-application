@@ -1,0 +1,39 @@
+<mat-card class="list-card" *ngIf="!loading">
+    <div class="card-content-container">
+        <mat-card-header>
+            <mat-card-title>
+                <div class="record-status">
+                    {{purchase.expenditure?.place | uppercase}}
+                </div>
+                <div class="record-payment" >
+                    {{purchase.expenditure?.purpose}}
+                </div>
+            </mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+            <h3>{{purchase.expenditure?.purpose | uppercase}} ITEMS ({{purchase.items.length}})</h3>
+            <mat-list>
+                <mat-list-item *ngFor="let item of purchase.items; let i = index">{{i+1}}. {{item}}</mat-list-item>
+            </mat-list>
+        </mat-card-content>
+        <mat-card-actions>
+            <div class="record-footer" *ngIf="purchase.expenditure.payment">
+                &#x20B9; {{purchase.expenditure.payment.amount | number}} | {{purchase.expenditure.payment?.method}}
+                <span style="float: right;">{{purchase.expenditure.date | date:'dd MMM, yyyy'}}</span>
+            </div>  
+        </mat-card-actions>
+    </div>
+</mat-card>
+
+<!-- EMPTY RECORDS -->
+<div class="empty-record-container" *ngIf="!purchase && !loading">
+    <img src="assets/icons/files.svg">
+    <h2>No purchases found</h2>
+    <h4>Any new purchase will appear here</h4>
+</div>
+
+
+<!-- SPINNER -->
+<div class="spinner-container" *ngIf="loading">
+    <mat-spinner></mat-spinner>
+</div>

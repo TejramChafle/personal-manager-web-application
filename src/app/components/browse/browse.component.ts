@@ -35,7 +35,7 @@ export class BrowseComponent implements OnInit {
           isChecked: false
         }
       });
-      console.log('this.records', this.records);
+      // console.log('this.records', this.records);
       this.checkAlreadySelected();
     }, (error) => {
       console.log(error);
