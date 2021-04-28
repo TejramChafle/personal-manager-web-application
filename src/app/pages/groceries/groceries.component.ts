@@ -9,6 +9,7 @@ import { ManageItemComponent } from './manage-item/manage-item.component';
 import { HttpService } from 'src/app/http.service';
 import { Subscription } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
   selector: 'personal-manager-groceries',
@@ -164,7 +165,13 @@ export class GroceriesComponent implements OnInit, OnDestroy {
   }
 
   onShare(purchase) {
-
+    console.log('purchase', purchase);
+    let href = 'whatsapp://send?abid=&text=';
+    href += 'Hey, \n' + purchase.createdBy + ' has shared the items list for ' + purchase.expenditure.purpose.toLowerCase() + '. \nItems list ('+purchase.items.length+') includes: \n';
+    href += purchase.items.join(', ');
+    href += '. \nTake action on ' + window.location.href + '/' + purchase._id;
+    // console.log('href', href);
+    window.open(href, '_blank');
   }
 
   onCopy(purchase) {
