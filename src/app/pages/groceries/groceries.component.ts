@@ -9,7 +9,7 @@ import { ManageItemComponent } from './manage-item/manage-item.component';
 import { HttpService } from 'src/app/http.service';
 import { Subscription } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
-import { DomSanitizer } from '@angular/platform-browser';
+import { AuthService } from '../auth/auth.service';
 
 @Component({
   selector: 'personal-manager-groceries',
@@ -31,7 +31,8 @@ export class GroceriesComponent implements OnInit, OnDestroy {
     private _snakBar: MatSnackBar,
     private _httpService: HttpService,
     private _router: Router,
-    private _route: ActivatedRoute) {
+    private _route: ActivatedRoute,
+    private _authService: AuthService) {
     let breakpoint = { ...Breakpoints };
     _breakpointObserver.observe(
       Object.values(breakpoint)
@@ -167,10 +168,12 @@ export class GroceriesComponent implements OnInit, OnDestroy {
   onShare(purchase) {
     console.log('purchase', purchase);
     let href = 'whatsapp://send?abid=&text=';
-    href += 'Hey, \n' + purchase.createdBy + ' has shared the items list for ' + purchase.expenditure.purpose.toLowerCase() + '. \nItems list ('+purchase.items.length+') includes: \n';
-    href += purchase.items.join(', ');
-    href += '. \nTake action on ' + window.location.href + '/' + purchase._id;
-    // console.log('href', href);
+    href += 'Hey, %0A' + this._authService.user.user.name + ' has shared the items list for ' + purchase.expenditure.purpose.toLowerCase() + '. %0AItems list (' + purchase.items.length + ') includes: %0A';
+    purchase.items.forEach((item, key) => {
+      href += ++key + '. ' + item + '%0A';
+    });
+    href += 'To edit or start purchasing, visit ' + window.location.href + '/' + purchase._id + '%0A';
+    href += ' ';
     window.open(href, '_blank');
   }
 
