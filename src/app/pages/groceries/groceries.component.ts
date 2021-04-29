@@ -168,7 +168,8 @@ export class GroceriesComponent implements OnInit, OnDestroy {
   onShare(purchase) {
     console.log('purchase', purchase);
     let href = 'whatsapp://send?abid=&text=';
-    href += 'Hey, %0A' + this._authService.user.user.name + ' has shared the items list for ' + purchase.expenditure.purpose.toLowerCase() + '. %0AItems list (' + purchase.items.length + ') includes: %0A';
+    href += 'Hey, %0A' + this._authService.user.user.name + ' has shared the items list for ' + purchase.expenditure.purpose.toLowerCase() + ' at ' + purchase.expenditure.place +'. %0A';
+    href += 'Items list (' + purchase.items.length + ') includes: %0A';
     purchase.items.forEach((item, key) => {
       href += ++key + '. ' + item + '%0A';
     });
