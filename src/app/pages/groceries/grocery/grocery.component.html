@@ -31,12 +31,12 @@
                     required</mat-error>
             </mat-form-field>
 
-            <div class="items-header">
+            <!-- HEADING -->
+            <div class="items-header" *ngIf="groceryControl.length">
                 <mat-label for="item">ITEMS ({{groceryControl.length}})</mat-label>
-                <!-- <button mat-raised-button type="button" color="primary" aria-label="Add item" (click)="onAddItem()" *ngIf="!data.isPaid" style="float: right;">
-                    ADD ITEM <mat-icon>add</mat-icon>
-                </button> -->
             </div>
+
+            <!-- LIST -->
             <div class="item-container grocery-items" *ngFor="let itemCtrl of groceryControl; let i = index;" [ngClass]="{'grocery-items-is-paid':data.isPaid}">
                 <div class="item-container-input">
                     <input class="item-container-input-name" type="text" [name]="i" [formControl]="groceryControl[i]" [isautofocused]="autofocused[i]">
@@ -56,18 +56,19 @@
                     </mat-error>
                 </div>
             </div>
-            <div class="add-item-alert" *ngIf="groceryControl && groceryControl.length==0">Add items
-                in grocery list
-            </div>
 
+            <!-- MESSAGE (if items not added) -->
+            <div class="add-item-alert" *ngIf="groceryControl && groceryControl.length==0">Add items in grocery list</div>
+
+            <!-- PAYMENT (fields for input) -->
             <div formGroupName="payment" *ngIf="data.isPaid">
                 <hr>
                 <mat-form-field>
                     <mat-label for="amount">Amount</mat-label>
                     <input matInput type="number" formControlName="amount">
-                    <mat-error
-                        *ngIf="groceryForm.get('payment.amount').invalid && groceryForm.get('payment.amount').touched">
-                        Please enter valid payment amount</mat-error>
+                    <mat-error *ngIf="groceryForm.get('payment.amount').invalid && groceryForm.get('payment.amount').touched">
+                        Please enter valid payment amount
+                    </mat-error>
                 </mat-form-field>
 
                 <mat-form-field>
@@ -76,34 +77,27 @@
                         <mat-option value="Paid">Paid</mat-option>
                         <mat-option value="Unpaid">Unpaid</mat-option>
                     </mat-select>
-                    <mat-error
-                        *ngIf="groceryForm.get('payment.status').invalid && groceryForm.get('payment.status').touched">
-                        Please select payment status</mat-error>
+                    <mat-error *ngIf="groceryForm.get('payment.status').invalid && groceryForm.get('payment.status').touched">
+                        Please select payment status
+                    </mat-error>
                 </mat-form-field>
 
                 <mat-form-field>
                     <mat-label for="method">Method</mat-label>
                     <mat-select name="method" formControlName="method">
-                        <mat-option *ngFor="let meth of _moneyService.paymentMethods" [value]="meth">{{meth}}
+                        <mat-option *ngFor="let meth of _moneyService.paymentMethods" [value]="meth">
+                            {{meth}}
                         </mat-option>
                     </mat-select>
-                    <mat-error
-                        *ngIf="groceryForm.get('payment.method').invalid && groceryForm.get('payment.method').touched">
-                        Please select payment method</mat-error>
+                    <mat-error *ngIf="groceryForm.get('payment.method').invalid && groceryForm.get('payment.method').touched">
+                        Please select payment method
+                    </mat-error>
                 </mat-form-field>
             </div>
-            <!-- <br>
-            <div align="right" class="form-action">
-                <button class="add-item-btn" mat-raised-button type="button" color="accent" aria-label="Add item field"
-                    (click)="onAddItem()" *ngIf="!data.isPaid">
-                    Add Item
-                </button>
-                <button mat-raised-button type="button" (click)="onClose()" [disabled]="loading">Close</button>
-                <button mat-raised-button type="submit" color="primary"
-                    [disabled]="loading || groceryForm.invalid">{{loading ? 'Please wait..' : 'Submit'}}</button>
-            </div> -->
         </div>
     </mat-dialog-content>
+
+    <!-- ACTION buttons -->
     <mat-dialog-actions align="right">
         <button mat-raised-button type="button" color="primary" aria-label="Add item" (click)="onAddItem()" *ngIf="!data.isPaid" style="float: right;">
             ADD ITEM <mat-icon>add</mat-icon>

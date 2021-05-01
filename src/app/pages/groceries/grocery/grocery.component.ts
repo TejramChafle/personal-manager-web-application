@@ -117,12 +117,14 @@ export class GroceryComponent implements OnInit {
 			data.updatedDate = new Date();
 			data.createdDate = this.data.grocery.createdDate;
 			data.expenditure = this.data.grocery.expenditure;
+			data.expenditure.purpose = data.purpose;
+			data.expenditure.place = data.place;
 			console.log('data:', data );
 
 			this._httpService.updateRecord('purchases', data).subscribe((response) => {
 				this.loading = false;
 				console.log(response);
-				if (response.result) {
+				if (response.ok) {
 					this._appService.actionMessage({ title: 'Success!', text: 'Grocery record created successfully.' });
 					this._dialogRef.close(true);
 				}
