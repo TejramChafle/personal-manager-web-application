@@ -77,7 +77,7 @@ export class GroceriesComponent implements OnInit, OnDestroy {
       console.log(response);
       // Modify the result for item description. This will generate text from items array
       response.docs.forEach(element => {
-        element.itemDescription = element.items.toString().replace(/,/g,", ");
+        element.itemDescription = element.items.map((item) => { return item.name }).toString().replace(/,/g, ", ");
       });
       // Adjust purchase array based on page number.
       if (response.page > 1) {
@@ -85,7 +85,7 @@ export class GroceriesComponent implements OnInit, OnDestroy {
       } else {
         this.purchases = response.docs;
       }
-      // console.log('this.purchases', this.purchases);
+      console.log('this.purchases', this.purchases);
     }, (error) => {
       this._appService.actionMessage({ title: 'Error!', text: 'Failed to get purchases information' });
       console.log(error);

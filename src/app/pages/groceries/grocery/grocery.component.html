@@ -31,26 +31,33 @@
                     required</mat-error>
             </mat-form-field>
 
-            <div>
-                <div class="items-header">
-                    <mat-label for="item">ITEMS</mat-label>
-                    <button mat-mini-fab type="button" color="primary" aria-label="Add item" (click)="onAddItem()" *ngIf="!data.isPaid" style="float: right;">
+            <div class="items-header">
+                <mat-label for="item">ITEMS ({{groceryControl.length}})</mat-label>
+                <!-- <button mat-raised-button type="button" color="primary" aria-label="Add item" (click)="onAddItem()" *ngIf="!data.isPaid" style="float: right;">
+                    ADD ITEM <mat-icon>add</mat-icon>
+                </button> -->
+            </div>
+            <div class="item-container grocery-items" *ngFor="let itemCtrl of groceryControl; let i = index;" [ngClass]="{'grocery-items-is-paid':data.isPaid}">
+                <div class="item-container-input">
+                    <input class="item-container-input-name" type="text" [name]="i" [formControl]="groceryControl[i]" [isautofocused]="autofocused[i]">
+                    <button mat-mini-fab type="button" color="warn" aria-label="Remove" (click)="removeItem(itemCtrl)"
+                        *ngIf="!data.isPaid">
+                        <mat-icon>remove</mat-icon>
+                    </button>
+                    <input type="text" class="item-container-input-quantity" [value]="itemQuantities[i]" name="itemQuantity" (change)="onQuantityChange($event, i)">
+                    <button mat-mini-fab type="button" color="primary" aria-label="Remove" (click)="addItem(itemCtrl)"
+                        *ngIf="!data.isPaid">
                         <mat-icon>add</mat-icon>
                     </button>
                 </div>
-                <div class="item-container grocery-items" *ngFor="let itemCtrl of groceryControl; let i = index;" [ngClass]="{'grocery-items-is-paid':data.isPaid}">
-                    <input type="text" [name]="i" [formControl]="groceryControl[i]" [isautofocused]="autofocused[i]">
-                    <button mat-mini-fab type="button" color="warn" aria-label="Remove" (click)="removeItem(itemCtrl)"
-                        *ngIf="!data.isPaid">
-                        <mat-icon>delete</mat-icon>
-                    </button>
-                    <mat-error
-                        *ngIf="groceryControl[i].invalid && groceryControl[i].touched">
-                        Item is required</mat-error>
+                <div class="item-container-error">
+                    <mat-error *ngIf="groceryControl[i].invalid && groceryControl[i].touched">
+                        Item is required
+                    </mat-error>
                 </div>
-                <div class="add-item-alert"
-                    *ngIf="groceryControl && groceryControl.length==0">Add items
-                    in grocery list</div>
+            </div>
+            <div class="add-item-alert" *ngIf="groceryControl && groceryControl.length==0">Add items
+                in grocery list
             </div>
 
             <div formGroupName="payment" *ngIf="data.isPaid">
@@ -98,16 +105,19 @@
         </div>
     </mat-dialog-content>
     <mat-dialog-actions align="right">
+        <button mat-raised-button type="button" color="primary" aria-label="Add item" (click)="onAddItem()" *ngIf="!data.isPaid" style="float: right;">
+            ADD ITEM <mat-icon>add</mat-icon>
+        </button>
         <button mat-raised-button type="button" color="accent" aria-label="Browse" style="float: right;"
             (click)="onBrowse()" *ngIf="!data.isPaid">
-            Browse
+            Browse  <mat-icon>search</mat-icon>
         </button>
-        <!-- <button class="add-item-btn" mat-raised-button type="button" color="accent" aria-label="Add item"
-            (click)="onAddItem()" *ngIf="!data.isPaid">
-            Add Item
-        </button> -->
-        <button mat-raised-button type="button" (click)="onClose()" [disabled]="loading" style="float: right;">Close</button>
+        <button mat-raised-button type="button" (click)="onClose()" [disabled]="loading" style="float: right;">
+            Close <mat-icon>close</mat-icon>
+        </button>
         <button mat-raised-button type="submit" color="primary" style="float: right"
-            [disabled]="loading || groceryForm.invalid">{{loading ? 'Please wait..' : 'Submit'}}</button>
+            [disabled]="loading || groceryForm.invalid">
+            {{loading ? 'Please wait..' : 'Submit'}} <mat-icon *ngIf="!loading">save</mat-icon><mat-icon *ngIf="loading">hourglass_top</mat-icon>
+        </button>
     </mat-dialog-actions>
 </form>

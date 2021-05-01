@@ -60,11 +60,12 @@ export class AppService {
   }
 
   public inputDate(date) {
-    const day = date.getDate();
+    let day = date.getDate();
     let month = date.getMonth();
     const year = date.getFullYear();
     month++;
     month = month < 10 ? '0' + month : month;
+    day = day < 10 ? '0' + day : day;
     return year + '-' + month + '-' + day;
   }
 

@@ -18,6 +18,7 @@ export class GroceryComponent implements OnInit {
 	id
 	today
 	autofocused = [];
+	itemQuantities: Array<number>;
 	constructor(
 		private _formBuilder: FormBuilder,
 		private _dialogRef: MatDialogRef<GroceryComponent>,
@@ -62,11 +63,11 @@ export class GroceryComponent implements OnInit {
 			this.groceryForm.patchValue({
 				date: this._appService.inputDate(new Date(this.data.grocery.expenditure.date)),
 				purspose: this.data.grocery.expenditure.purpose,
-				items: this.data.grocery.items,
+				items: this.data.grocery.items.map((item) => { return item.name }),
 				place: this.data.grocery.expenditure.place,
 				payment: this.data.grocery.payment
 			});
-			console.log('this.groceryForm', this.groceryForm);
+			this.itemQuantities = this.data.grocery.items.map((item) => { return item.quantity });
 		}
 	}
 
@@ -76,18 +77,22 @@ export class GroceryComponent implements OnInit {
 		// Reset other autofocus and set to newly added
 		this.autofocused.forEach((item) => item = false);
 		this.autofocused[this.groceryForm.get('items')['value'].length - 1] = true;
+		if (!this.itemQuantities) { this.itemQuantities = [] };
+		this.itemQuantities[this.groceryForm.get('items')['value'].length - 1] = 1;
 	}
 
 	onClose() {
 		this._dialogRef.close(false);
 	}
 
+	// Decrement the quantity on click of - button in items list
 	removeItem(item) {
-		this.groceryForm.get('items')['controls'].splice(this.groceryForm.get('items')['controls'].indexOf(item), 1);
-		this.groceryForm.get('items')['value'].splice(this.groceryForm.get('items')['value'].indexOf(item), 1);
-		// RESET items if all removed
-		if (this.groceryForm.get('items')['controls'].length == 0) {
-			this.groceryForm.get('items').reset();
+		const itemIndex = this.groceryForm.get('items')['controls'].indexOf(item);
+		if (this.itemQuantities[itemIndex] <= 0) {
+			// If the value is less than 0, then delete item from list
+			this.removeItemFromForm(itemIndex);
+		} else {
+			this.itemQuantities[itemIndex] -= 1;
 		}
 	}
 
@@ -100,9 +105,9 @@ export class GroceryComponent implements OnInit {
 		if (this.data.grocery && this.data.grocery.items && this.data.isPaid) {
 			items = this.data.grocery.items;
 		} else if (data.items && data.items.length) {
-			data.items.forEach(element => {
-				element = element.trim();
-				items.push(element);
+			data.items.forEach((item, key) => {
+				item = item.trim();
+				items.push({name: item, quantity: this.itemQuantities[key]});
 			});
 		}
 		data.items = items;
@@ -129,7 +134,7 @@ export class GroceryComponent implements OnInit {
 		} else {
 			data.createdDate = new Date();
 			data.updatedDate = new Date();
-
+			console.log('data:', data );
 			this._httpService.saveRecord('purchases', data).subscribe((response) => {
 				this.loading = false;
 				console.log(response);
@@ -179,6 +184,8 @@ export class GroceryComponent implements OnInit {
 		// groceryForm.get('items').controls
 	}
 
+
+	// Find the list of items for suggestions. The suggestions will come from previously purchanges 100 items in same purpose of shopping 
 	onBrowse() {
 		let dialogRef = this._dialog.open(BrowseComponent, {
 			minWidth: '350px',
@@ -203,6 +210,31 @@ export class GroceryComponent implements OnInit {
 				});
 			}
 		})
+	}
+
+	// Remove item from items array form controls 
+	removeItemFromForm(itemIndex) {
+		this.groceryForm.get('items')['controls'].splice(itemIndex, 1);
+		this.groceryForm.get('items')['value'].splice(itemIndex, 1);
+		// RESET items if all removed
+		if (this.groceryForm.get('items')['controls'].length == 0) {
+			this.groceryForm.get('items').reset();
+		}
+		this.itemQuantities.splice(itemIndex, 1);
+	}
+
+	// Add 1 on click of + button of item list 
+	addItem(item) {
+		const itemIndex = this.groceryForm.get('items')['controls'].indexOf(item);
+		this.itemQuantities[itemIndex] += 1;
+	}
+
+	// On manually changing quantity in items list, adjust the quantities in form controls 
+	onQuantityChange(event, index) {
+		this.itemQuantities[index] = parseInt(event.target.value, 10);
+		if (this.itemQuantities[index] <= 0) {
+			this.removeItemFromForm(index);
+		}
 	}
 
 }

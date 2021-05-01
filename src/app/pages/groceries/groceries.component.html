@@ -12,7 +12,7 @@
     [infiniteScrollThrottle]="300"
     [infiniteScrollUpDistance]="2"
     (scrolled)="onScrollDown()"
-    (scrolledUp)="onUp()">
+    (scrolledUp)="onUp()" *ngIf="purchases && purchases.length">
     <!-- ITEMS -->
     <mat-grid-list [cols]="gridCols" rowHeight="225px">
         <mat-grid-tile
