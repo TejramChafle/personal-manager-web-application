@@ -34,18 +34,18 @@
                         </mat-card-title>
                     </mat-card-header>
                     <mat-card-content>
-                        <div [ngClass]="purchase.expenditure.payment ? 'record-purpose-with-payment' : 'record-purpose-without-payment'">
-                            <!-- <mat-list>
-                                <mat-list-item *ngFor="let item of purchase.items; let i = index">{{i+1}}. {{item}}</mat-list-item>
-                            </mat-list> -->
+                        <div [ngClass]="purchase.expenditure.payment ? 'record-purpose-with-payment' : 'record-purpose-with-payment'">
                             {{purchase.itemDescription}}
-                            <!-- <h5>{{purchase.date | date:'dd MMM, yyyy'}}</h5> -->
                         </div>
                     </mat-card-content>
                     <mat-card-actions>
                         <div class="record-footer" *ngIf="purchase.expenditure.payment">
                             &#x20B9; {{purchase.expenditure.payment.amount | number}} | {{purchase.expenditure.payment?.method}}
-                            <span style="float: right;">{{purchase.date | date:'dd MMM, yyyy'}}</span>
+                            <span style="float: right;">{{purchase.expenditure.payment.updatedDate | date:'dd MMM, yyyy'}}</span>
+                        </div>
+                        <div class="record-footer" *ngIf="!purchase.expenditure.payment">
+                            {{purchase.items.length}} Items
+                            <span style="float: right;">{{purchase.expenditure.date | date:'dd MMM, yyyy'}}</span>
                         </div>  
                     </mat-card-actions>
                 </div>

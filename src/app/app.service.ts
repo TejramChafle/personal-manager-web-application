@@ -13,7 +13,7 @@ export class AppService {
   searchFieldsEnabler = {
     date: [pages.EXPENDITURE, pages.RETURNING, pages.REMINDER, pages.TASK, pages.GROCERY, pages.LEARNING, pages.TIMESHEET],
     type: [pages.RETURNING],
-    amount: [pages.EXPENDITURE, pages.GROCERY, pages.RETURNING],
+    amount: [pages.EXPENDITURE, pages.RETURNING],
     person: [pages.RETURNING],
     expectedReturnDate: [pages.RETURNING],
     paymentMethod: [pages.EXPENDITURE, pages.RETURNING],
