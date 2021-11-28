@@ -40,7 +40,7 @@ export class AuthService {
         console.log(error);
         // return throwError(error);
         this._appService.handleError(error);
-        return error;
+        return throwError(error);
       })
     )
   }

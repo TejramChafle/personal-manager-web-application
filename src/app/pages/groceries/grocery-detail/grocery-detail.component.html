@@ -13,14 +13,19 @@
         <mat-card-content>
             <h3>{{purchase.expenditure?.purpose | uppercase}} ITEMS ({{purchase.items.length}})</h3>
             <mat-list>
-                <mat-list-item *ngFor="let item of purchase.items; let i = index">{{i+1}}. {{item}}</mat-list-item>
+                <mat-list-item *ngFor="let item of purchase.items; let i = index">{{i+1}}. {{item.name}} ({{item.quantity}})</mat-list-item>
             </mat-list>
         </mat-card-content>
         <mat-card-actions>
-            <div class="record-footer" *ngIf="purchase.expenditure.payment">
-                &#x20B9; {{purchase.expenditure.payment.amount | number}} | {{purchase.expenditure.payment?.method}}
-                <span style="float: right;">{{purchase.expenditure.date | date:'dd MMM, yyyy'}}</span>
-            </div>  
+            <div class="record-footer">
+                <button mat-raised-button type="button" color="light" aria-label="Add item" (click)="onEdit()"style="float: right;">
+                    Edit <mat-icon>edit</mat-icon>
+                </button>
+                <button mat-raised-button type="button" color="accent" aria-label="Browse" style="float: right;"
+                    (click)="onBrowse()">
+                    Start Shopping  <mat-icon>shopping_cart</mat-icon>
+                </button>
+            </div>
         </mat-card-actions>
     </div>
 </mat-card>

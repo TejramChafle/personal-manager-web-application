@@ -73,7 +73,7 @@ export class HttpService {
 
     // UPDATE
     public updateRecord(pathname, data): Observable<any> {
-        data.createdBy = this._authService.user.user.id;
+        data.updatedBy = this._authService.user.user.id;
         return this._http.put(environment.API_URL + pathname + '/' + data.id, data).pipe(
             catchError((error) => {
                 this._appService.handleError(error);

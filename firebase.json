@@ -1,6 +1,6 @@
 {
   "hosting": {
-    "public": "dist/PersonalManager",
+    "public": "dist/personal-manager-web-application",
     "ignore": [
       "firebase.json",
       "**/.*",

@@ -1,6 +1,6 @@
 
 <div class="signup-page">
-    <mat-grid-list cols="3" rowHeight="500px" gutterSize="25px">
+    <mat-grid-list cols="3" rowHeight="600px" gutterSize="25px">
         <mat-grid-tile [colspan]="dimentions.cols" [rowspan]="dimentions.rows">
             <mat-card>
                 <mat-card-content>
@@ -36,7 +36,6 @@
                     <button type="button" class="custom-btn facebook-login-btn" mat-button (click)="_authService.facebookAuth()">
                         <img src="assets/brand/facebook.png" height="24" width="24"> Signup with Facebook 
                     </button>
-                    <br>
                     <button type="button" mat-button color="primary" (click)="onSignin()"><b>Already having account? Signin</b></button>
                 </mat-card-actions>
             </mat-card>

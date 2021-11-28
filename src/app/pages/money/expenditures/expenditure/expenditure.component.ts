@@ -41,9 +41,9 @@ export class ExpenditureComponent implements OnInit {
 	}
 
 	ngOnInit() {
-		console.log(this.data.expenditure);
+		console.log(this.data);
 		if (this.data.expenditure) {
-			this.id = this.data.expenditure.id;
+			this.id = this.data.expenditure._id;
 			delete this.data.expenditure.id;
 			delete this.data.expenditure.createdDate;
 			delete this.data.expenditure.user;
@@ -72,11 +72,12 @@ export class ExpenditureComponent implements OnInit {
 			this.loading = true;
 			data.updatedDate = new Date();
 			data.id = this.id;
+			data.payment._id = this.data.expenditure.payment._id;
 			console.log('updating..', data);
 			this._httpService.updateRecord('expenditures', data).subscribe((response) => {
 				this.loading = false;
 				console.log(response);
-				if (response.result) {
+				if (response.ok) {
 					this._appService.actionMessage({ title: 'Success!', text: 'Expenditures added successfully.' });
 					this._dialogRef.close(true);
 				}
@@ -108,7 +109,7 @@ export class ExpenditureComponent implements OnInit {
 			this._httpService.saveRecord('expenditures', data).subscribe((response) => {
 				this.loading = false;
 				console.log(response);
-				if (response.result) {
+				if (response.ok) {
 					this._appService.actionMessage({ title: 'Success!', text: 'Expenditure updated successfully.' });
 					this._dialogRef.close(true);
 				}
