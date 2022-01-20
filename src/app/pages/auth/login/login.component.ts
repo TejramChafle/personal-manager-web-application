@@ -2,9 +2,9 @@ import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { AuthService } from '../auth.service';
 import { Router } from '@angular/router';
-import { MatSnackBar } from '@angular/material';
 import { Breakpoints, BreakpointObserver } from '@angular/cdk/layout';
 import { map } from 'rxjs/operators';
+import { AppService } from 'src/app/app.service';
 
 @Component({
   selector: 'personal-assistant-login',
@@ -20,14 +20,13 @@ export class LoginComponent implements OnInit {
 
   constructor(
     public _authService: AuthService,
+    private _appSerivce: AppService, 
     private _router: Router,
-    private _snackbar: MatSnackBar,
     private _breakpointObserver: BreakpointObserver) {
     this.dimentions = {
       cols: 3,
       rows: 1
     }
-
     this._breakpointObserver.observe(Breakpoints.Handset).pipe(
       map(({ matches }) => {
         if (matches) {
@@ -36,7 +35,6 @@ export class LoginComponent implements OnInit {
         }
       })
     );
-
     if (this._authService.user) {
       this._router.navigate(['/']);
     }
@@ -53,11 +51,7 @@ export class LoginComponent implements OnInit {
       this._router.navigate([window.history.state.url || '/']);
     }, (error) => {
       this.loading = false;
-      this._snackbar.open('Username or password is incorrect!', 'Close', {
-        duration: 5000,
-        horizontalPosition: "center",
-        verticalPosition: "bottom"
-      });
+      this._appSerivce.actionMessage({ title: 'Error!', text: 'Username or password is incorrect!' });
     })
   }
 
@@ -65,4 +59,25 @@ export class LoginComponent implements OnInit {
     this._router.navigate(['signup']);
   }
 
+  doSocialAuthenticationWith(channel) {
+    this.loading = true;
+    this._authService.doSocialAuthenticationWith(channel).then((response) => {
+      // console.log({ response });
+      this.onSocialAuthentication(response);
+    }).catch((error) => {
+      // console.log({error});
+      this.loading = false;
+      this._appSerivce.actionMessage({ title: 'Error!', text: 'Failed to login with ' + channel });
+    })
+  }
+
+  onSocialAuthentication(response) {
+    this._authService.validateSocialSignInAndAuthenticate(response).subscribe((resp) => {
+      this.loading = false;
+      this._router.navigate([window.history.state.url || '/']);
+    }, (error) => {
+      this.loading = false;
+      this._appSerivce.actionMessage({ title: 'Error!', text: error.error.error || error.error.message });
+    });
+  }
 }

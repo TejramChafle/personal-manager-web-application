@@ -9,10 +9,6 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
 // Components
 import { NavigationComponent } from './components/navigation/navigation.component';
 
-// Pages
-// import { LoginComponent } from '../app/pages/auth/login/login.component';
-// import { SignupComponent } from './pages/auth/signup/signup.component';
-
 import { DashboardComponent } from './pages/dashboard/dashboard.component';
 import { ProfileComponent } from './pages/profile/profile.component';
 
@@ -44,8 +40,6 @@ import { FilterPipe } from './pipes/filter.pipe';
     AppComponent,
     DashboardComponent,
     NavigationComponent,
-    // LoginComponent,
-    // SignupComponent,
     ProfileComponent,
     UploadPhotoComponent,
     ConfirmComponent,

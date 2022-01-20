@@ -5,6 +5,7 @@ import { AppService } from '../../../app.service';
 import { Router } from '@angular/router';
 import { Breakpoints, BreakpointObserver } from '@angular/cdk/layout';
 import { map } from 'rxjs/operators';
+import { LoginComponent } from '../login/login.component';
 
 @Component({
   selector: 'personal-manager-signup',
@@ -15,18 +16,18 @@ import { map } from 'rxjs/operators';
 export class SignupComponent implements OnInit {
   signupForm: NgForm;
   dimentions: { rows: number, cols: number };
-  loading = false;
-
+  loading: boolean;
+  loginComponent: LoginComponent;
   constructor(
     public _authService: AuthService, 
     private _appSerivce: AppService, 
     private _router: Router, 
-    private _breakpointObserver: BreakpointObserver) { 
+    private _breakpointObserver: BreakpointObserver) {
     this.dimentions = {
       cols: 3,
       rows: 1
     }
-
+    // check the window size and decide column diamention
     this._breakpointObserver.observe(Breakpoints.Handset).pipe(
       map(({ matches }) => {
         if (matches) {
@@ -35,13 +36,15 @@ export class SignupComponent implements OnInit {
         }
       })
     );
-
-    if (this._authService.user) {
-      this._router.navigate(['/']);
-    }
+    // init login component to reuse social authentication methods
+    this.loginComponent = new LoginComponent(this._authService, this._appSerivce, this._router, this._breakpointObserver);
   }
 
   ngOnInit() {
+    // if user is already authenticated, navigate back to home page
+    if (this._authService.user) {
+      this._router.navigate(['/']);
+    }
   }
 
   onSignup(form: NgForm) {
@@ -70,5 +73,4 @@ export class SignupComponent implements OnInit {
   onSignin() {
     this._router.navigate(['login']);
   }
-
 }

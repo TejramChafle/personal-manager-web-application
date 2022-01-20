@@ -4,9 +4,9 @@
 		<mat-toolbar class="user-info-toolbar">
 			<div class="user-info">
 				<div class="profile-picture">
-					<img [src]="_authService.user.profilePicture || 'http://www.cse.mrt.ac.lk/images/people/profile.jpg'" alt="Profile picture of user">
+					<img [src]="_authService.user.user.photo || 'http://www.cse.mrt.ac.lk/images/people/profile.jpg'" alt="Profile picture of user">
 				</div>
-				<div *ngIf="_authService.user.displayName; else buttonTemplate">{{_authService.user.displayName}}</div>
+				<div *ngIf="_authService.user.user; else buttonTemplate">{{_authService.user.user.name}}</div>
 				<ng-template #buttonTemplate>
 					<a routerLink="profile">
 						<button mat-button class="edit-profile-button" (click)="(isHandset || isTablet) && drawer.toggle()" >Edit Profile</button>

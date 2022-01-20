@@ -8,7 +8,7 @@ import { SignupComponent } from './signup/signup.component';
 
 const routes: Routes = [
   { path:'login', component: LoginComponent },
-  { path:'signup', component: LoginComponent }
+  { path:'signup', component: SignupComponent }
 ]
 
 @NgModule({
@@ -20,9 +20,6 @@ const routes: Routes = [
     CommonModule,
     FormsModule,
     AppMaterialModule
-  ], 
-  exports: [
-    SignupComponent
   ]
 })
 

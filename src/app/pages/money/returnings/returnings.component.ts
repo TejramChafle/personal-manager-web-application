@@ -83,7 +83,6 @@ export class ReturningsComponent implements OnInit, OnDestroy {
   }
 
   onDelete(returning) {
-
     let dialogRef = this._dialog.open(ConfirmComponent, {
       width: '400px',
       data: {
@@ -93,7 +92,6 @@ export class ReturningsComponent implements OnInit, OnDestroy {
         cancelText: 'No'
       }
     });
-
     dialogRef.afterClosed().subscribe((response) => {
       console.log(response);
       if (response) {

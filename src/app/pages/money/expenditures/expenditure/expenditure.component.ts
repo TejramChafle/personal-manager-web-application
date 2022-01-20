@@ -109,8 +109,8 @@ export class ExpenditureComponent implements OnInit {
 			this._httpService.saveRecord('expenditures', data).subscribe((response) => {
 				this.loading = false;
 				console.log(response);
-				if (response.ok) {
-					this._appService.actionMessage({ title: 'Success!', text: 'Expenditure updated successfully.' });
+				if (response.result) {
+					this._appService.actionMessage({ title: 'Success!', text: 'Expenditure added successfully.' });
 					this._dialogRef.close(true);
 				}
 			}, (error) => {

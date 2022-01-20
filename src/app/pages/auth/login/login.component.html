@@ -59,11 +59,11 @@
             </form>
         </mat-card-content>
         <mat-card-actions align="center">
-            <button type="button" class="custom-btn google-login-btn" mat-button (click)="_authService.googleAuth()">
-                <img src="assets/brand/google.webp" height="24" width="24"> Login with Google
+            <button type="button" class="custom-btn google-login-btn" mat-button (click)="doSocialAuthenticationWith('google')" [disabled]="loading">
+                <img src="assets/icons/google.svg" height="24" width="24"> Login with Google
             </button>
-            <button type="button" class="custom-btn facebook-login-btn" mat-button (click)="_authService.facebookAuth()">
-                <img src="assets/brand/facebook.png" height="24" width="24"> Login with Facebook 
+            <button type="button" class="custom-btn facebook-login-btn" mat-button (click)="_authService.facebookAuth()" [disabled]="loading">
+                <img src="assets/icons/facebook.svg" height="24" width="24"> Login with Facebook 
             </button>
             <br>
             <button type="button" class="custom-btn" mat-button color="primary" (click)="onSignup()"><b>Not registered? Create an account</b></button>

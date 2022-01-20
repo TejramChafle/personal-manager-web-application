@@ -15,8 +15,11 @@ import { AngularFireAuth } from '@angular/fire/auth';
 export class AuthService {
   auth = new BehaviorSubject<any>(null);
 
-  constructor(private _http: HttpClient, private _appService: AppService, private _firebaseAuth: AngularFireAuth) { }
-
+  constructor(
+    private _http: HttpClient,
+    private _appService: AppService,
+    private _firebaseAuth: AngularFireAuth) {
+  }
 
   public login(param): Observable<any> {
     /* const auth = { email: param.username, password: param.password, returnSecureToken: true };
@@ -108,33 +111,36 @@ export class AuthService {
     this.auth.next(null);
   }
 
-
-  // signin with Google
-  googleAuth() {
-    return this.AuthLogin(new auth.GoogleAuthProvider());
+  validateSocialSignInAndAuthenticate(params): Observable<any> {
+    const auth = {
+      name: params.user.displayName,
+      email: params.user.email,
+      token: params.credential.idToken,
+      photo: params.user.photoURL
+    };
+    return this._http.post(environment.API_URL + 'auth/login-with-social', auth).pipe(
+      tap((auth) => {
+        // console.log('auth', auth);
+        this.auth.next(auth);
+      }),
+      catchError((error) => {
+        console.log(error);
+        // return throwError(error);
+        this._appService.handleError(error);
+        return throwError(error);
+      })
+    )
   }
 
-  // Auth logic to run auth provider
-  AuthLogin(provider) {
-    return this._firebaseAuth.auth.signInWithPopup(provider)
-    .then((response) => {
-      
-      const auth = {
-        displayName: response.user.displayName,
-        email: response.user.email,
-        profilePicture: response.user.photoURL,
-        /* expiresIn: '3600',
-        refreshToken: response.credential['accessToken'], */
-        ...response.credential
-      };
-      console.log(response, auth);
-      this.auth.next(auth);
+  doSocialAuthenticationWith(channel): Promise<any> {
+    // TODO: Based on channel, provider should be changed in future
+    const provider = new auth.GoogleAuthProvider();
+    return this._firebaseAuth.auth.signInWithPopup(provider).then((response) => {
+      // console.log({ response });
+      return response;
     }).catch(error => {
       console.log(error);
+      return throwError(error);
     })
-  }
-
-  facebookAuth() {
-    
   }
 }

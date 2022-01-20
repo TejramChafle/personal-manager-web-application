@@ -30,11 +30,13 @@
                     </form>
                 </mat-card-content>
                 <mat-card-actions align="center">
-                    <button type="button" class="custom-btn google-login-btn" mat-button (click)="_authService.googleAuth()">
-                        <img src="assets/brand/google.webp" height="24" width="24"> Signup with Google
+                    <button type="button" class="custom-btn google-login-btn" mat-button (click)="loginComponent.doSocialAuthenticationWith('google')"
+                    [disabled]="loading">
+                        <img src="assets/icons/google.svg" height="24" width="24"> Signup with Google
                     </button>
-                    <button type="button" class="custom-btn facebook-login-btn" mat-button (click)="_authService.facebookAuth()">
-                        <img src="assets/brand/facebook.png" height="24" width="24"> Signup with Facebook 
+                    <button type="button" class="custom-btn facebook-login-btn" mat-button (click)="loginComponent.doSocialAuthenticationWith('facebook')"
+                    [disabled]="loading">
+                        <img src="assets/icons/facebook.svg" height="24" width="24"> Signup with Facebook 
                     </button>
                     <button type="button" mat-button color="primary" (click)="onSignin()"><b>Already having account? Signin</b></button>
                 </mat-card-actions>
