@@ -1,5 +1,5 @@
 <div class="fab-button-bottom-right">
-    <button mat-fab color="primary" routerLink="returning">
+    <button mat-fab color="primary" (click)="openReturning()">
         <mat-icon>add</mat-icon>
     </button>
 </div>
@@ -74,7 +74,7 @@
                                 <mat-icon>more_vert</mat-icon>
                             </button>
                             <mat-menu #menu="matMenu" xPosition="before">
-                                <button mat-menu-item (click)="onEdit(returning)"><mat-icon>edit</mat-icon>Edit</button>
+                                <button mat-menu-item (click)="openReturning(returning)"><mat-icon>edit</mat-icon>Edit</button>
                                 <button mat-menu-item (click)="onDelete(returning)"><mat-icon>delete</mat-icon>Remove</button>
                             </mat-menu>
                         </mat-card-title>

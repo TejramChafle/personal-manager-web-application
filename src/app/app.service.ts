@@ -25,6 +25,17 @@ export class AppService {
   purposeTypes: Array<string> = purposeTypes;
   taskLabels = taskLabels;
   sortOptions = sortOptions;
+
+  labels = [
+    { name: 'Mobile', color: '#82caaf', isChecked: false },
+    { name: 'Frontend', color: '#b676b1', isChecked: false },
+    { name: 'Backend', color: '#194a8d', isChecked: false },
+    { name: 'API', color: '#fecf6a', isChecked: false },
+    { name: 'Learning', color: '#75c0e0', isChecked: false },
+    { name: 'Office', color: '#75c0e0', isChecked: false },
+    { name: 'Help', color: '#b676b1', isChecked: false },
+    { name: 'Other', color: '#8F3985', isChecked: false }
+  ];
   
   constructor(
     private _snackBar: MatSnackBar, 

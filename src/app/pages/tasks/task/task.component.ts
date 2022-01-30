@@ -3,6 +3,7 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { FormControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { TaskService } from '../task.service';
 import { AppService } from '../../../app.service';
+import { HttpService } from 'src/app/http.service';
 
 @Component({
   selector: 'personal-manager-task',
@@ -27,7 +28,7 @@ export class TaskComponent implements OnInit {
     private _dialogRef: MatDialogRef<TaskComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
     private _formBuilder: FormBuilder,
-    public _taskService: TaskService,
+    public _httpService: HttpService,
     public _appService: AppService
   ) {
     this.taskForm = this._formBuilder.group({
@@ -45,12 +46,12 @@ export class TaskComponent implements OnInit {
 
     if (this.data.task) {
       // SET id for update
-      this.id = this.data.task.id;
+      this.id = this.data.task._id;
       // Initialize labels dropdown by comparing existing selected labels
       this.labels = [];
-      this._taskService.labels.forEach((label) => {
-        if (this.data.task.labels) { 
-          this.labels.push({ isChecked: this.data.task.labels.find((lab) => { return lab.name == label.name; }) ? true: false, name: label.name, color: label.color }); 
+      this._appService.labels.forEach((label) => {
+        if (this.data.task.labels) {
+          this.labels.push({ isChecked: this.data.task.labels.find((lab) => { return lab.name == label.name; }) ? true : false, name: label.name, color: label.color });
         } else {
           this.labels.push({ isChecked: false, name: label.name, color: label.color });
         }
@@ -67,7 +68,7 @@ export class TaskComponent implements OnInit {
       this.isDone = this.data.task.isDone;
     } else {
       this.labels = [];
-      this._taskService.labels.forEach((label) => {
+      this._appService.labels.forEach((label) => {
         this.labels.push({ isChecked: false, name: label.name, color: label.color });
       });
     }
@@ -77,7 +78,7 @@ export class TaskComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log(this._taskService.labels);
+    console.log(this._appService.labels);
   }
 
   onClose() {
@@ -107,35 +108,27 @@ export class TaskComponent implements OnInit {
       data.id = this.id;
       data.updatedDate = new Date();
       data.createdDate = this.data.task.createdDate;
-      this._taskService.updateTask(data).subscribe((response) => {
+      this._httpService.updateRecord('tasks', data).subscribe((response) => {
         console.log(response);
         this.loading = false;
         this._appService.actionMessage({ title: 'Success!', text: 'Task record updated successfully.' });
         this._dialogRef.close(true);
       }, (error) => {
-        if (error.status == 401 && error.statusText == "Unauthorized") {
-          this.onClose();
-        } else {
-          this._appService.actionMessage({ title: 'Error!', text: 'Failed to update task record.' });
-        }
+        this._appService.actionMessage({ title: 'Error!', text: 'Failed to update task record.' });
         console.log(error);
         this.loading = false;
       });
     } else {
       data.createdDate = new Date();
-      this._taskService.saveTask(data).subscribe((response) => {
+      this._httpService.saveRecord('tasks', data).subscribe((response) => {
         this.loading = false;
         console.log(response);
-        if (response.name) {
+        if (response.result) {
           this._appService.actionMessage({ title: 'Success!', text: 'Task list created successfully.' });
           this._dialogRef.close(true);
         }
       }, (error) => {
-        if (error.status == 401 && error.statusText == "Unauthorized") {
-          this.onClose();
-        } else {
-          this._appService.actionMessage({ title: 'Error!', text: 'Failed to create task list.' });
-        }
+        this._appService.actionMessage({ title: 'Error!', text: 'Failed to create task list.' });
         console.log(error);
         this.loading = false;
       });

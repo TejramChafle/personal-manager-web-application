@@ -54,7 +54,7 @@ export class TasksComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this._httpService.getRecords('tasks', {}).subscribe((response) => {
+    this._httpService.getRecords('tasks', { page: 1, limit: 10, order: 'desc' }).subscribe((response) => {
       this.loading = false;
       console.log(response);
       this.tasks = response.docs;
@@ -110,8 +110,9 @@ export class TasksComponent implements OnInit, OnDestroy {
   }
 
   editTask(task, field) {
+    console.log({task});
     task[field] = !task[field];
-    let data: any = { ...task };
+    let data: any = { ...task, id: task._id };
     data.updatedDate = new Date();
     let snak = this._snakBar.open('Updating, Please wait...', 'Close');
     this._httpService.updateRecord('tasks', data).subscribe((response) => {

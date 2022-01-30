@@ -48,8 +48,17 @@ export class SignupComponent implements OnInit {
   }
 
   onSignup(form: NgForm) {
+    console.log({form});
+    // Do not trigger form is invalid or password and confirm password doesn't match
+    if (form.invalid || form.form.controls.confirmPassword.invalid) {
+      return false;
+    }
     this.loading = true;
-    this._authService.signup(form).subscribe((response) => {
+    this._authService.signup({
+      username: form.value.username,
+      password: form.value.password,
+      name: form.value.name
+    }).subscribe((response) => {
       this.loading = false;
       // console.log(response);
       if (response) {
@@ -72,5 +81,29 @@ export class SignupComponent implements OnInit {
 
   onSignin() {
     this._router.navigate(['login']);
+  }
+
+  checkError(field, type, inputs) {
+    // console.log({field, type, inputs});
+    /* switch (type) {
+      case 'required':
+        return field.control.touched && !field.control.value;
+        break;
+      case 'equals':
+        return field.control.touched && (field.control.value !== inputs.password);
+        break;
+      default:
+        return false;
+        break;
+    } */
+    let isInvalid = false;
+    if (type === 'required' && field.control.touched && !field.control.value.length) {
+      field.control.status = 'INVALID';
+      isInvalid = true;
+    } else if (type === 'equals' && field.control.touched && field.control.value.length && (field.control.value !== inputs.password)) {
+      field.control.status = 'INVALID';
+      isInvalid = true;
+    }
+    return isInvalid;
   }
 }

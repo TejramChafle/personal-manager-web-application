@@ -8,6 +8,7 @@ import { ConfirmComponent } from '../../../components/confirm/confirm.component'
 import { MatDialog } from '@angular/material/dialog';
 import { Subscription } from 'rxjs';
 import { HttpService } from 'src/app/http.service';
+import { ReturningComponent } from './returning/returning.component';
 
 @Component({
   selector: 'personal-assistant-returnings',
@@ -19,6 +20,7 @@ export class ReturningsComponent implements OnInit, OnDestroy {
   returnings: Array<any>;
   gridCols: number;
   subscription: Subscription;
+  page: number;
 
   constructor(
     public _moneyService: MoneyService,
@@ -48,10 +50,11 @@ export class ReturningsComponent implements OnInit, OnDestroy {
         }
       }
     });
+    this.page = 1;
   }
 
   ngOnInit() {
-    const params = { order: 'desc', page: 1, limit: 10 };
+    const params = { order: 'desc', page: this.page, limit: 10 };
     this._httpService.getRecords('returnings', params).subscribe((response) => {
       console.log(response);
       response.docs.forEach((returning) => {
@@ -59,9 +62,13 @@ export class ReturningsComponent implements OnInit, OnDestroy {
         returning['whatsAppUrl'] = this._domSanitizer.bypassSecurityTrustResourceUrl('whatsapp://send?abid=+919482153795&text=Dear+' + returning.person.replace(" ", "+") + '%2C+This+is+a+reminder+to+the+borrowings+of+Rs.+' + returning.amount + '+due+on+dated+' + returning.expectedReturnDateInWords + '.+Kindly+return+the+amount+on+or+before+the+due+date.');
         returning['smsUrl'] = this._domSanitizer.bypassSecurityTrustResourceUrl('sms://+919482153795?body=Dear ' + returning.person+ '%2C This is a reminder to the borrowings of Rs. ' + returning.amount + ' due on dated ' + returning.expectedReturnDateInWords + '. Kindly return the amount on or before the due date.');
         // console.log(returning['smsUrl']);
-        this.returnings.push(returning);
+        if (this.returnings) {
+          this.returnings.push(returning);
+        } else {
+          this.returnings = [returning]
+        }
       });
-      this.returnings = response.docs;
+      // this.returnings = response.docs;
     }, (error) => {
       this._appService.actionMessage({ title: 'Error!', text: 'Failed to get returnings information' });
       console.log(error);
@@ -97,6 +104,8 @@ export class ReturningsComponent implements OnInit, OnDestroy {
       if (response) {
         this._httpService.deleteRecord('returnings', returning).subscribe((response) => {
           console.log(response);
+          this.page = 1;
+          this.returnings = null;
           this.ngOnInit();
           this._appService.actionMessage({ title: 'Success!', text: 'Returning information deleted successfully.' });
         }, (error) => {
@@ -111,4 +120,19 @@ export class ReturningsComponent implements OnInit, OnDestroy {
     this.subscription.unsubscribe();
   }
 
+  openReturning(returning?: any) {
+    let dialogRef = this._dialog.open(ReturningComponent, {
+      minWidth: '350px',
+      data: { ...returning }
+    });
+
+    dialogRef.afterClosed().subscribe((resp) => {
+      console.log(resp);
+      if (resp) {
+        this.page = 1;
+        this.returnings = null;
+        this.ngOnInit();
+      }
+    })
+  }
 }

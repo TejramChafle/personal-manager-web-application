@@ -5,6 +5,10 @@
     </button>
 </div> -->
 
+<!-- Heading -->
+<h2 class="mat-h2">{{data.grocery && data.grocery._id ? 'Update Grocery' : 'Add Grocery'}}</h2>
+
+<!-- Form -->
 <form [formGroup]="groceryForm" (ngSubmit)="onSubmit(groceryForm)">
     <mat-dialog-content>
         <div class="grocery-form">
@@ -33,7 +37,8 @@
 
             <!-- HEADING -->
             <div class="items-header" *ngIf="groceryControl.length">
-                <mat-label for="item">ITEMS ({{groceryControl.length}})</mat-label>
+                <!-- <mat-label for="item"></mat-label> -->
+                ITEMS ({{groceryControl.length}})
             </div>
 
             <!-- LIST -->

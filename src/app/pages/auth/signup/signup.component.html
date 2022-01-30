@@ -1,13 +1,13 @@
 
 <div class="signup-page">
-    <mat-grid-list cols="3" rowHeight="600px" gutterSize="25px">
+    <mat-grid-list cols="3" rowHeight="700px" gutterSize="25px">
         <mat-grid-tile [colspan]="dimentions.cols" [rowspan]="dimentions.rows">
             <mat-card>
                 <mat-card-content>
                     <div align="center">
                         <img src="assets/brand/task-manager.png" width="100" height="100" style="margin: 10px auto;">
                     </div>
-                    <form class="login-form" #signupForm="ngForm" (ngSubmit)="onSignup(signupForm.value)">
+                    <form class="login-form" #signupForm="ngForm" (ngSubmit)="onSignup(signupForm)">
                         <mat-form-field class="login-form-field" appearance="outline">
                             <mat-label>Name</mat-label>
                             <input matInput type="text" name="name" ngModel #name="ngModel" required>
@@ -23,9 +23,18 @@
                             <input matInput type="password" name="password" ngModel #password="ngModel" required>
                             <mat-error *ngIf="password.invalid && password.touched">Password required!</mat-error>
                         </mat-form-field>
+                        <mat-form-field class="login-form-field" appearance="outline">
+                            <mat-label>Confirm password</mat-label>
+                            <input matInput type="password" name="confirmPassword" ngModel #confirmPassword="ngModel" required>
+                            <!-- <mat-error *ngIf="confirmPassword.invalid && confirmPassword.touched">Confirm password required!</mat-error> -->
+                            <!-- <mat-error *ngIf="confirmPassword.valid && (signupForm.value.password !== signupForm.value.confirmPassword)">Password and confirm password should match!</mat-error> -->
+                            <mat-error *ngIf="checkError(confirmPassword, 'required', signupForm.value)">Confirm password required!</mat-error>
+                            <mat-error *ngIf="checkError(confirmPassword, 'equals', signupForm.value)">Password and confirm password should match!</mat-error>
+                        </mat-form-field>
                         <div class="login-form-field">
-                            <button mat-raised-button type="submit" color="primary" class="login-form-field" [disabled]="loading">
-                                {{loading ? 'Please wait..' : 'Register'}}</button>
+                            <button mat-raised-button type="submit" color="primary" class="login-form-field btn" [disabled]="loading">
+                                {{loading ? 'Please wait..' : 'Register'}}
+                            </button>
                         </div>
                     </form>
                 </mat-card-content>

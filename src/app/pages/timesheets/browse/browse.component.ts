@@ -45,8 +45,8 @@ export class BrowseTaskComponent implements OnInit {
       }
       console.log(error);
     }); */
-
-    this._httpService.getRecords('tasks', {}).subscribe((response) => {
+    const params = { page: 1, limit: 100, order: 'desc' };
+    this._httpService.getRecords('tasks', params).subscribe((response) => {
       this.loading = false;
       console.log(response);
       this.tasks = response.docs;
@@ -63,7 +63,7 @@ export class BrowseTaskComponent implements OnInit {
 
   onSubmit() {
     console.log(this.tasks.filter(task=>task.isChecked));
-    this._dialogRef.close(this.tasks.filter(task=>task.isChecked));
+    this._dialogRef.close(this.tasks.filter(task => task.isChecked));
   }
 
   get isChecked() {

@@ -1,10 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
 import { AppService } from '../../../../app.service';
 import { AuthService } from '../../../auth/auth.service';
 import { Returning } from '../returning.model';
 import { ActivatedRoute } from '@angular/router';
 import { HttpService } from 'src/app/http.service';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 
 
 @Component({
@@ -25,7 +26,9 @@ export class ReturningComponent implements OnInit {
     public _httpService: HttpService,
     private _appService: AppService,
     private _authService: AuthService,
-    private _activatedRoute: ActivatedRoute) {
+    private _activatedRoute: ActivatedRoute,
+		public _dialogRef: MatDialogRef<ReturningComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: any) {
 
     // INITialize the form
     this.returningForm = this._formBuilder.group({
@@ -53,6 +56,19 @@ export class ReturningComponent implements OnInit {
       });
       console.log(window.history.state);
     }
+
+    if (this.data) {
+      this.returningForm.patchValue({
+        type: this.data.type,
+        amount: this.data.amount,
+        date: this._appService.inputDate(new Date(this.data.date)),
+        person: this.data.person,
+        purpose: this.data.purpose,
+        expectedReturnDate: this._appService.inputDate(new Date(this.data.expectedReturnDate)),
+        paymentMethod: this.data.paymentMethod
+      });
+    }
+    console.log(this.data);
   }
 
   ngOnInit() {
@@ -71,14 +87,15 @@ export class ReturningComponent implements OnInit {
 
     let param: Returning = { ...data };
 
-    if (this.id) {
+    if (this.data && this.data._id) {
       this.updateReturning(param);
     } else {
-      this._httpService.updateRecord('returnings', data).subscribe((response) => {
+      this._httpService.saveRecord('returnings', data).subscribe((response) => {
 				this.loading = false;
 				console.log(response);
 				if (response.result) {
 					this._appService.actionMessage({ title: 'Success!', text: 'Returning information added successfully.' });
+          this._dialogRef.close(true);
 				}
 			}, (error) => {
 				console.log(error);
@@ -90,14 +107,14 @@ export class ReturningComponent implements OnInit {
 
   // UPDATE
   updateReturning(param) {
-    param.id = this.id;
+    param.id = this.data._id;
     param.updatedDate = new Date();
-    
-    this._httpService.saveRecord('returnings', param).subscribe((response) => {
+    this._httpService.updateRecord('returnings', param).subscribe((response) => {
       this.loading = false;
       console.log(response);
-      if (response.result) {
+      if (response._id) {
         this._appService.actionMessage({ title: 'Success!', text: 'Returning informaton updated successfully.' });
+        this._dialogRef.close(true);
       }
     }, (error) => {
       console.log(error);

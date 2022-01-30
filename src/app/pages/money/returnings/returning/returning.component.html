@@ -1,62 +1,58 @@
-<mat-card class="returnings-card">
-    <mat-card-header>
-        <mat-card-title>Returning Form</mat-card-title>
-    </mat-card-header>
 
-    <mat-card-content>
-        <form [formGroup]="returningForm" (ngSubmit)="onSubmit(returningForm)">
+<!-- Heading -->
+<h2 class="mat-h2">{{data && data._id ? 'Update Returning' : 'Add Returning'}}</h2>
 
-            <mat-form-field class="form-field">
-                <mat-label>Type</mat-label>
-                <mat-select formControlName="type">
-                    <mat-option value="Borrowed">Borrowed</mat-option>
-                    <mat-option value="Lend">Lend</mat-option>
-                </mat-select>
-                <mat-error *ngIf="returningForm.get('type').invalid">Please select returning type</mat-error>
-            </mat-form-field>
+<!-- Form -->
+<form [formGroup]="returningForm" (ngSubmit)="onSubmit(returningForm)">
+    <mat-form-field class="form-field">
+        <mat-label>Type</mat-label>
+        <mat-select formControlName="type">
+            <mat-option value="Borrowed">Borrowed</mat-option>
+            <mat-option value="Lend">Lend</mat-option>
+        </mat-select>
+        <mat-error *ngIf="returningForm.get('type').invalid">Please select returning type</mat-error>
+    </mat-form-field>
 
-            <mat-form-field class="form-field">
-                <mat-label>Amount</mat-label>
-                <input matInput type="number" formControlName="amount">
-                <mat-error *ngIf="returningForm.get('amount').invalid && returningForm.get('amount').touched">Please enter amount</mat-error>
-            </mat-form-field>
+    <mat-form-field class="form-field">
+        <mat-label>Amount</mat-label>
+        <input matInput type="number" formControlName="amount">
+        <mat-error *ngIf="returningForm.get('amount').invalid && returningForm.get('amount').touched">Please enter amount</mat-error>
+    </mat-form-field>
 
-            <mat-form-field class="form-field">
-                <mat-label>Date</mat-label>
-                <input matInput type="date" formControlName="date">
-                <mat-error *ngIf="returningForm.get('date').invalid && returningForm.get('date').touched">Please enter date</mat-error>
-            </mat-form-field>
+    <mat-form-field class="form-field">
+        <mat-label>Date</mat-label>
+        <input matInput type="date" formControlName="date">
+        <mat-error *ngIf="returningForm.get('date').invalid && returningForm.get('date').touched">Please enter date</mat-error>
+    </mat-form-field>
 
-            <mat-form-field class="form-field">
-                <mat-label>Person</mat-label>
-                <input matInput type="text" formControlName="person">
-                <mat-error *ngIf="returningForm.get('person').invalid && returningForm.get('person').touched">Please enter person</mat-error>
-            </mat-form-field>
+    <mat-form-field class="form-field">
+        <mat-label>Person</mat-label>
+        <input matInput type="text" formControlName="person">
+        <mat-error *ngIf="returningForm.get('person').invalid && returningForm.get('person').touched">Please enter person</mat-error>
+    </mat-form-field>
 
-            <mat-form-field class="form-field">
-                <mat-label>Purpose</mat-label>
-                <textarea matInput type="text" formControlName="purpose"></textarea>
-                <mat-error *ngIf="returningForm.get('purpose').invalid && returningForm.get('purpose').touched">Please enter purpose</mat-error>
-            </mat-form-field>
+    <mat-form-field class="form-field">
+        <mat-label>Purpose</mat-label>
+        <textarea matInput type="text" formControlName="purpose"></textarea>
+        <mat-error *ngIf="returningForm.get('purpose').invalid && returningForm.get('purpose').touched">Please enter purpose</mat-error>
+    </mat-form-field>
 
-            <mat-form-field class="form-field">
-                <mat-label>Expected Return Date</mat-label>
-                <input matInput type="date" formControlName="expectedReturnDate">
-                <mat-error *ngIf="returningForm.get('expectedReturnDate').invalid && returningForm.get('expectedReturnDate').touched">Please enter expected return date</mat-error>
-            </mat-form-field>
+    <mat-form-field class="form-field">
+        <mat-label>Expected Return Date</mat-label>
+        <input matInput type="date" formControlName="expectedReturnDate">
+        <mat-error *ngIf="returningForm.get('expectedReturnDate').invalid && returningForm.get('expectedReturnDate').touched">Please enter expected return date</mat-error>
+    </mat-form-field>
 
-            <mat-form-field class="form-field">
-                <mat-label type="method">Method</mat-label>
-                <mat-select formControlName="paymentMethod" >
-                    <mat-option *ngFor="let method of _appService.paymentMethods" value="{{method}}">{{method}}</mat-option>
-                </mat-select>
-                <mat-error *ngIf="returningForm.get('paymentMethod').invalid">Please select payment method</mat-error>
-            </mat-form-field>
-            <br>
-            <button type="submit" mat-raised-button color="primary" 
-                [disabled]="returningForm.invalid || loading" class="form-field">
-                {{loading ? 'Please wait..' : (this.id ? 'Update' : 'Submit')}}
-            </button>
-        </form>
-    </mat-card-content>
-</mat-card>
+    <mat-form-field class="form-field">
+        <mat-label type="method">Method</mat-label>
+        <mat-select formControlName="paymentMethod" >
+            <mat-option *ngFor="let method of _appService.paymentMethods" value="{{method}}">{{method}}</mat-option>
+        </mat-select>
+        <mat-error *ngIf="returningForm.get('paymentMethod').invalid">Please select payment method</mat-error>
+    </mat-form-field>
+    <br>
+    <button type="submit" mat-raised-button color="primary" 
+        [disabled]="returningForm.invalid || loading" class="form-field">
+        {{loading ? 'Please wait..' : (this.id ? 'Update' : 'Submit')}}
+    </button>
+</form>
