@@ -1,7 +1,7 @@
 
-<div class="signup-page">
-    <mat-grid-list cols="3" rowHeight="700px" gutterSize="25px">
-        <mat-grid-tile [colspan]="dimentions.cols" [rowspan]="dimentions.rows">
+<div class="signup-page-container">
+    <!-- <mat-grid-list cols="3" rowHeight="900px" gutterSize="25px">
+        <mat-grid-tile [colspan]="dimentions.cols" [rowspan]="dimentions.rows"> -->
             <mat-card>
                 <mat-card-content>
                     <div align="center">
@@ -31,13 +31,17 @@
                             <mat-error *ngIf="checkError(confirmPassword, 'required', signupForm.value)">Confirm password required!</mat-error>
                             <mat-error *ngIf="checkError(confirmPassword, 'equals', signupForm.value)">Password and confirm password should match!</mat-error>
                         </mat-form-field>
-                        <div class="login-form-field">
+                        <div class="login-form-field" align="center">
                             <button mat-raised-button type="submit" color="primary" class="login-form-field btn" [disabled]="loading">
                                 {{loading ? 'Please wait..' : 'Register'}}
                             </button>
+                            <button type="button" mat-button color="primary" (click)="onSignin()"><b>Already having account? Signin</b></button>
                         </div>
                     </form>
                 </mat-card-content>
+                <div class="or-action">
+                    Or Signup with social media
+                </div>
                 <mat-card-actions align="center">
                     <button type="button" class="custom-btn google-login-btn" mat-button (click)="loginComponent.doSocialAuthenticationWith('google')"
                     [disabled]="loading">
@@ -47,11 +51,10 @@
                     [disabled]="loading">
                         <img src="assets/icons/facebook.svg" height="24" width="24"> Signup with Facebook 
                     </button>
-                    <button type="button" mat-button color="primary" (click)="onSignin()"><b>Already having account? Signin</b></button>
                 </mat-card-actions>
             </mat-card>
-        </mat-grid-tile>
-    </mat-grid-list>
+        <!-- </mat-grid-tile>
+    </mat-grid-list> -->
 </div>
 
 

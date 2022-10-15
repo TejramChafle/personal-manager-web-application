@@ -1,3 +1,4 @@
+@import '../../../sass//variables.scss';
 
 // Mixin used to handle text in card body. Handle longer text by showing ... at end
 @mixin responsive-card-content {
@@ -14,11 +15,11 @@
 
 .list-card {
     position: absolute;
-    top: 5px;
+    // top: 5px;
     left: 5px;
     right: 5px;
     bottom: 5px;
-    font-family: 'Open Sans Condensed', sans-serif;
+    // font-family: $font-family;
     .mat-card-header-text {
         margin: 0 !important;
     }
@@ -97,7 +98,7 @@
             // float: right;
             margin-right: 30px;
             background-color: #7E57C2;
-            margin-top: -35px;
+            margin-top: -30px;
             padding: 5px 10px;
             right: 0;
             position: absolute;

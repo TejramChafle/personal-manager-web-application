@@ -1,5 +1,7 @@
 
-$font: 'Open Sans Condensed', sans-serif;
+@import '../../../sass/variables.scss';
+
+$font: $font-family;
 mat-list-item {
     border-bottom: 0.5px solid #E6E6E6;
     height: 50px !important;

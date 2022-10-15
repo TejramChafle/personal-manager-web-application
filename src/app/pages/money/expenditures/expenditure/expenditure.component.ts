@@ -21,7 +21,7 @@ export class ExpenditureComponent implements OnInit {
 		private _formBuilder: FormBuilder,
 		private _dialogRef: MatDialogRef<ExpenditureComponent>,
 		@Inject(MAT_DIALOG_DATA) public data: any,
-		private _appService: AppService
+		public _appService: AppService
 	) {
 		this.expenditureForm = this._formBuilder.group({
 			date: new FormControl(null, Validators.required),

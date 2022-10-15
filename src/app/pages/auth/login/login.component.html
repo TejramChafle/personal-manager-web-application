@@ -42,7 +42,6 @@
                 <img src="assets/brand/task-manager.png" width="100" height="100" style="margin: 10px auto;">
             </div>
             <form class="login-form" #loginForm="ngForm" (ngSubmit)="loginForm.valid && onLogin(loginForm.value)">
-                
                 <mat-form-field class="login-form-field" appearance="outline">
                     <mat-label>Username</mat-label>
                     <input matInput type="text" name="username" ngModel #username="ngModel" required>
@@ -55,18 +54,19 @@
                 </mat-form-field>
                 <div class="login-form-field">
                     <button mat-raised-button type="submit" color="primary" class="login-form-field" [disabled]="loading" >{{loading ? 'Please wait..' : 'Login'}}</button>
+                    <br>
+                    <button type="button" class="custom-btn" mat-button color="primary" (click)="onSignup()"><b>Not registered? Create an account</b></button>
                 </div>
             </form>
         </mat-card-content>
+        <div class="or-action">Or login with social media</div>
         <mat-card-actions align="center">
             <button type="button" class="custom-btn google-login-btn" mat-button (click)="doSocialAuthenticationWith('google')" [disabled]="loading">
                 <img src="assets/icons/google.svg" height="24" width="24"> Login with Google
             </button>
-            <button type="button" class="custom-btn facebook-login-btn" mat-button (click)="_authService.facebookAuth()" [disabled]="loading">
+            <button type="button" class="custom-btn facebook-login-btn" mat-button (click)="doSocialAuthenticationWith('facebook')" [disabled]="loading">
                 <img src="assets/icons/facebook.svg" height="24" width="24"> Login with Facebook 
             </button>
-            <br>
-            <button type="button" class="custom-btn" mat-button color="primary" (click)="onSignup()"><b>Not registered? Create an account</b></button>
         </mat-card-actions>
     </mat-card>
 </div>

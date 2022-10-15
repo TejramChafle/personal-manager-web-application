@@ -24,7 +24,7 @@ export class ReturningComponent implements OnInit {
   constructor(
     private _formBuilder: FormBuilder,
     public _httpService: HttpService,
-    private _appService: AppService,
+    public _appService: AppService,
     private _authService: AuthService,
     private _activatedRoute: ActivatedRoute,
 		public _dialogRef: MatDialogRef<ReturningComponent>,

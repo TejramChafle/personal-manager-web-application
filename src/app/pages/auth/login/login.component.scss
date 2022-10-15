@@ -12,30 +12,31 @@
     display: none !important;
 }
 
-.login-form-container {
+/* .login-form-container {
     margin: 15px;
     // padding: 15px;
-}
+} */
 
-.mat-figure {
+/* .mat-figure {
     padding: 15px;
 }
 
 .login-page {
     padding: 15px;
-}
+} */
 
 .login-page-container {
-    // height: 100vh;
     display: flex;
     justify-content: center;
-
     .login-card {
         @media screen and (max-width: 640px){
-            // margin-top: 25%;
+            margin: 10% 16px 0;
         }
         @media screen and (min-width: 641px){
             margin-top: 5%;
+        }
+        img {
+            border-radius: 50%;
         }
     }
 }

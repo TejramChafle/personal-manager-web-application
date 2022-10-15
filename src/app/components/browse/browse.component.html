@@ -7,7 +7,7 @@
 <hr>
 <!-- TASK COMPOSE FORM -->
 <mat-dialog-content>
-    <mat-selection-list (selectionChange)="onChangeItem($event)" #chosenRecords>
+    <mat-selection-list (selectionChange)="onChangeItem()" #chosenRecords>
         <mat-list-option
             *ngFor="let record of records | filter: search"
             checkboxPosition="before"

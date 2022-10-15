@@ -1,6 +1,4 @@
 .login-form {
-    // min-width: 400px;
-    // max-width: 500px;
     width: 100%;
 }
 
@@ -12,7 +10,18 @@
     display: none !important;
 }
 
-.login-form-container {
-    margin: 15px;
-    padding: 15px;
+.signup-page-container {
+    display: flex;
+    justify-content: center;
+    mat-card {
+        @media screen and (max-width: 640px){
+            margin: 10% 16px 0;
+        }
+        @media screen and (min-width: 641px){
+            margin-top: 5%;
+        }
+        img {
+            border-radius: 50%;
+        }
+    }
 }

@@ -34,6 +34,7 @@ import { SearchComponent } from './components/search/search.component';
 import { SortComponent } from './components/sort/sort.component';
 import { BrowseComponent } from './components/browse/browse.component';
 import { FilterPipe } from './pipes/filter.pipe';
+import { SampleComponent } from './sample/sample.component';
 
 @NgModule({
   declarations: [
@@ -46,7 +47,8 @@ import { FilterPipe } from './pipes/filter.pipe';
     SearchComponent,
     SortComponent,
     BrowseComponent,
-    FilterPipe
+    FilterPipe,
+    SampleComponent
   ],
   imports: [
     BrowserModule,

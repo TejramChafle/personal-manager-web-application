@@ -34,7 +34,7 @@
                         <img src="assets/icons/rent.svg" *ngIf="expenditure.purpose == 'Rent'">
                     </div>
                     <div class="record-type" *ngIf="expenditure.payment">
-                        <h1>&#x20B9; {{expenditure.payment?.amount | number}}</h1>
+                        <h2>&#x20B9;{{expenditure.payment?.amount | number}}</h2>
                     </div>
                     <div class="record-unpaid" *ngIf="!expenditure.payment">Unpaid</div>
                 </div>

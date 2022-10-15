@@ -85,8 +85,8 @@
 
 $primary-color: #7E57C2;
 $secondary-color: lightgray;
-$font-family-primary: Roboto, "Helvetica Neue", sans-serif;
-$font-family-secondary: 'Open Sans Condensed', sans-serif;
+// $font-family-primary: Roboto, "Helvetica Neue", sans-serif;
+// $font-family-secondary: 'Open Sans Condensed', sans-serif;
 $font-size-large-extra: 18px;
 $font-size-large:   16px;
 $font-size-medium:  14px;
@@ -104,7 +104,7 @@ $margin-small: 5px;
 
     mat-card { 
         padding: 5px 0px 15px;
-        font-family: $font-family-secondary; 
+        // font-family: $font-family-secondary; 
     }
 
     &-brief {
@@ -190,7 +190,7 @@ $margin-small: 5px;
             line-height: 40px;
         }
         .task-list-card {
-            font-family: $font-family-secondary;
+            // font-family: $font-family-secondary;
             padding: 5px !important;
             margin-bottom: 1px;
             box-shadow: none;
@@ -231,7 +231,7 @@ $margin-small: 5px;
                     padding: 0px 10px;
                     font-weight: bold;
                     line-height: 18px;
-                    font-family: Roboto, "Helvetica Neue", sans-serif;
+                    // font-family: Roboto, "Helvetica Neue", sans-serif;
                     margin: 10px 0 -10px;
                     font-size: 12px;
                 }
@@ -336,7 +336,7 @@ $margin-small: 5px;
     left: 5px;
     right: 5px;
     bottom: 5px; */
-    font-family: 'Open Sans Condensed', sans-serif;
+    // font-family: 'Open Sans Condensed', sans-serif;
     padding: 5px !important;
     margin-bottom: 10px;
 
@@ -385,7 +385,7 @@ $margin-small: 5px;
                 font-weight: bold;  
 
                 line-height: 24px;
-                font-family: Roboto,"Helvetica Neue",sans-serif;
+                // font-family: Roboto,"Helvetica Neue",sans-serif;
             }
             /* .mat-card-header-text {
                 margin: 0 !important;

@@ -4,7 +4,7 @@
 		<mat-toolbar class="user-info-toolbar">
 			<div class="user-info">
 				<div class="profile-picture">
-					<img [src]="_authService.user.user.photo || 'http://www.cse.mrt.ac.lk/images/people/profile.jpg'" alt="Profile picture of user">
+					<img [src]="_authService.user.user.photo || '../../../assets/profile/profile.jpg'" alt="Profile picture of user">
 				</div>
 				<div *ngIf="_authService.user.user; else buttonTemplate">{{_authService.user.user.name}}</div>
 				<ng-template #buttonTemplate>

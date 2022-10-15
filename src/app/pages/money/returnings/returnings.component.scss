@@ -60,7 +60,7 @@
     height: 100%;
     .amount-summary {
         text-align: right;
-        font-family: 'Open Sans Condensed', sans-serif;
+        // font-family: 'Open Sans Condensed', sans-serif;
         padding-right: 10px;
         flex: 30%;
         border-right: 1px dotted black;
@@ -104,7 +104,7 @@
             .returning-actions-block {
                 padding: 5px;
                 border-top: 0.5px solid #9E9E9E;
-                font-family: 'Open Sans Condensed', sans-serif;
+                // font-family: 'Open Sans Condensed', sans-serif;
                 text-transform: capitalize;
                 width: 33%;
                 text-align: center;
@@ -181,7 +181,7 @@
             display: block;
             padding: 10px 15px;
             text-decoration: none;
-            font-family: 'Open Sans Condensed', sans-serif;
+            // font-family: 'Open Sans Condensed', sans-serif;
             border: 0.5px solid #9E9E9E;
             margin-right: 10px;
             width: inherit;
@@ -197,7 +197,7 @@
         }
         mat-card-title {
             .mat-button-wrapper {
-                font-family: 'Open Sans Condensed', sans-serif;
+                // font-family: 'Open Sans Condensed', sans-serif;
             }
         }
     }
@@ -206,7 +206,7 @@
         padding: 15px 0;
         text-align: left;
         font-size: 18px;
-        font-family: 'Open Sans Condensed', sans-serif;
+        // font-family: 'Open Sans Condensed', sans-serif;
     }
     
   }

@@ -50,4 +50,12 @@ export class GroceryDetailComponent implements OnInit, OnDestroy {
 		})
 	}
 
+	onEdit() {
+
+	}
+
+	onBrowse() {
+		
+	}
+
 }
