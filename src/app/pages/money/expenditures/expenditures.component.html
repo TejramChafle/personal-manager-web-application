@@ -5,7 +5,7 @@
 </div>
 
 <!-- ITEMS -->
-<mat-grid-list [cols]="gridCols" rowHeight="225px" *ngIf="expenditures && expenditures.length">
+<mat-grid-list [cols]="_appService.gridCols" rowHeight="225px" *ngIf="expenditures && expenditures.length">
     <mat-grid-tile
         *ngFor="let expenditure of expenditures"
         colspan="1"

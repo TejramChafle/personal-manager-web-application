@@ -6,9 +6,6 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HTTP_INTERCEPTORS } from '@angular/common/http'; 
 // import { FlexLayoutModule } from '@angular/flex-layout';
 
-// Components
-import { NavigationComponent } from './components/navigation/navigation.component';
-
 import { DashboardComponent } from './pages/dashboard/dashboard.component';
 import { ProfileComponent } from './pages/profile/profile.component';
 
@@ -25,30 +22,18 @@ import { AngularFireStorageModule } from '@angular/fire/storage';
 import { environment } from '../environments/environment';
 
 import { UploadPhotoComponent } from './pages/profile/upload-photo/upload-photo.component';
-import { ConfirmComponent } from '../app/components/confirm/confirm.component';
 
 // import { TasksModule } from './pages/tasks/tasks.module';
 import { AuthModule } from './pages/auth/auth.module';
 import { AngularFireAuthModule } from '@angular/fire/auth';
-import { SearchComponent } from './components/search/search.component';
-import { SortComponent } from './components/sort/sort.component';
-import { BrowseComponent } from './components/browse/browse.component';
-import { FilterPipe } from './pipes/filter.pipe';
-import { SampleComponent } from './sample/sample.component';
+import { ComponentsModule } from './components/components.module';
 
 @NgModule({
   declarations: [
     AppComponent,
     DashboardComponent,
-    NavigationComponent,
     ProfileComponent,
-    UploadPhotoComponent,
-    ConfirmComponent,
-    SearchComponent,
-    SortComponent,
-    BrowseComponent,
-    FilterPipe,
-    SampleComponent
+    UploadPhotoComponent
   ],
   imports: [
     BrowserModule,
@@ -62,16 +47,13 @@ import { SampleComponent } from './sample/sample.component';
     // FlexLayoutModule,
     // TasksModule,
     AuthModule,
-    AngularFireAuthModule
+    AngularFireAuthModule,
+    ComponentsModule
   ],
   providers: [AuthGuard, { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }],
   bootstrap: [AppComponent],
   entryComponents: [
-    UploadPhotoComponent,
-    ConfirmComponent,
-    SearchComponent,
-    SortComponent,
-    BrowseComponent
+    UploadPhotoComponent
   ]
 })
 export class AppModule { }

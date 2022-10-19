@@ -2,10 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ExpenditureComponent } from './expenditure/expenditure.component';
 import { AppService } from '../../../app.service';
-import { Breakpoints, BreakpointObserver } from '@angular/cdk/layout';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ConfirmComponent } from '../../../components/confirm/confirm.component';
 import { HttpService } from 'src/app/http.service';
+import { Subscription } from 'rxjs';
 
 
 @Component({
@@ -17,40 +17,41 @@ import { HttpService } from 'src/app/http.service';
 export class ExpendituresComponent implements OnInit {
   expenditures: Array<any>;
   loading = false;
-  gridCols: number;
+  subscription: Subscription;
+  isError: boolean;
 
   constructor(
     private _dialog: MatDialog,
-    private _appService: AppService,
-    private _breakpointObserver: BreakpointObserver,
+    public _appService: AppService,
     private _snakBar: MatSnackBar,
     private _httpService: HttpService) {
-    let breakpoint = { ...Breakpoints };
-    _breakpointObserver.observe(
-      Object.values(breakpoint)
-    ).subscribe(result => {
-      for (let device in Breakpoints) {
-        if (_breakpointObserver.isMatched(Breakpoints[device]) && (device == 'XSmall')) {
-          this.gridCols = 1;
-          break;
-        } else if (_breakpointObserver.isMatched(Breakpoints[device]) && (device == 'Handset')) {
-          this.gridCols = 2;
-          break;
-        } else if (_breakpointObserver.isMatched(Breakpoints[device]) && (device == 'TabletPortrait')) {
-          this.gridCols = 2;
-          break;
-        } else {
-          this.gridCols = 3;
-        }
+  }
+
+  ngOnInit() {
+    const params = { order: 'desc', page: 1, limit: 100 };
+    // Initialise the page with default preference and get first 10 records
+    this.getRecords(params);
+    
+    // Subscribe to user actions like search, filter and sort
+    this.subscription = this._appService.dialogRef.subscribe((response) => {
+      console.log('dialogRef expenditure.component', response);
+      if (response.data) {
+        this.getRecords({...params, ...response.data});
       }
     });
   }
 
-  ngOnInit() {
-    const params = { order: 'desc', page: 1, limit: 10 };
+  getRecords(params) {
     this._httpService.getRecords('expenditures', params).subscribe((response) => {
       console.log(response);
-      this.expenditures = response.docs;
+      // Adjust purchase array based on page number.
+      if (response.page > 1) {
+        this.expenditures = this.expenditures.concat(response.docs);
+      } else {
+        this.expenditures = response.docs;
+      }
+      this.isError = false;
+      // this.expenditures = response.docs;
     }, (error) => {
       this._appService.actionMessage({ title: 'Error!', text: 'Failed to get expenditure information' });
       console.log(error);
@@ -101,5 +102,9 @@ export class ExpendituresComponent implements OnInit {
         });
       }
     })
+  }
+
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
   }
 }

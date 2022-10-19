@@ -14,7 +14,7 @@
     (scrolled)="onScrollDown()"
     (scrolledUp)="onUp()" *ngIf="purchases && purchases.length">
     <!-- ITEMS -->
-    <mat-grid-list [cols]="gridCols" rowHeight="225px">
+    <mat-grid-list [cols]="_appService.gridCols" rowHeight="225px">
         <mat-grid-tile
             *ngFor="let purchase of purchases"
             colspan="1"

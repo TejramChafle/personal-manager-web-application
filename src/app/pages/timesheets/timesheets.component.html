@@ -7,7 +7,7 @@
 </div>
 
 <!-- ITEMS -->
-<!-- <mat-grid-list [cols]="gridCols" rowHeight="200px" *ngIf="timesheets">
+<!-- <mat-grid-list [cols]="_appService.gridCols" rowHeight="200px" *ngIf="timesheets">
     <mat-grid-tile
         *ngFor="let timesheet of timesheets"
         colspan="1"

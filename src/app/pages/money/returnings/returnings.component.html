@@ -5,7 +5,7 @@
 </div>
 
 <!-- ITEMS -->
-<mat-grid-list [cols]="gridCols" rowHeight="225px" *ngIf="returnings && returnings.length !== 0">
+<mat-grid-list [cols]="_appService.gridCols" rowHeight="225px" *ngIf="returnings && returnings.length !== 0">
     <mat-grid-tile
         *ngFor="let returning of returnings"
         colspan="1"
@@ -112,14 +112,10 @@
 </mat-grid-list>
 
 <!-- EMPTY RECORDS -->
-<div class="empty-record-container" *ngIf="returnings && returnings.length == 0">
-    <img src="assets/icons/files.svg">
-    <h2>No returnings found</h2>
-    <h4>Any new returning will appear here</h4>
-</div>
-
+<personal-manager-empty-state [records]="returnings" [record]="'returning'"></personal-manager-empty-state>
 
 <!-- SPINNER -->
-<div class="spinner-container" *ngIf="!returnings">
-    <mat-spinner></mat-spinner>
-</div>
+<personal-manager-loader [records]="returnings" [isError]="isError"></personal-manager-loader>
+
+<!-- ERROR -->
+<personal-manager-error-handler [isError]="isError"></personal-manager-error-handler>

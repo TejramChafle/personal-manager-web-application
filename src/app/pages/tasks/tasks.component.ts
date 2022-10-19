@@ -2,7 +2,6 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { TaskComponent } from './task/task.component';
 import { AppService } from '../../app.service';
-import { Breakpoints, BreakpointObserver } from '@angular/cdk/layout';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ConfirmComponent } from '../../components/confirm/confirm.component';
 import { Subscription } from 'rxjs';
@@ -17,35 +16,14 @@ import { HttpService } from 'src/app/http.service';
 export class TasksComponent implements OnInit, OnDestroy {
   tasks: Array<any>;
   loading = false;
-  gridCols: number;
   subscription: Subscription;
 
   constructor(
     private _dialog: MatDialog,
     private _httpService: HttpService,
-    private _appService: AppService,
-    private _breakpointObserver: BreakpointObserver,
+    public _appService: AppService,
     private _snakBar: MatSnackBar
   ) {
-    let breakpoint = { ...Breakpoints };
-    _breakpointObserver.observe(
-      Object.values(breakpoint)
-    ).subscribe(result => {
-      for (let device in Breakpoints) {
-        if (_breakpointObserver.isMatched(Breakpoints[device]) && (device == 'XSmall')) {
-          this.gridCols = 1;
-          break;
-        } else if (_breakpointObserver.isMatched(Breakpoints[device]) && (device == 'Handset')) {
-          this.gridCols = 2;
-          break;
-        } else if (_breakpointObserver.isMatched(Breakpoints[device]) && (device == 'TabletPortrait')) {
-          this.gridCols = 2;
-          break;
-        } else {
-          this.gridCols = 3;
-        }
-      }
-    });
 
     // On model service subsciorion
     this.subscription = this._appService.dialogRef.subscribe((response) => {

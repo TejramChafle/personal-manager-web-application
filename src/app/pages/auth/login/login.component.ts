@@ -7,7 +7,7 @@ import { map } from 'rxjs/operators';
 import { AppService } from 'src/app/app.service';
 
 @Component({
-  selector: 'personal-assistant-login',
+  selector: 'personal-manager-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss'],
   // encapsulation: ViewEncapsulation.None

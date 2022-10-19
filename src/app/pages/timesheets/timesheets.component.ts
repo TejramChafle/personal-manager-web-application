@@ -1,9 +1,7 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { AppService } from '../../app.service';
-import { Breakpoints, BreakpointObserver } from '@angular/cdk/layout';
 import { MatSnackBar } from '@angular/material/snack-bar';
-
 import { ConfirmComponent } from '../../components/confirm/confirm.component';
 import { TimesheetComponent } from './timesheet/timesheet.component';
 import { HttpService } from 'src/app/http.service';
@@ -19,34 +17,13 @@ export class TimesheetsComponent implements OnInit {
 
   timesheets: Array<any>;
   loading = false;
-  gridCols: number;
 
   constructor(
     private _dialog: MatDialog,
     private _httpService: HttpService,
-    private _appService: AppService,
-    private _breakpointObserver: BreakpointObserver,
+    public _appService: AppService,
     private _snakBar: MatSnackBar
   ) {
-    let breakpoint = { ...Breakpoints };
-    _breakpointObserver.observe(
-      Object.values(breakpoint)
-    ).subscribe(result => {
-      for (let device in Breakpoints) {
-        if (_breakpointObserver.isMatched(Breakpoints[device]) && (device == 'XSmall')) {
-          this.gridCols = 1;
-          break;
-        } else if (_breakpointObserver.isMatched(Breakpoints[device]) && (device == 'Handset')) {
-          this.gridCols = 2;
-          break;
-        } else if (_breakpointObserver.isMatched(Breakpoints[device]) && (device == 'TabletPortrait')) {
-          this.gridCols = 2;
-          break;
-        } else {
-          this.gridCols = 3;
-        }
-      }
-    });
   }
 
   ngOnInit() {

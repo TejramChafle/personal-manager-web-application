@@ -2,6 +2,7 @@ import { Injectable, EventEmitter } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { pages, paymentMethods, purposeTypes, taskLabels, sortOptions } from 'src/app/app.constant';
+import { Breakpoints, BreakpointObserver } from '@angular/cdk/layout';
 
 @Injectable({
   providedIn: 'root'
@@ -36,10 +37,14 @@ export class AppService {
     { name: 'Help', color: '#b676b1', isChecked: false },
     { name: 'Other', color: '#8F3985', isChecked: false }
   ];
+
+  gridCols: number;
   
   constructor(
     private _snackBar: MatSnackBar, 
-    private _router: Router) {
+    private _router: Router,
+    private _breakpointObserver: BreakpointObserver) {
+      this.deviceInfo();
   }
 
   public actionMessage(message: { title: string, text: string }) {
@@ -112,5 +117,26 @@ export class AppService {
       hours: hrs ? hrs.toFixed() : null,
       minutes: mins ? mins : (hrs ? 0 : null)
     }
+  }
+
+  deviceInfo() {
+    this._breakpointObserver.observe(
+      Object.values(Breakpoints)
+    ).subscribe(result => {
+      for (let device in Breakpoints) {
+        if (this._breakpointObserver.isMatched(Breakpoints[device]) && (device == 'XSmall')) {
+          this.gridCols = 1;
+          break;
+        } else if (this._breakpointObserver.isMatched(Breakpoints[device]) && (device == 'Handset')) {
+          this.gridCols = 2;
+          break;
+        } else if (this._breakpointObserver.isMatched(Breakpoints[device]) && (device == 'TabletPortrait')) {
+          this.gridCols = 2;
+          break;
+        } else {
+          this.gridCols = 3;
+        }
+      }
+    });
   }
 }
