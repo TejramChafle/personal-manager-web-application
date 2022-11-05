@@ -62,7 +62,7 @@ export class LoginComponent implements OnInit {
   doSocialAuthenticationWith(channel) {
     this.loading = true;
     this._authService.doSocialAuthenticationWith(channel).then((response) => {
-      // console.log({ response });
+      console.log({ response });
       this.onSocialAuthentication(response);
     }).catch((error) => {
       // console.log({error});
@@ -74,7 +74,11 @@ export class LoginComponent implements OnInit {
   onSocialAuthentication(response) {
     this._authService.validateSocialSignInAndAuthenticate(response).subscribe((resp) => {
       this.loading = false;
-      this._router.navigate([window.history.state.url || '/']);
+      if (window.history.state.url) {
+        this._router.navigate([window.history.state.url]);
+      } else {
+        location.reload();
+      }
     }, (error) => {
       this.loading = false;
       this._appSerivce.actionMessage({ title: 'Error!', text: error.error.error || error.error.message });

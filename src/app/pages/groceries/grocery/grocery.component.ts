@@ -29,7 +29,7 @@ export class GroceryComponent implements OnInit {
 		public _dialog: MatDialog
 	) {
 		this.groceryForm = this._formBuilder.group({
-			date: new FormControl(null),
+			date: new FormControl(null, Validators.required),
 			purpose: new FormControl( this.data.grocery && this.data.grocery.expenditure && this.data.grocery.expenditure.purpose || 'Grocery' ),
 			place: new FormControl(null, Validators.required),
 			items: new FormArray([], Validators.required)

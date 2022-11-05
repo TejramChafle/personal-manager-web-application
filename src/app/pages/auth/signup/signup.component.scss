@@ -13,7 +13,7 @@
 .signup-page-container {
     display: flex;
     justify-content: center;
-    mat-card {
+    .signup-card {
         @media screen and (max-width: 640px){
             margin: 10% 16px 0;
         }

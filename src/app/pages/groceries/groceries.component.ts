@@ -41,7 +41,6 @@ export class GroceriesComponent implements OnInit, OnDestroy {
 
     // On model service subsciorion
     this.subscription = this._appService.dialogRef.subscribe((response) => {
-      console.log('dialogRef groceries.component', response);
       if (response.action === 'search' && response.data) {
         this.page = 1;
         const params = { order: 'desc', page: this.page, limit: 100, ...response.data };
@@ -52,7 +51,7 @@ export class GroceriesComponent implements OnInit, OnDestroy {
 
   getRecords(params) {
     this._httpService.getRecords('purchases', params).subscribe((response) => {
-      console.log(response);
+      // console.log(response);
       // Modify the result for item description. This will generate text from items array
       response.docs.forEach(element => {
         element.itemDescription = element.items.map((item) => { return item.name }).toString().replace(/,/g, ", ");
@@ -63,10 +62,10 @@ export class GroceriesComponent implements OnInit, OnDestroy {
       } else {
         this.purchases = response.docs;
       }
-      console.log('this.purchases', this.purchases);
+      // console.log('this.purchases', this.purchases);
     }, (error) => {
       this._appService.actionMessage({ title: 'Error!', text: 'Failed to get purchases information' });
-      console.log(error);
+      // console.log(error);
     });
   }
 
@@ -78,7 +77,7 @@ export class GroceriesComponent implements OnInit, OnDestroy {
     });
 
     dialogRef.afterClosed().subscribe((resp) => {
-      console.log(resp);
+      // console.log(resp);
       if (resp) {
         this.ngOnInit();
       }
@@ -144,12 +143,11 @@ export class GroceriesComponent implements OnInit, OnDestroy {
   }
 
   onShare(purchase) {
-    console.log('purchase', purchase);
     let href = 'whatsapp://send?abid=&text=';
     href += 'Hey, %0A' + this._authService.user.user.name + ' has shared the items list for ' + purchase.expenditure.purpose.toLowerCase() + ' at ' + purchase.expenditure.place +'. %0A';
     href += 'Items list (' + purchase.items.length + ') includes: %0A';
     purchase.items.forEach((item, key) => {
-      href += ++key + '. ' + item + '%0A';
+      href += ++key + '. ' + item.name + ' (' + item.quantity + ')' + '%0A';
     });
     href += 'To edit or start purchasing, visit ' + window.location.href + '/' + purchase._id + '%0A';
     href += ' ';
@@ -157,7 +155,6 @@ export class GroceriesComponent implements OnInit, OnDestroy {
   }
 
   onCopy(purchase) {
-    console.log('purchase', purchase);
     let param = {
       expenditure: {
         place: purchase.expenditure.place,

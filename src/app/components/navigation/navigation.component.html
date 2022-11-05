@@ -21,24 +21,24 @@
 			<a mat-list-item routerLink="" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" (click)="(isHandset || isTablet) && drawer.toggle()">
 				<mat-icon class="icon">home</mat-icon> <span class="label">Home</span>
 			</a>
-			<a mat-list-item routerLink="money/returnings" [state]="{title: 'Returnings'}" routerLinkActive="active" (click)="(isHandset || isTablet) && drawer.toggle()">
-				<mat-icon class="icon">payment</mat-icon><span class="label">Returnings</span>
+			<a mat-list-item routerLink="groceries"  [state]="{title: 'Grocery'}" routerLinkActive="active" (click)="(isHandset || isTablet) && drawer.toggle()">
+				<mat-icon class="icon">add_shopping_cart</mat-icon> <span class="label">Grocery</span>
 			</a>
 			<a mat-list-item routerLink="money/expenditures"  [state]="{title: 'Expenditure'}" routerLinkActive="active" (click)="(isHandset || isTablet) && drawer.toggle()">
 				<mat-icon class="icon">insert_chart</mat-icon> <span class="label">Expenditure</span>
 			</a>
-			<a mat-list-item routerLink="reminders"  [state]="{title: 'Reminders'}" routerLinkActive="active" (click)="(isHandset || isTablet) && drawer.toggle()">
-				<mat-icon class="icon">alarm</mat-icon> <span class="label">Reminders</span>
+			<a mat-list-item routerLink="money/returnings" [state]="{title: 'Returnings'}" routerLinkActive="active" (click)="(isHandset || isTablet) && drawer.toggle()">
+				<mat-icon class="icon">payment</mat-icon><span class="label">Returnings</span>
 			</a>
+			<!-- <a mat-list-item routerLink="reminders"  [state]="{title: 'Reminders'}" routerLinkActive="active" (click)="(isHandset || isTablet) && drawer.toggle()">
+				<mat-icon class="icon">alarm</mat-icon> <span class="label">Reminders</span>
+			</a> -->
 			<a mat-list-item routerLink="tasks"  [state]="{title: 'Tasks'}" routerLinkActive="active" (click)="(isHandset || isTablet) && drawer.toggle()">
 				<mat-icon class="icon">event_note</mat-icon> <span class="label">Tasks</span>
 			</a>
-			<a mat-list-item routerLink="groceries"  [state]="{title: 'Grocery'}" routerLinkActive="active" (click)="(isHandset || isTablet) && drawer.toggle()">
-				<mat-icon class="icon">add_shopping_cart</mat-icon> <span class="label">Grocery</span>
-			</a>
-			<a mat-list-item routerLink="learnings"  [state]="{title: 'Learnings'}" routerLinkActive="active" (click)="(isHandset || isTablet) && drawer.toggle()">
+			<!-- <a mat-list-item routerLink="learnings"  [state]="{title: 'Learnings'}" routerLinkActive="active" (click)="(isHandset || isTablet) && drawer.toggle()">
 				<mat-icon class="icon">psychology</mat-icon> <span class="label">Learnings</span>
-			</a>
+			</a> -->
 			<a mat-list-item routerLink="timesheets"  [state]="{title: 'Timesheets'}" routerLinkActive="active" (click)="(isHandset || isTablet) && drawer.toggle()">
 				<mat-icon class="icon">check_box</mat-icon> <span class="label">Timesheets</span>
 			</a>
@@ -46,9 +46,9 @@
 			<!-- PROFILE & SETTINGS -->
 			<span class="header-spacer"></span>
 			<hr>
-			<a mat-list-item routerLink="profile" [state]="{title: 'Profile'}" routerLinkActive="active" (click)="(isHandset || isTablet) && drawer.toggle()">
+			<!-- <a mat-list-item routerLink="profile" [state]="{title: 'Profile'}" routerLinkActive="active" (click)="(isHandset || isTablet) && drawer.toggle()">
 				<mat-icon class="icon">person</mat-icon> <span class="label">Profile</span>
-			</a>
+			</a> -->
 			<a mat-list-item (click)="(isHandset || isTablet) && drawer.toggle(); _authService.logout()" routerLink="login"
 				type="button">
 				<mat-icon class="icon">login</mat-icon><span class="label">Logout</span>

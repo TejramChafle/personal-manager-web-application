@@ -1,11 +1,9 @@
 
 <div class="signup-page-container">
-    <!-- <mat-grid-list cols="3" rowHeight="900px" gutterSize="25px">
-        <mat-grid-tile [colspan]="dimentions.cols" [rowspan]="dimentions.rows"> -->
-            <mat-card>
+            <mat-card class="signup-card">
                 <mat-card-content>
                     <div align="center">
-                        <img src="assets/brand/task-manager.png" width="100" height="100" style="margin: 10px auto;">
+                        <img src="assets/brand/task-manager.png" alt="task manager logo" width="100" height="100" style="margin: 10px auto;">
                     </div>
                     <form class="login-form" #signupForm="ngForm" (ngSubmit)="onSignup(signupForm)">
                         <mat-form-field class="login-form-field" appearance="outline">
@@ -40,17 +38,18 @@
                     </form>
                 </mat-card-content>
                 <div class="or-action">
-                    Or Signup with social media
+                    <!-- Or Signup with social media -->
+                    OR
                 </div>
                 <mat-card-actions align="center">
                     <button type="button" class="custom-btn google-login-btn" mat-button (click)="loginComponent.doSocialAuthenticationWith('google')"
                     [disabled]="loading">
-                        <img src="assets/icons/google.svg" height="24" width="24"> Signup with Google
+                        <img src="assets/icons/google.svg" height="24" width="24" alt="Google logo"> Signup with Google
                     </button>
-                    <button type="button" class="custom-btn facebook-login-btn" mat-button (click)="loginComponent.doSocialAuthenticationWith('facebook')"
+                    <!-- <button type="button" class="custom-btn facebook-login-btn" mat-button (click)="loginComponent.doSocialAuthenticationWith('facebook')"
                     [disabled]="loading">
                         <img src="assets/icons/facebook.svg" height="24" width="24"> Signup with Facebook 
-                    </button>
+                    </button> -->
                 </mat-card-actions>
             </mat-card>
         <!-- </mat-grid-tile>
